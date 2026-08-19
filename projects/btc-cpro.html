@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPro: Multi-Scale Momentum Transformer — Technical Architecture &amp; Case Study | Kapil Sandhu</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicons/favicon-cpro.svg">
+  <meta name="description"
+    content="Deep technical case study of CPro: Bitcoin short-term momentum &amp; volatility-conditioned forecasting pipeline utilizing Symmetric CUSUM filtering, Triple-Barrier labeling, 4-State Gaussian HMM regime gating, and Multi-Scale Momentum Transformers with RoPE.">
+
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- KaTeX for Mathematical Formulations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            deepNavy: '#05070D',
+            navyCard: '#0A0E1A',
+            electricCyan: '#00F0FF',
+            goldGlow: '#FFB800',
+            amberFire: '#FF6A00'
+          },
+          fontFamily: {
+            heading: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #05070D;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 184, 0, 0.15);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Ambient background grid */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Diagram SVG Animations */
+    @keyframes flowPulse {
+      0% {
+        stroke-dashoffset: 24;
+        opacity: 0.4;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0.4;
+      }
+    }
+    .arch-flow-pulse {
+      stroke-dasharray: 6 4;
+      animation: flowPulse 2s linear infinite;
+    }
+
+    /* Refined Dual Gold & Cyan Glass Panels */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(16, 12, 4, 0.65) 0%, rgba(10, 14, 26, 0.75) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 184, 0, 0.22);
+      box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 184, 0, 0.06);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 184, 0, 0.5);
+      box-shadow: 0 15px 40px -10px rgba(255, 184, 0, 0.25), 0 0 25px rgba(255, 184, 0, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .glass-card-cyan {
+      background: linear-gradient(135deg, rgba(4, 18, 30, 0.65) 0%, rgba(10, 14, 26, 0.75) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 240, 255, 0.06);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-cyan:hover {
+      border-color: rgba(0, 240, 255, 0.5);
+      box-shadow: 0 15px 40px -10px rgba(0, 240, 255, 0.25), 0 0 25px rgba(0, 240, 255, 0.12);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="bg-deepNavy text-slate-200 font-sans antialiased selection:bg-goldGlow/30 selection:text-white bg-grid-pattern min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+  <!-- Dynamic Cloud & Star Background Canvases -->
+  <canvas id="globalCloudCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+  <canvas id="globalStarCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+  <!-- =========================================================================
+       1. NAVIGATION TOP BAR (Transparent Cyan Glassmorphism)
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 w-full bg-cyan-950/35 backdrop-blur-xl border-b border-cyan-500/20 py-3.5 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo / Back Link -->
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 font-mono font-bold text-base shadow-lg group-hover:scale-105 group-hover:border-cyan-400 transition-all">
+          KS
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white font-heading font-extrabold text-lg md:text-xl tracking-tight group-hover:text-goldGlow transition-colors">
+            Kapil Sandhu
+          </span>
+          <span class="text-[11px] font-mono text-cyan-300 font-bold -mt-0.5">
+            Uni Bonn · AI &amp; ML Research
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation & Action Links -->
+      <div class="flex items-center gap-3 md:gap-4">
+        <a href="../index.html#ongoing-projects"
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-cyan-300 hover:text-white transition-colors font-bold">
+          <span>&larr;</span> <span>On-Going</span>
+        </a>
+        <a href="../index.html#projects"
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-slate-300 hover:text-goldGlow transition-colors font-bold">
+          <span>Projects</span>
+        </a>
+
+        <a href="https://github.com/Kapil-Sandhu/CPro" target="_blank" rel="noopener"
+          class="px-3.5 py-2 text-xs font-mono font-bold text-slate-200 hover:text-white bg-slate-900/90 border border-slate-700 hover:border-goldGlow rounded-xl transition-all flex items-center gap-1.5 shadow-md">
+          <svg class="w-4 h-4 text-goldGlow" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          <span class="hidden md:inline">GitHub</span>
+        </a>
+
+        <a href="../assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener"
+          class="px-4 py-2 text-xs font-mono font-extrabold text-slate-950 bg-gradient-to-r from-cyan-400 to-electricCyan hover:from-cyan-300 hover:to-cyan-200 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Download CV</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT AREA
+       ========================================================================= -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-10 w-full space-y-12">
+
+    <!-- HERO HEADER SECTION -->
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+        <span class="text-goldGlow font-bold bg-amber-950/80 border border-amber-500/40 px-3 py-1 rounded-full">
+          SYS.02 · TIME-SERIES TRANSFORMERS &amp; QUANT
+        </span>
+        <span class="text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full font-semibold">
+          Status: Active &middot; On-Going Research
+        </span>
+        <span class="text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">
+          83.36% High-Confidence Accuracy
+        </span>
+        <span class="text-slate-300 bg-slate-900/80 border border-slate-700/60 px-3 py-1 rounded-full">
+          5+ Years (3.15M Bars) Clean Data
+        </span>
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight">
+        CPro: Multi-Scale Momentum Transformer &amp; CPro 2.0
+      </h1>
+
+      <p class="text-sm md:text-base text-goldGlow font-mono font-medium max-w-4xl">
+        Bitcoin Short-Term Direction &amp; Volatility-Conditioned Momentum Forecasting Pipeline
+      </p>
+
+      <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-5xl">
+        An institutional-grade quantitative machine learning research framework engineered to forecast high-probability Bitcoin (<code class="text-goldGlow">BTC/USD</code>) momentum directions (Bullish, Bearish, or Neutral/Skip) and continuous momentum strength. Built and validated on over <strong class="text-white">5 years (2020–2025) of 1-minute tick data (~3.15 million bars)</strong>, the project resolves financial non-stationarity, regime collapse, and lookahead data leakage through event-driven CUSUM sampling, 4-state Gaussian HMM gating, and cross-timeframe RoPE attention.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a href="https://github.com/Kapil-Sandhu/CPro" target="_blank" rel="noopener"
+          class="px-5 py-2.5 text-xs font-mono font-bold text-slate-950 bg-gradient-to-r from-goldGlow to-amberFire hover:brightness-110 rounded-xl transition-all shadow-lg flex items-center gap-2">
+          <span>View GitHub Repository</span> <span>↗</span>
+        </a>
+        <a href="#pipeline"
+          class="px-4 py-2.5 text-xs font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 hover:border-cyan-400 rounded-xl transition-all flex items-center gap-2">
+          <span>Pipeline Architecture</span> <span>↓</span>
+        </a>
+        <a href="#benchmarks"
+          class="px-4 py-2.5 text-xs font-mono font-bold text-slate-300 bg-slate-900/80 border border-slate-700 hover:border-slate-500 rounded-xl transition-all flex items-center gap-2">
+          <span>Empirical Benchmarks</span> <span>↓</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- METRICS HIGHLIGHT BAR -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="glass-card p-4 rounded-2xl border border-amber-500/20 text-center">
+        <div class="text-2xl md:text-3xl font-heading font-black text-goldGlow">83.36%</div>
+        <div class="text-[11px] font-mono text-slate-300 mt-1">High-Confidence Subset Acc</div>
+        <div class="text-[10px] font-mono text-cyan-300 mt-0.5">Confidence &gt; 0.65 (MCC: 0.6558)</div>
+      </div>
+      <div class="glass-card-cyan p-4 rounded-2xl border border-cyan-500/20 text-center">
+        <div class="text-2xl md:text-3xl font-heading font-black text-electricCyan">82.62%</div>
+        <div class="text-[11px] font-mono text-slate-300 mt-1">Fee-Adjusted Hit Rate</div>
+        <div class="text-[10px] font-mono text-emerald-400 mt-0.5">3,447 Executed Trades (2025)</div>
+      </div>
+      <div class="glass-card p-4 rounded-2xl border border-amber-500/20 text-center">
+        <div class="text-2xl md:text-3xl font-heading font-black text-emerald-400">+5.15%</div>
+        <div class="text-[11px] font-mono text-slate-300 mt-1">Net Backtest Return</div>
+        <div class="text-[10px] font-mono text-slate-400 mt-0.5">After $2 \times 0.05\%$ Taker Fees</div>
+      </div>
+      <div class="glass-card-cyan p-4 rounded-2xl border border-cyan-500/20 text-center">
+        <div class="text-2xl md:text-3xl font-heading font-black text-cyan-300">329.6k</div>
+        <div class="text-[11px] font-mono text-slate-300 mt-1">CUSUM Filtered Events</div>
+        <div class="text-[10px] font-mono text-goldGlow mt-0.5">12.5% Volatility Event Density</div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         SECTION 1: SYSTEM ARCHITECTURE & PIPELINE DIAGRAM
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 bg-goldGlow rounded-full"></div>
+        <h2 class="text-2xl font-heading font-bold text-white">1. End-to-End Pipeline &amp; Model Architecture</h2>
+      </div>
+
+      <!-- INTERACTIVE ARCHITECTURE SVG -->
+      <div class="glass-card p-4 md:p-6 rounded-3xl border border-amber-500/25 relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-amber-500/20 text-xs font-mono">
+          <span class="text-goldGlow font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-goldGlow animate-ping"></span> MSMT PIPELINE FLOW // SYS.02
+          </span>
+          <span class="text-cyan-300">Multi-Scale (1m, 5m, 15m, 1h) &middot; 4-State HMM Gate &middot; RoPE Attention</span>
+        </div>
+
+        <svg viewBox="0 0 1000 380" class="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="grad-gold-cpro" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FFB800" />
+              <stop offset="100%" stop-color="#FF6A00" />
+            </linearGradient>
+            <linearGradient id="grad-cyan-cpro" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00F0FF" />
+              <stop offset="100%" stop-color="#0080FF" />
+            </linearGradient>
+            <filter id="glow-gold-cpro" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFB800" flood-opacity="0.5" />
+            </filter>
+            <filter id="glow-cyan-cpro" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.5" />
+            </filter>
+          </defs>
+
+          <!-- Flow Connectors -->
+          <!-- Ingestion to CUSUM & Multi-TF -->
+          <path d="M 125 180 C 150 180, 150 100, 175 100" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 125 180 C 150 180, 150 260, 175 260" stroke="#FFB800" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Multi-TF & CUSUM to Feature Matrix -->
+          <path d="M 295 100 C 320 100, 320 180, 345 180" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 295 260 C 320 260, 320 180, 345 180" stroke="#FFB800" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Feature Matrix to MSMT Transformer -->
+          <path d="M 470 180 L 515 180" stroke="#00F0FF" stroke-width="1.8" class="arch-flow-pulse" />
+
+          <!-- HMM to Sigmoid Gate Injection -->
+          <path d="M 600 65 C 630 65, 630 140, 660 140" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+
+          <!-- MSMT to Multi-Task Output Heads -->
+          <path d="M 720 180 C 750 180, 750 100, 780 100" stroke="#10B981" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 720 180 C 750 180, 750 180, 780 180" stroke="#FFB800" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 720 180 C 750 180, 750 260, 780 260" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Post-Hoc Calibration & Backtest -->
+          <path d="M 915 180 L 935 180" stroke="#10B981" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- STAGE 1: RAW INGESTION -->
+          <rect x="15" y="125" width="110" height="110" rx="10" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.3" filter="url(#glow-cyan-cpro)" />
+          <text x="70" y="152" fill="#00F0FF" font-size="10.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">RAW DATA</text>
+          <text x="70" y="172" fill="#E2E8F0" font-size="9" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">5+ Yrs BTC/USD</text>
+          <text x="70" y="190" fill="#94A3B8" font-size="8" font-family="'Fira Code', monospace" text-anchor="middle">3.15M 1-Min Bars</text>
+          <text x="70" y="206" fill="#38BDF8" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">2020 &rarr; 2025</text>
+          <text x="70" y="222" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">QC &amp; Resampling</text>
+
+          <!-- STAGE 2A: MULTI-TIMEFRAME RESAMPLING -->
+          <rect x="175" y="45" width="120" height="110" rx="10" fill="#06111C" stroke="#00F0FF" stroke-width="1.3" />
+          <text x="235" y="70" fill="#00F0FF" font-size="9.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">1) MULTI-SCALE TF</text>
+          <text x="235" y="88" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">1m, 5m, 15m, 1h</text>
+          <text x="235" y="104" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">16 Features / TF</text>
+          <text x="235" y="120" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">EMA &amp; VWAP Dist.</text>
+          <text x="235" y="136" fill="#38BDF8" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">11 Dynamic Candles</text>
+
+          <!-- STAGE 2B: CUSUM FILTER & TRIPLE BARRIER -->
+          <rect x="175" y="205" width="120" height="110" rx="10" fill="#120E04" stroke="#FFB800" stroke-width="1.3" />
+          <text x="235" y="230" fill="#FFB800" font-size="9.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">2) CUSUM &amp; LABELS</text>
+          <text x="235" y="248" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Symmetric CUSUM</text>
+          <text x="235" y="264" fill="#FBBF24" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">329.6k Events (12.5%)</text>
+          <text x="235" y="280" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">Triple-Barrier (1.5x ATR)</text>
+          <text x="235" y="296" fill="#FDE68A" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">Dir + Strength Score</text>
+
+          <!-- STAGE 3: PURGED & EMBARGOED SPLIT -->
+          <rect x="345" y="125" width="125" height="110" rx="10" fill="#0F172A" stroke="#00F0FF" stroke-width="1.3" />
+          <text x="407" y="150" fill="#00F0FF" font-size="9.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">3) LEAKAGE GUARD</text>
+          <text x="407" y="168" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Purged &amp; Embargoed</text>
+          <text x="407" y="184" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">200-Bar Boundary Gap</text>
+          <text x="407" y="200" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">Train: 2021&rarr;2024</text>
+          <text x="407" y="216" fill="#10B981" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Test: 2025 (Full Year)</text>
+
+          <!-- 4-STATE GAUSSIAN HMM TOP INJECTION -->
+          <rect x="500" y="20" width="160" height="65" rx="8" fill="#150E06" stroke="#FFB800" stroke-width="1.2" />
+          <text x="580" y="42" fill="#FFB800" font-size="9" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">4-STATE GAUSSIAN HMM</text>
+          <text x="580" y="58" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif" text-anchor="middle">Posteriors $\mathbf{p}_{\text{HMM}}$ &middot; Boosted Diag</text>
+          <text x="580" y="73" fill="#FBBF24" font-size="7" font-family="'Fira Code', monospace" text-anchor="middle">Ranging (0) vs Trending (1,2) vs Crisis (3)</text>
+
+          <!-- STAGE 4: MSMT TRANSFORMER CORE -->
+          <rect x="515" y="105" width="205" height="150" rx="12" fill="#070D1A" stroke="#FFB800" stroke-width="1.5" filter="url(#glow-gold-cpro)" />
+          <text x="617" y="132" fill="#FFB800" font-size="11" font-family="'Space Grotesk', sans-serif" font-weight="800" text-anchor="middle">MSMT TRANSFORMER</text>
+          <line x1="530" y1="140" x2="705" y2="140" stroke="rgba(255,184,0,0.3)" stroke-width="1" />
+          <text x="617" y="157" fill="#67E8F9" font-size="8" font-family="'Fira Code', monospace" text-anchor="middle">&bull; RevIN &middot; Patch Token (4 bars)</text>
+          <text x="617" y="173" fill="#E2E8F0" font-size="8" font-family="'Fira Code', monospace" text-anchor="middle">&bull; Rotary Position Embeddings (RoPE)</text>
+          <text x="617" y="189" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" text-anchor="middle">&bull; Cross-TF Attn + Dyn Candle Bias</text>
+          <text x="617" y="205" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">&bull; Sigmoid Regime Gate: $\sigma(\mathbf{W}_r \mathbf{p}_{\text{HMM}})$</text>
+          <text x="617" y="221" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" text-anchor="middle">&bull; Lion Optimizer + OneCycleLR</text>
+          <text x="617" y="237" fill="#FDA4AF" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">&bull; Multi-Task: Focal + Huber + KL</text>
+
+          <!-- STAGE 5: MULTI-TASK OUTPUT HEADS -->
+          <!-- Direction Head -->
+          <rect x="780" y="65" width="135" height="70" rx="8" fill="#0A1624" stroke="#10B981" stroke-width="1.3" />
+          <text x="847" y="88" fill="#10B981" font-size="9" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">1) DIRECTION HEAD</text>
+          <text x="847" y="104" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif" text-anchor="middle">3-Way: Bull / Skip / Bear</text>
+          <text x="847" y="120" fill="#34D399" font-size="8.5" font-family="'Fira Code', monospace" font-weight="800" text-anchor="middle">83.36% High-Conf Acc</text>
+
+          <!-- Strength Head -->
+          <rect x="780" y="145" width="135" height="70" rx="8" fill="#120E04" stroke="#FFB800" stroke-width="1.3" />
+          <text x="847" y="168" fill="#FFB800" font-size="9" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">2) STRENGTH HEAD</text>
+          <text x="847" y="184" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif" text-anchor="middle">Continuous Score $y_{\text{str}} \in [0, 1]$</text>
+          <text x="847" y="200" fill="#FBBF24" font-size="8" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Volatility-Norm Return</text>
+
+          <!-- Regime Aux Head -->
+          <rect x="780" y="225" width="135" height="70" rx="8" fill="#06111C" stroke="#00F0FF" stroke-width="1.3" />
+          <text x="847" y="248" fill="#00F0FF" font-size="9" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">3) REGIME AUX HEAD</text>
+          <text x="847" y="264" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif" text-anchor="middle">4-State Classification</text>
+          <text x="847" y="280" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" text-anchor="middle">KL-Divergence Regularizer</text>
+
+          <!-- STAGE 6: POST-HOC CALIBRATION & BACKTEST -->
+          <rect x="935" y="115" width="55" height="130" rx="8" fill="#081510" stroke="#10B981" stroke-width="1.3" />
+          <text x="962" y="142" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">EXEC.</text>
+          <line x1="943" y1="150" x2="982" y2="150" stroke="rgba(16,185,129,0.3)" stroke-width="1" />
+          <text x="962" y="168" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" text-anchor="middle">L-BFGS</text>
+          <text x="962" y="180" fill="#34D399" font-size="7" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">T=0.924</text>
+          <text x="962" y="200" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" text-anchor="middle">Backtest</text>
+          <text x="962" y="214" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="800" text-anchor="middle">+5.15%</text>
+          <text x="962" y="228" fill="#6EE7B7" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">82.6% Win</text>
+        </svg>
+
+        <div class="mt-4 pt-3 border-t border-amber-500/20 flex flex-wrap items-center justify-between text-xs font-mono text-slate-400">
+          <span class="text-goldGlow font-bold">Pipeline Overview: 20 Modular Execution Stages from Raw Ticks to Fee-Adjusted Execution</span>
+          <span class="text-cyan-300">PyTorch &middot; Dual T4 GPUs &middot; Lion Optimizer &middot; L-BFGS Calibration</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: QUANTITATIVE METHODOLOGY & 6 TECHNICAL PILLARS
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 bg-electricCyan rounded-full"></div>
+        <h2 class="text-2xl font-heading font-bold text-white">2. Quantitative Methodology &amp; Mathematical Formulations</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Pillar 1: CUSUM Event Filtering -->
+        <div class="glass-card p-5 rounded-2xl border border-amber-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-goldGlow font-bold bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30">
+                PILLAR 01
+              </span>
+              <span class="text-xs font-mono text-cyan-300 font-semibold">12.5% Sampling Density</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">Symmetric CUSUM Event Filter</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              Standard chronological 1-minute bars generate high noise during consolidation and miss volatility bursts. BTC-Cpro employs a Symmetric Cumulative Sum filter to sample only when accumulated return deviations exceed a dynamic threshold $h_t$:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-amber-500/20 text-xs font-mono text-slate-200">
+              $$S_t^+ = \max(0, S_{t-1}^+ + r_t - \mu_t)$$
+              $$S_t^- = \min(0, S_{t-1}^- + r_t - \mu_t)$$
+              $$\text{Trigger: } S_t^+ > h_t \;\lor\; S_t^- < -h_t$$
+            </div>
+          </div>
+          <div class="pt-3 border-t border-amber-500/15 text-[11px] font-mono text-slate-400">
+            Reduced 2.63M clean 1-min bars into <strong class="text-goldGlow">329,602 discrete events</strong> with maximal information density.
+          </div>
+        </div>
+
+        <!-- Pillar 2: Triple-Barrier Labeling -->
+        <div class="glass-card-cyan p-5 rounded-2xl border border-cyan-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-electricCyan font-bold bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-500/30">
+                PILLAR 02
+              </span>
+              <span class="text-xs font-mono text-emerald-400 font-semibold">Triple-Barrier</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">Triple-Barrier Execution Targets</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              Eliminates horizon bias by setting upper and lower profit/stop barriers based on real-time ATR volatility, alongside a 30-bar vertical timeout:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-cyan-500/20 text-xs font-mono text-slate-200 space-y-1">
+              <div>• Upper (TP): $P_{\text{entry}} \times (1 + 1.5 \cdot \text{ATR}\%_t)$ &rarr; <span class="text-emerald-400">Bull (2)</span></div>
+              <div>• Lower (SL): $P_{\text{entry}} \times (1 - 1.5 \cdot \text{ATR}\%_t)$ &rarr; <span class="text-rose-400">Bear (0)</span></div>
+              <div>• Timeout (30m): No barrier hit &rarr; <span class="text-slate-400">Skip (1)</span></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-cyan-500/15 text-[11px] font-mono text-slate-400">
+            Generates continuous strength score $y_{\text{str}} \in [0, 1]$ based on 95th-percentile capped normalized forward return.
+          </div>
+        </div>
+
+        <!-- Pillar 3: Multi-Scale Stationarity & Dynamic Candles -->
+        <div class="glass-card p-5 rounded-2xl border border-amber-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-goldGlow font-bold bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30">
+                PILLAR 03
+              </span>
+              <span class="text-xs font-mono text-goldGlow font-semibold">11 Dynamic Features</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">Stationary Order Flow &amp; Intra-Candles</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              Converts raw non-stationary price series into bounded ratio matrices across 4 timeframes (1m, 5m, 15m, 1h), enriched with 11 causal intra-candle signals:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-amber-500/20 text-[11px] font-mono text-slate-300 space-y-1">
+              <div>• Dollar Volume: $\text{DV} = \text{VWAP} \times \text{Vol}$, $\text{DVZ} \in [-5, +5]$</div>
+              <div>• Signed Order Flow: $\text{DSDI} = \frac{\text{Buy DV} - \text{Sell DV}}{\text{Total DV}} \in [-1, +1]$</div>
+              <div>• Institutional Footprint: $\text{ATV} = \ln(1 + \text{DV}/\text{Trades})$</div>
+              <div>• Dynamic Candle: Progress, Wick Ratios, Body/Range</div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-amber-500/15 text-[11px] font-mono text-slate-400">
+            Guarantees strict causality for partially-formed higher-timeframe bars.
+          </div>
+        </div>
+
+        <!-- Pillar 4: 4-State Gaussian HMM Regime Gate -->
+        <div class="glass-card-cyan p-5 rounded-2xl border border-cyan-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-electricCyan font-bold bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-500/30">
+                PILLAR 04
+              </span>
+              <span class="text-xs font-mono text-cyan-300 font-semibold">Sigmoid Gate</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">4-State Gaussian HMM Gating</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              An unsupervised Hidden Markov Model classifies macro regimes from smoothed return direction, realized volatility, and move magnitude. Modulates network activations via a Sigmoid Gate:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-cyan-500/20 text-xs font-mono text-slate-200">
+              $$\mathbf{z}_{\text{gated}} = \text{LN}\left(\mathbf{z} \odot \sigma(\mathbf{W}_r \mathbf{p}_{\text{HMM}}) + \mathbf{z}\right)$$
+            </div>
+          </div>
+          <div class="pt-3 border-t border-cyan-500/15 text-[11px] font-mono text-slate-400">
+            Suppresses momentum signals during State 0 (ranging chop, 33.6% of data) while enabling aggressive positioning in States 1 &amp; 2 (trending).
+          </div>
+        </div>
+
+        <!-- Pillar 5: MSMT Architecture & RoPE -->
+        <div class="glass-card p-5 rounded-2xl border border-amber-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-goldGlow font-bold bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30">
+                PILLAR 05
+              </span>
+              <span class="text-xs font-mono text-goldGlow font-semibold">RoPE Attention</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">Multi-Scale Patch Transformer (MSMT)</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              Applies RevIN normalization, tokenizes 4-bar patches, and injects relative positional geometry directly into attention query/key inner products:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-amber-500/20 text-xs font-mono text-slate-200">
+              $$\langle \mathbf{q}_m, \mathbf{k}_n \rangle = (\mathbf{R}_{\Theta, m} \mathbf{W}_q \mathbf{x}_m)^T (\mathbf{R}_{\Theta, n} \mathbf{W}_k \mathbf{x}_n) = g(\mathbf{x}_m, \mathbf{x}_n, m-n)$$
+            </div>
+          </div>
+          <div class="pt-3 border-t border-amber-500/15 text-[11px] font-mono text-slate-400">
+            Cross-timeframe attention allows the 1-minute CLS token to attend across 5m, 15m, and 1h tokens with dynamic candle bias.
+          </div>
+        </div>
+
+        <!-- Pillar 6: Purged CV, Lion & L-BFGS -->
+        <div class="glass-card-cyan p-5 rounded-2xl border border-cyan-500/25 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono text-electricCyan font-bold bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-500/30">
+                PILLAR 06
+              </span>
+              <span class="text-xs font-mono text-emerald-400 font-semibold">L-BFGS Calibrated</span>
+            </div>
+            <h3 class="text-lg font-heading font-bold text-white mb-2">Leakage Control &amp; Temperature Scaling</h3>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans mb-3">
+              Enforces a 200-bar embargo window between train/test splits to eliminate serial correlation leakage. Optimized with Lion + OneCycleLR and post-hoc temperature scaling:
+            </p>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-cyan-500/20 text-xs font-mono text-slate-200">
+              $$\hat{p}_i = \frac{\exp(z_i / T)}{\sum_j \exp(z_j / T)}, \quad T^* = 0.9243$$
+            </div>
+          </div>
+          <div class="pt-3 border-t border-cyan-500/15 text-[11px] font-mono text-slate-400">
+            Guarantees probability calibration so that predicted confidence reflects true empirical win probability.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: EMPIRICAL BENCHMARK & EXPERIMENTAL RESULTS
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 bg-goldGlow rounded-full"></div>
+        <h2 class="text-2xl font-heading font-bold text-white">3. Experimental Benchmarks &amp; Out-of-Sample Performance</h2>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl border border-amber-500/25 space-y-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs md:text-sm font-sans border-collapse">
+            <thead>
+              <tr class="border-b border-amber-500/30 text-goldGlow font-mono bg-amber-950/30">
+                <th class="py-3.5 px-4 font-bold">Evaluation Metric</th>
+                <th class="py-3.5 px-4 font-bold text-cyan-300">Validation Set (H2 2024)</th>
+                <th class="py-3.5 px-4 font-bold text-emerald-400">Test Set (Full Year 2025)</th>
+                <th class="py-3.5 px-4 font-bold">Significance &amp; Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80 font-mono text-xs">
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Total Market Events Evaluated</td>
+                <td class="py-3 px-4 text-slate-300">34,288 samples</td>
+                <td class="py-3 px-4 text-emerald-300 font-bold">68,770 samples</td>
+                <td class="py-3 px-4 text-slate-400 font-sans">Filtered from ~3.15M 1-minute bars via CUSUM</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">All-Sample Directional Accuracy (Bull/Bear)</td>
+                <td class="py-3 px-4 text-cyan-300">63.51%</td>
+                <td class="py-3 px-4 text-emerald-300 font-bold">63.22%</td>
+                <td class="py-3 px-4 text-slate-400 font-sans">Outperforms random walk ($50\%$) by $+13.22\%$ unconditionally</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">All-Sample Matthews Correlation (MCC)</td>
+                <td class="py-3 px-4 text-slate-300">0.2654</td>
+                <td class="py-3 px-4 text-slate-300">0.2591</td>
+                <td class="py-3 px-4 text-slate-400 font-sans">Strong statistical significance across all volatile regimes</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40 bg-emerald-950/20">
+                <td class="py-3 px-4 font-sans font-bold text-emerald-400">High-Confidence Accuracy ($\text{Conf} > 0.65$)</td>
+                <td class="py-3 px-4 text-emerald-300 font-bold">82.19% <span class="text-[10px] text-slate-400">(1,252 trades)</span></td>
+                <td class="py-3 px-4 text-emerald-400 font-extrabold text-sm">83.36% <span class="text-[10px] text-slate-400">(2,464 trades)</span></td>
+                <td class="py-3 px-4 text-emerald-300 font-sans font-medium">Selective alpha: High conviction threshold isolates breakout flow</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40 bg-emerald-950/20">
+                <td class="py-3 px-4 font-sans font-bold text-emerald-400">High-Confidence Matthews Correlation (MCC)</td>
+                <td class="py-3 px-4 text-emerald-300 font-bold">0.6379</td>
+                <td class="py-3 px-4 text-emerald-400 font-extrabold text-sm">0.6558</td>
+                <td class="py-3 px-4 text-emerald-300 font-sans font-medium">Exceptional correlation with real institutional orderbook movements</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Post-Hoc Calibrated Temperature ($T^*$)</td>
+                <td class="py-3 px-4 text-cyan-300">0.9243</td>
+                <td class="py-3 px-4 text-cyan-300">0.9243</td>
+                <td class="py-3 px-4 text-slate-400 font-sans">L-BFGS optimization on NLL validation loss</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40 bg-amber-950/20">
+                <td class="py-3 px-4 font-sans font-bold text-goldGlow">2025 Fee-Adjusted Backtest Hit Rate</td>
+                <td class="py-3 px-4 text-slate-400">&mdash;</td>
+                <td class="py-3 px-4 text-goldGlow font-extrabold text-sm">82.62% <span class="text-[10px] text-slate-400">(3,447 trades)</span></td>
+                <td class="py-3 px-4 text-goldGlow font-sans font-medium">Includes $2 \times 0.05\%$ exchange taker fees ($0.10\%$ round-trip)</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40 bg-amber-950/20">
+                <td class="py-3 px-4 font-sans font-bold text-goldGlow">2025 Net Cumulative Return</td>
+                <td class="py-3 px-4 text-slate-400">&mdash;</td>
+                <td class="py-3 px-4 text-emerald-400 font-extrabold text-sm">+5.15% Net</td>
+                <td class="py-3 px-4 text-slate-300 font-sans">Net positive alpha after strict fee deductions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: MSMT v1.01 VS CPRO 2.0 EVOLUTION COMPARISON
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 bg-electricCyan rounded-full"></div>
+        <h2 class="text-2xl font-heading font-bold text-white">4. Architecture Evolution: MSMT (v1.01) vs. CPro 2.0 (v2.0)</h2>
+      </div>
+
+      <div class="glass-card-cyan p-6 rounded-3xl border border-cyan-500/25 space-y-4">
+        <p class="text-slate-300 text-xs md:text-sm font-sans leading-relaxed">
+          The research framework contains two distinct paradigm approaches comparing handcrafted stationary indicator fusion against raw end-to-end multi-horizon sequence learning:
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs md:text-sm font-sans border-collapse">
+            <thead>
+              <tr class="border-b border-cyan-500/30 text-cyan-300 font-mono bg-cyan-950/40">
+                <th class="py-3 px-4 font-bold">Architectural Dimension</th>
+                <th class="py-3 px-4 font-bold text-goldGlow">MSMT v1.01 (Feature-Engineered)</th>
+                <th class="py-3 px-4 font-bold text-electricCyan">CPro 2.0 (End-to-End Deep Model)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80 font-mono text-xs">
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Feature Philosophy</td>
+                <td class="py-3 px-4 text-slate-300">16 stationary technical &amp; order-flow indicators per TF + 11 dynamic candle signals</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">End-to-end raw OHLCV price ticks + volume (Zero manual indicators)</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Timeframe Resolution</td>
+                <td class="py-3 px-4 text-slate-300">4 Timeframes: 1m, 5m, 15m, 1h</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">5 Timeframes: 1m, 5m, 15m, 1h, 4h</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Backbone Neural Architecture</td>
+                <td class="py-3 px-4 text-slate-300">Multi-Scale Patch Transformer + RoPE Position Embeddings</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">Causal Multi-Head Self-Attention + Residual LSTM Hybrid</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Target Learning Task</td>
+                <td class="py-3 px-4 text-slate-300">Discrete CUSUM Triple-Barrier (Bull/Skip/Bear) + Strength Score</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">60-min Log Return Quantile Pinball ($q_{10}, q_{50}, q_{90}$) + Direction Logits</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Regime Conditioning</td>
+                <td class="py-3 px-4 text-slate-300">Explicit 4-State Gaussian HMM with Sigmoid Gate Modulation</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">Implicit Multi-Horizon Recurrent Memory States</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="py-3 px-4 font-sans font-semibold text-white">Distributed Training Framework</td>
+                <td class="py-3 px-4 text-slate-300">PyTorch DataParallel on Dual NVIDIA T4 GPUs</td>
+                <td class="py-3 px-4 text-cyan-300 font-medium">True Distributed Data Parallel (<code class="text-white">torchrun</code> DDP with NCCL)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: CODE SCRIPT ROADMAP & REPOSITORY STRUCTURE
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 bg-goldGlow rounded-full"></div>
+        <h2 class="text-2xl font-heading font-bold text-white">5. Software Modules &amp; Execution Pipeline</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 text-xs font-mono">
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-goldGlow font-bold flex items-center justify-between">
+            <span>Stage 01: Data Ingestion &amp; QC</span>
+            <span class="text-slate-400">clean_resample.py</span>
+          </div>
+          <p class="text-slate-300 font-sans text-[11px] leading-relaxed">
+            Loads 3.15M raw 1-minute OHLCV tick records from 2020–2025, checks timestamp continuity, imputes micro-gaps, and computes 5m, 15m, and 1h resampled aggregations.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-cyan-300 font-bold flex items-center justify-between">
+            <span>Stage 02: CUSUM &amp; Triple Barrier</span>
+            <span class="text-slate-400">cusum_labeler.py</span>
+          </div>
+          <p class="text-slate-300 font-sans text-[11px] leading-relaxed">
+            Executes the Symmetric CUSUM volatility filter down to 329,602 discrete trading events, dynamically calculating $1.5\times$ ATR profit/stop boundaries and 30-bar vertical timeouts.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-goldGlow font-bold flex items-center justify-between">
+            <span>Stage 03: Feature Engineering &amp; HMM</span>
+            <span class="text-slate-400">features_hmm.py</span>
+          </div>
+          <p class="text-slate-300 font-sans text-[11px] leading-relaxed">
+            Constructs 16 stationary technical and order flow indicators per timeframe alongside 11 causal intra-candle features, fitting a 4-state Gaussian HMM with boosted transition persistence.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-emerald-400 font-bold flex items-center justify-between">
+            <span>Stage 04: MSMT Training &amp; Calibration</span>
+            <span class="text-slate-400">msmt_trainer.py</span>
+          </div>
+          <p class="text-slate-300 font-sans text-[11px] leading-relaxed">
+            Trains the Multi-Scale Momentum Transformer via Lion optimizer and progressive multi-task loss schedule, executing post-hoc L-BFGS temperature scaling on validation logits ($T^* = 0.9243$).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         FOOTER NAVIGATION BAR
+         ========================================================================= -->
+    <div class="pt-8 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-4">
+      <a href="agentic-trade-analyzer.html"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-goldGlow hover:text-white transition-colors font-bold">
+        <span>&larr; Prev: Agentic Trade Analyzer (SYS.01)</span>
+      </a>
+
+      <a href="../index.html#projects"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-slate-300 hover:text-goldGlow transition-colors font-bold">
+        <span>Projects</span>
+      </a>
+
+      <a href="causal-nli.html"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-electricCyan hover:text-white transition-colors font-bold">
+        <span>Next: Natural Language Inference (SYS.03) &rarr;</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Kapil-Sandhu/CPro" target="_blank" rel="noopener"
+          class="px-5 py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-electricCyan to-cyan-400 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-2">
+          <span>GitHub Source Code</span> <span>↗</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       3. BOTTOM BAR (Transparent Cyan Glassmorphism with Bold Yellow Tagline)
+       ========================================================================= -->
+  <footer class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-6 flex flex-col items-center justify-center text-center mt-12">
+    <div class="flex items-center justify-center gap-2 text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
+      <span>Designed with</span>
+      <span class="text-rose-500 text-lg md:text-xl inline-block animate-pulse" title="love">❤️</span>
+      <span>in Germany</span>
+    </div>
+    <div class="text-xs md:text-sm font-mono font-bold text-cyan-300 mt-1">
+      &copy; 2026 Kapil Sandhu &middot; University of Bonn
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. GLOBAL STEVEN MENGIN-STYLE FLUID DUAL GOLD & CYAN CLOUDS
+       ========================================================================= */
+    const cloudCanvas = document.getElementById('globalCloudCanvas');
+    const cloudCtx = cloudCanvas.getContext('2d');
+    const starCanvas = document.getElementById('globalStarCanvas');
+    const starCtx = starCanvas.getContext('2d');
+    let cloudTime = 0;
+    let mouseX = 0.5, mouseY = 0.5;
+
+    function resizeGlobalCanvases() {
+      cloudCanvas.width = window.innerWidth;
+      cloudCanvas.height = window.innerHeight;
+      starCanvas.width = window.innerWidth;
+      starCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeGlobalCanvases);
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX / window.innerWidth;
+      mouseY = e.clientY / window.innerHeight;
+    });
+
+    const cloudBlobs = [
+      { x: 0.18, y: 0.22, r: 420, color: 'rgba(255, 184, 0, 0.16)', speed: 0.0010, phase: 0 },
+      { x: 0.82, y: 0.68, r: 440, color: 'rgba(0, 240, 255, 0.13)', speed: 0.0014, phase: 2.1 },
+      { x: 0.50, y: 0.45, r: 480, color: 'rgba(255, 199, 0, 0.10)', speed: 0.0008, phase: 4.3 },
+      { x: 0.85, y: 0.18, r: 380, color: 'rgba(0, 240, 255, 0.12)', speed: 0.0012, phase: 1.5 },
+      { x: 0.15, y: 0.82, r: 400, color: 'rgba(255, 140, 0, 0.11)', speed: 0.0009, phase: 3.4 },
+      { x: 0.55, y: 0.88, r: 440, color: 'rgba(0, 240, 255, 0.11)', speed: 0.0011, phase: 5.2 }
+    ];
+
+    function drawStevenMenginClouds() {
+      cloudCtx.clearRect(0, 0, cloudCanvas.width, cloudCanvas.height);
+      cloudTime += 0.012;
+
+      cloudCtx.save();
+      cloudCtx.globalCompositeOperation = 'screen';
+
+      cloudBlobs.forEach((blob) => {
+        const offsetX = Math.sin(cloudTime * blob.speed * 100 + blob.phase) * 80 + (mouseX - 0.5) * 50;
+        const offsetY = Math.cos(cloudTime * blob.speed * 80 + blob.phase) * 60 + (mouseY - 0.5) * 40;
+
+        const cx = blob.x * cloudCanvas.width + offsetX;
+        const cy = blob.y * cloudCanvas.height + offsetY;
+        const radius = blob.r + Math.sin(cloudTime * 0.4 + blob.phase) * 35;
+
+        const grad = cloudCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(10, radius));
+        grad.addColorStop(0, blob.color);
+        grad.addColorStop(0.5, blob.color.replace(/[\d\.]+\)$/, '0.04)'));
+        grad.addColorStop(1, 'rgba(5, 7, 13, 0)');
+
+        cloudCtx.fillStyle = grad;
+        cloudCtx.beginPath();
+        cloudCtx.arc(cx, cy, Math.max(10, radius), 0, Math.PI * 2);
+        cloudCtx.fill();
+      });
+
+      cloudCtx.restore();
+      requestAnimationFrame(drawStevenMenginClouds);
+    }
+
+    /* =========================================================================
+       2. GLOBAL BACKGROUND STARFIELD
+       ========================================================================= */
+    let stars = [];
+    resizeGlobalCanvases();
+    drawStevenMenginClouds();
+
+    for (let i = 0; i < 140; i++) {
+      stars.push({
+        x: Math.random() * starCanvas.width,
+        y: Math.random() * starCanvas.height,
+        radius: Math.random() * 1.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.008 + 0.003
+      });
+    }
+
+    function animateStars() {
+      starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+        starCtx.fillStyle = `rgba(255, 184, 0, ${Math.abs(s.alpha) * 0.6})`;
+        starCtx.beginPath();
+        starCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        starCtx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+</body>
+</html>

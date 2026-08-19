@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic Trade Analyzer — Kapil Sandhu | Autonomous BTC Quant &amp; MoE Architecture</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicons/favicon-trade.svg">
+  <meta name="description"
+    content="Deep dive into the Agentic Trade Analyzer: An asynchronous multi-agent BTC trading system combining dual-clock microstructure data, 3-round Bull vs Bear adversarial LLM debate, and deterministic 99% CVaR risk execution." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Space Grotesk, Inter, Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- KaTeX for crisp mathematical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepNavy: '#05070D',
+            darkSlate: '#0A0E1A',
+            panelNavy: '#0F172A',
+            goldGlow: '#FFB800',
+            amberFire: '#FF6A00',
+            electricCyan: '#00F0FF',
+            neonGreen: '#10B981',
+          },
+          fontFamily: {
+            heading: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #05070D;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Ambient background grid */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Diagram SVG Animations */
+    @keyframes flowPulse {
+      0% {
+        stroke-dashoffset: 24;
+        opacity: 0.4;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0.4;
+      }
+    }
+    .arch-flow-pulse {
+      stroke-dasharray: 6 4;
+      animation: flowPulse 2s linear infinite;
+    }
+
+    /* Refined Dual Gold & Cyan Glass Panels */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(16, 12, 4, 0.65) 0%, rgba(10, 14, 26, 0.75) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 184, 0, 0.22);
+      box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 184, 0, 0.06);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 184, 0, 0.5);
+      box-shadow: 0 15px 40px -10px rgba(255, 184, 0, 0.25), 0 0 25px rgba(255, 184, 0, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .glass-card-cyan {
+      background: linear-gradient(135deg, rgba(4, 18, 30, 0.65) 0%, rgba(10, 14, 26, 0.75) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 240, 255, 0.06);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-cyan:hover {
+      border-color: rgba(0, 240, 255, 0.5);
+      box-shadow: 0 15px 40px -10px rgba(0, 240, 255, 0.25), 0 0 25px rgba(0, 240, 255, 0.12);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body class="bg-deepNavy text-slate-200 font-sans antialiased selection:bg-goldGlow/30 selection:text-white bg-grid-pattern min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+  <!-- Dynamic Cloud & Star Background Canvases -->
+  <canvas id="globalCloudCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+  <canvas id="globalStarCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+  <!-- =========================================================================
+       1. NAVIGATION TOP BAR (Transparent Cyan Glassmorphism)
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 w-full bg-cyan-950/35 backdrop-blur-xl border-b border-cyan-500/20 py-3.5 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo / Back Link -->
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 font-mono font-bold text-base shadow-lg group-hover:scale-105 group-hover:border-cyan-400 transition-all">
+          KS
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white font-heading font-extrabold text-lg md:text-xl tracking-tight group-hover:text-goldGlow transition-colors">
+            Kapil Sandhu
+          </span>
+          <span class="text-[11px] font-mono text-cyan-300 font-bold -mt-0.5">
+            Uni Bonn · AI &amp; ML Research
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation & Action Links -->
+      <div class="flex items-center gap-3 md:gap-4">
+        <a href="../index.html#ongoing-projects"
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-cyan-300 hover:text-white transition-colors font-bold">
+          <span>&larr;</span> <span>On-Going</span>
+        </a>
+        <a href="../index.html#projects"
+          class="hidden sm:inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-slate-300 hover:text-goldGlow transition-colors font-bold">
+          <span>Projects</span>
+        </a>
+
+        <a href="https://github.com/Kapil-Sandhu/agentic-trade-analyzer" target="_blank" rel="noopener"
+          class="px-3.5 py-2 text-xs font-mono font-bold text-slate-200 hover:text-white bg-slate-900/90 border border-slate-700 hover:border-goldGlow rounded-xl transition-all flex items-center gap-1.5 shadow-md">
+          <svg class="w-4 h-4 text-goldGlow" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          <span class="hidden md:inline">GitHub</span>
+        </a>
+
+        <a href="../assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener"
+          class="px-4 py-2 text-xs font-mono font-extrabold text-slate-950 bg-gradient-to-r from-cyan-400 to-electricCyan hover:from-cyan-300 hover:to-cyan-200 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 flex items-center gap-1.5 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Download CV</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. MAIN CONTENT AREA
+       ========================================================================= -->
+  <main class="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-14 space-y-12">
+
+    <!-- Breadcrumb & Hero Header -->
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="../index.html" class="text-xs font-mono text-cyan-300 hover:text-white transition-colors">Home</a>
+        <span class="text-slate-600 text-xs font-mono">/</span>
+        <a href="../index.html#projects" class="text-xs font-mono text-cyan-300 hover:text-white transition-colors">Projects</a>
+        <span class="text-slate-600 text-xs font-mono">/</span>
+        <span class="text-xs font-mono text-goldGlow font-bold">01 · Agentic Trade Analyzer</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 pt-2">
+        <span class="text-[11px] font-mono text-goldGlow font-bold bg-amber-950/80 border border-amber-500/40 px-3 py-1 rounded-full shadow-sm">
+          SYS.01 · MULTI-AGENT MoE &amp; QUANT
+        </span>
+        <span class="text-[11px] font-mono text-cyan-300 bg-cyan-950/70 border border-cyan-500/30 px-3 py-1 rounded-full font-semibold">
+          Gemini 2.5 Flash Cluster
+        </span>
+        <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">
+          99% CVaR Tail Guard
+        </span>
+        <span class="text-[11px] font-mono text-slate-300 bg-slate-900/80 border border-slate-700/60 px-3 py-1 rounded-full">
+          Fast-Path: 10ms Poller
+        </span>
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight">
+        Autonomous BTC Quantitative &amp; MoE Trading System
+      </h1>
+
+      <p class="text-base md:text-lg font-mono text-goldGlow font-semibold max-w-4xl leading-relaxed">
+        Dual-Clock Microstructure ($1M Dollar Bars) × 3-Round Bull/Bear Adversarial Debate × 4-Tier Deterministic Risk FSM
+      </p>
+
+      <p class="text-sm md:text-base text-slate-300 leading-relaxed max-w-4xl pt-2">
+        An institutional-grade algorithmic trading architecture bridging high-frequency microstructure mathematics with asynchronous multi-agent cognitive reasoning. Built to solve the fundamental failure points of naive LLM trading: number blindness, confirmation bias, latency mismatch, and catastrophic tail risk.
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3 pt-4">
+        <a href="https://github.com/Kapil-Sandhu/agentic-trade-analyzer" target="_blank" rel="noopener"
+          class="px-5 py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-goldGlow to-amberFire text-slate-950 rounded-xl hover:brightness-110 shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2">
+          <span>Inspect GitHub Repository</span> <span>↗</span>
+        </a>
+        <a href="#architecture"
+          class="px-4 py-2.5 text-xs font-mono border border-cyan-500/40 text-cyan-300 hover:text-white hover:bg-cyan-950/50 rounded-xl transition-colors flex items-center gap-1.5">
+          <span>Jump to Architecture Diagram</span> <span>↓</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         SECTION 1: INTERACTIVE ARCHITECTURE DIAGRAM
+         ========================================================================= -->
+    <section id="architecture" class="space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-white flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span> End-to-End System Architecture
+        </h2>
+        <span class="text-xs font-mono text-cyan-300">Deterministic CVD + Gemini API</span>
+      </div>
+
+      <div class="diagram-frame diagram-frame-cyan p-5 md:p-8 arch-grid-bg relative rounded-3xl border border-cyan-500/30 bg-slate-950/80 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-cyan-500/20 text-xs font-mono">
+          <span class="text-electricCyan font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-electricCyan animate-ping"></span> PIPELINE DATA FLOW // BTC/USDT L2
+          </span>
+          <span class="text-goldGlow font-bold">5-Stage Deterministic + AI Pipeline</span>
+        </div>
+
+        <svg viewBox="0 0 570 260" class="w-full h-auto drop-shadow-2xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="grad-gold-p1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FFB800" />
+              <stop offset="100%" stop-color="#FF6A00" />
+            </linearGradient>
+            <linearGradient id="grad-cyan-p1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00F0FF" />
+              <stop offset="100%" stop-color="#0080FF" />
+            </linearGradient>
+            <filter id="glow-c-p1" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.6" />
+            </filter>
+            <filter id="glow-g-p1" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFB800" flood-opacity="0.6" />
+            </filter>
+          </defs>
+
+          <!-- Connection Flow Lines -->
+          <!-- Raw to Multi-TF & Dollar Candles -->
+          <path d="M 88 115 C 100 115, 100 75, 112 75" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 88 145 C 100 145, 100 185, 112 185" stroke="#FFB800" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Multi-TF & Dollar Candles to Tech Agent -->
+          <path d="M 210 75 C 222 75, 222 115, 234 115" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 210 185 C 222 185, 222 145, 234 145" stroke="#FFB800" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Tech Agent to Bull & Bear -->
+          <path d="M 322 115 C 336 115, 336 74, 350 74" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 322 145 C 336 145, 336 186, 350 186" stroke="#FF3366" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Bull & Bear to Master AI -->
+          <path d="M 438 74 C 452 74, 452 115, 466 115" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+          <path d="M 438 186 C 452 186, 452 145, 466 145" stroke="#FF3366" stroke-width="1.5" class="arch-flow-pulse" />
+
+          <!-- Debate Inter-Agent Pulse Arrows -->
+          <path d="M 394 98 L 394 116" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+          <path d="M 394 144 L 394 162" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+
+          <!-- 1. Raw Market Data Box -->
+          <rect x="8" y="95" width="80" height="70" rx="8" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.2" />
+          <text x="48" y="116" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">RAW DATA</text>
+          <text x="48" y="131" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Binance WS</text>
+          <text x="48" y="144" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace" text-anchor="middle">BTC/USDT L2</text>
+          <text x="48" y="156" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Live Ingestion</text>
+
+          <!-- 2A. 1) Multi-Timeframe OHLCV Box -->
+          <rect x="112" y="45" width="98" height="60" rx="7" fill="#06111C" stroke="#00F0FF" stroke-width="1.2" />
+          <text x="161" y="63" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">1) MULTI-TF OHLCV</text>
+          <text x="161" y="77" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">1m, 5m, 15m, 1h, 4h</text>
+          <text x="161" y="89" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">RSI · MACD · BB</text>
+          <text x="161" y="99" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">KRS Liquidity</text>
+
+          <!-- 2B. 2) Dollar Candle Box -->
+          <rect x="112" y="155" width="98" height="60" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
+          <text x="161" y="173" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">2) $1M DOLLAR BARS</text>
+          <text x="161" y="187" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Volume Sampling</text>
+          <text x="161" y="199" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Streaming CVD</text>
+          <text x="161" y="209" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Lee-Ready Ticks</text>
+
+          <!-- 3. Technical Agent Box -->
+          <rect x="234" y="95" width="88" height="70" rx="8" fill="#0F172A" stroke="#00F0FF" stroke-width="1.2" />
+          <text x="278" y="115" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">TECH AGENT</text>
+          <text x="278" y="130" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Summarize Data</text>
+          <text x="278" y="143" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Pydantic Schemas</text>
+          <text x="278" y="155" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Market Context</text>
+
+          <!-- 4. Adversarial MoE Arena -->
+          <rect x="342" y="20" width="104" height="220" rx="9" fill="#05070D" stroke="#FFB800" stroke-width="1" stroke-dasharray="4,4" fill-opacity="0.75" />
+          <text x="394" y="38" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">3-ROUND DEBATE</text>
+
+          <!-- Bull Agent -->
+          <rect x="350" y="50" width="88" height="48" rx="6" fill="#0A1624" stroke="#00F0FF" stroke-width="1.2" filter="url(#glow-c-p1)" />
+          <text x="394" y="68" fill="#00F0FF" font-size="8" font-family="'Space Grotesk', sans-serif" font-weight="700" text-anchor="middle">Bull Agent 🐂</text>
+          <text x="394" y="80" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif" text-anchor="middle">Argues to BUY</text>
+          <text x="394" y="91" fill="#67E8F9" font-size="6" font-family="'Fira Code', monospace" text-anchor="middle">+CVD Momentum</text>
+
+          <!-- Debate 3-Round Center Core -->
+          <circle cx="394" cy="130" r="14" fill="#0F172A" stroke="#FFB800" stroke-width="1.2" />
+          <text x="394" y="133" fill="#FFB800" font-size="7" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">3-RND</text>
+
+          <!-- Bear Agent -->
+          <rect x="350" y="162" width="88" height="48" rx="6" fill="#1C0F17" stroke="#FF3366" stroke-width="1.2" />
+          <text x="394" y="180" fill="#FF3366" font-size="8" font-family="'Space Grotesk', sans-serif" font-weight="700" text-anchor="middle">Bear Agent 🐻</text>
+          <text x="394" y="192" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif" text-anchor="middle">Argues to SELL</text>
+          <text x="394" y="203" fill="#FDA4AF" font-size="6" font-family="'Fira Code', monospace" text-anchor="middle">-Liquidity Wall</text>
+
+          <!-- 5. Master AI & Final Decision -->
+          <rect x="466" y="80" width="96" height="100" rx="8" fill="#081510" stroke="#FFB800" stroke-width="1.3" filter="url(#glow-g-p1)" />
+          <text x="514" y="102" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">MASTER AI</text>
+          <text x="514" y="116" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600" text-anchor="middle">Final Decision</text>
+          <line x1="476" y1="124" x2="552" y2="124" stroke="rgba(255,184,0,0.3)" stroke-width="1" />
+          <text x="514" y="138" fill="#10B981" font-size="7" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">EXECUTE SIGNAL</text>
+          <text x="514" y="151" fill="#34D399" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Kelly Sizing f*</text>
+          <text x="514" y="163" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Semantic Inval.</text>
+          <text x="514" y="173" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">4-Tier Risk FSM</text>
+        </svg>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2 border-t border-slate-800/80 pt-3">
+          <span class="text-cyan-300">Pipeline Flow: Raw Data &rarr; Multi-TF + Dollar Bars &rarr; Tech Agent &rarr; 3-Round Debate &rarr; Master AI</span>
+          <span class="text-goldGlow font-bold">Signal Latency: &lt; 42ms</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: PROBLEM STATEMENT & CORE OBJECTIVES
+         ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-goldGlow flex items-center gap-2.5">
+          <span>🎯</span> 1. Problem Statement &amp; Architectural Objectives
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-card p-5 rounded-2xl">
+          <div class="text-rose-400 font-bold font-mono text-sm mb-1.5">1. Inefficiency of Chronological Time Bars</div>
+          <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+            Standard time-based candles (1m, 5m, 1h) oversample during quiet market consolidation (generating high-frequency noise) and critically undersample during fast flash crashes, hiding vital order flow shifts when volatility explodes.
+          </p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl">
+          <div class="text-rose-400 font-bold font-mono text-sm mb-1.5">2. Fragility of Single-Model LLM Decisions</div>
+          <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+            Relying on a single prompt or standalone agent to execute live trades induces catastrophic hallucinations, confirmation bias, and mathematical blindness, making the system vulnerable to institutional market traps.
+          </p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl">
+          <div class="text-rose-400 font-bold font-mono text-sm mb-1.5">3. Macro Reasoning vs Micro Execution Gap</div>
+          <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+            LLM cognitive reasoning requires seconds, whereas microsecond order-book sweeps occur in milliseconds. Delegating real-time order routing directly to an LLM results in extreme slippage and unmanageable latency.
+          </p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl">
+          <div class="text-rose-400 font-bold font-mono text-sm mb-1.5">4. Static Risk vs Fat-Tailed Tail Risk</div>
+          <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+            Traditional fixed-percentage stop losses fail in cryptocurrency markets, which exhibit extreme non-Gaussian kurtosis and volatility clustering. Positions must be protected by statistical Expected Shortfall (CVaR).
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 text-xs md:text-sm text-cyan-200 font-mono flex items-start gap-3">
+        <span class="text-lg">💡</span>
+        <div>
+          <strong>The Solution:</strong> A decoupled hybrid quant-AI engine that partitions work into three distinct execution paths: a <strong>10ms Fast Risk Poller</strong>, a <strong>5s Continuous Math Engine</strong>, and a <strong>2m Cognitive AI Mixture-of-Experts Brain</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: THE 5 DECOUPLED MICROSERVICE PILLARS
+         ========================================================================= -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-white flex items-center gap-2.5">
+          <span>🏗️</span> 2. Decoupled 5-Pillar Microservice Architecture
+        </h2>
+      </div>
+
+      <div class="space-y-5">
+        <!-- Pillar 1 -->
+        <div class="glass-card-cyan p-6 rounded-2xl space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cyan-500/20 pb-2">
+            <h3 class="text-base md:text-lg font-heading font-bold text-cyan-300 flex items-center gap-2">
+              <span>⚡</span> Pillar 1: Data Ingestion &amp; Dual-Clock Microstructure Layer
+            </h3>
+            <span class="text-xs font-mono text-slate-400"><code>nervous_system.py</code> &amp; <code>bootstrapper.py</code></span>
+          </div>
+          <ul class="space-y-2 text-xs md:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+            <li><strong class="text-white">Information-Driven Sampling ($1M Dollar Bars):</strong> Replaces chronological clock time with volume-driven sampling, cutting an informational slice every accumulated <strong>$1,000,000 USD</strong> of volume with fractional tick boundary splitting.</li>
+            <li><strong class="text-white">O(1) Streaming Memory EWMA:</strong> Calculates running mean and variance on tick streams without storing unbounded historical arrays, tracking fast ($\alpha=0.2$) and slow ($\alpha=0.02$) Cumulative Volume Delta (CVD) in real time.</li>
+            <li><strong class="text-white">Divergence Z-Scores &amp; Warmup:</strong> Emits real-time breakout signals (<code>BULLISH_BREAKOUT</code>, <code>BEARISH_BREAKDOWN</code>). Bootstrapper pre-fills Redis cache from Binance klines before live feed activation.</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="glass-card p-6 rounded-2xl space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-500/20 pb-2">
+            <h3 class="text-base md:text-lg font-heading font-bold text-goldGlow flex items-center gap-2">
+              <span>📊</span> Pillar 2: Multi-Timeframe Technical &amp; Structural Analysis
+            </h3>
+            <span class="text-xs font-mono text-slate-400"><code>ta_engine.py</code></span>
+          </div>
+          <ul class="space-y-2 text-xs md:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+            <li><strong class="text-white">Vectorized Indicators across 6 Timeframes:</strong> Computes momentum (RSI-14, MACD 12/26/9), trend envelopes (SMAs &amp; EMAs 10–200), and volatility (ATR-14, Bollinger Bands 20, 2.0) across <code>1m</code>, <code>5m</code>, <code>15m</code>, <code>1h</code>, <code>4h</code>, and synthetic <strong>Dollar Bars</strong>.</li>
+            <li><strong class="text-white">Key Structural Support &amp; Resistance (KRS Zones):</strong> Applies centered rolling windows ($\pm 15$ bars) to identify pivot highs/lows and merges neighboring liquidity clusters within a <strong>0.1% price tolerance</strong>.</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="glass-card-cyan p-6 rounded-2xl space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cyan-500/20 pb-2">
+            <h3 class="text-base md:text-lg font-heading font-bold text-slate-200 flex items-center gap-2">
+              <span>📝</span> Pillar 3: Context Formulation &amp; Semantic Compression
+            </h3>
+            <span class="text-xs font-mono text-slate-400"><code>context_builder.py</code></span>
+          </div>
+          <ul class="space-y-2 text-xs md:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+            <li><strong class="text-white">Strict Pydantic AI Schemas:</strong> Enforces strong type validation on <code>TrendAverages</code>, <code>TechnicalState</code>, and <code>MarketSummary</code> to prevent malformed prompt injections.</li>
+            <li><strong class="text-white">Semantic Regime Translation:</strong> Converts floating-point values into descriptive structural tokens (e.g., <code>"UPTREND OVEREXTENDED"</code>, <code>"UPTREND PULLBACK"</code>, <code>"CONSOLIDATION"</code>) to prevent LLM numerical confusion.</li>
+            <li><strong class="text-white">Prompt Optimization:</strong> Rounds numeric metrics to 2 decimal places to minimize token overhead and latency.</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="glass-card p-6 rounded-2xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-500/20 pb-2">
+            <h3 class="text-base md:text-lg font-heading font-bold text-goldGlow flex items-center gap-2">
+              <span>🧠</span> Pillar 4: Mixture-of-Experts (MoE) Adversarial Reasoning &amp; Dual FSM
+            </h3>
+            <span class="text-xs font-mono text-slate-400"><code>ai_orchestrator.py</code></span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="bg-slate-950/80 p-4 rounded-xl border border-cyan-500/25 space-y-2">
+              <div class="text-cyan-300 font-mono font-bold text-xs">Pipeline A: Alpha Hunter (Trade Entry)</div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside text-[11px] md:text-xs">
+                <li><strong>Technical Analyst Agent:</strong> Synthesizes multi-timeframe micro/macro market data.</li>
+                <li><strong>3-Round Debate:</strong> Bull Quant vs Bear Quant engage in structured opening, cross-examination rebuttals, and closing predictions.</li>
+                <li><strong>Master Portfolio Manager:</strong> Evaluates transcript in a <code>&lt;scratchpad&gt;</code>, issuing direction, Conviction Score (0.0–1.0), and a <strong>Semantic Invalidation Condition</strong> (e.g., <em>"1H CVD breakdown &amp; 15m RSI &lt; 30"</em>).</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-500/25 space-y-2">
+              <div class="text-goldGlow font-mono font-bold text-xs">Pipeline B: Thesis Validator (Trade Audit)</div>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside text-[11px] md:text-xs">
+                <li><strong>Position Manager vs Risk Auditor:</strong> Actively defends vs attacks the live thesis against real-time order flow decay.</li>
+                <li><strong>Semantic Exit Actions:</strong> Emits <code>HOLD</code>, <code>REDUCE_EXPOSURE</code>, or <code>ABORT</code> without waiting for stop loss cascades.</li>
+                <li><strong>Self-Distillation Logging:</strong> Logs all debate reasoning to <code>distillation_dataset.jsonl</code> for offline Small Language Model (SLM) fine-tuning.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="glass-card-cyan p-6 rounded-2xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-cyan-500/20 pb-2">
+            <h3 class="text-base md:text-lg font-heading font-bold text-emerald-400 flex items-center gap-2">
+              <span>🛡️</span> Pillar 5: Institutional Risk Management &amp; Deterministic Execution
+            </h3>
+            <span class="text-xs font-mono text-slate-400"><code>order_router.py</code></span>
+          </div>
+
+          <p class="text-xs md:text-sm text-slate-300">
+            Operating on a <strong>10ms high-frequency polling loop</strong>, ensuring deterministic quantitative risk strictly overrides and constrains AI recommendations:
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-4 text-xs font-mono">
+            <div class="bg-slate-950/80 p-4 rounded-xl border border-emerald-500/25 space-y-2 font-sans">
+              <div class="text-emerald-400 font-mono font-bold text-xs">Pre-Trade Risk Gates</div>
+              <ul class="space-y-1 text-slate-300 text-[11px] md:text-xs list-disc list-inside">
+                <li><strong>Global Circuit Breaker:</strong> Halts all trading if drawdown exceeds <strong class="text-white">5% from peak equity</strong>.</li>
+                <li><strong>99% Expected Shortfall (CVaR):</strong> Analyzes worst 1% left-tail returns over 300 Dollar Bars. Suppresses trade if <code>ES₉₉ &gt; 5%</code>.</li>
+                <li><strong>Fractional Quarter-Kelly:</strong> Sizes positions based on Kelly fraction scaled by AI Conviction and ATR volatility.</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-500/25 space-y-2 font-sans">
+              <div class="text-goldGlow font-mono font-bold text-xs">4-Tier Dynamic In-Position FSM</div>
+              <ul class="space-y-1 text-slate-300 text-[11px] md:text-xs list-disc list-inside">
+                <li><strong>Tier 1A (Floor):</strong> Hard Stop Loss at 1.5x ATR (non-negotiable).</li>
+                <li><strong>Tier 1B (The Banker):</strong> +2.0x ATR profit executes 50% trim &amp; moves SL to Breakeven.</li>
+                <li><strong>Tier 2A (Toxic Flow):</strong> Immediate exit on VPIN/sweep against trade.</li>
+                <li><strong>Tier 2B (Choke):</strong> GMM shift to CHAOTIC tightens SL to 0.5x ATR &amp; trims 50%.</li>
+                <li><strong>Tier 2C (Decay):</strong> 50 Dollar Bars without target hit triggers 50% trim.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: MATHEMATICAL FORMULATIONS
+         ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-goldGlow flex items-center gap-2.5">
+          <span>📊</span> 3. Mathematical Formulations &amp; Statistical Invariants
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 font-mono text-xs text-slate-300">
+        <!-- Formula 1 -->
+        <div class="glass-card p-5 rounded-2xl space-y-2">
+          <span class="text-cyan-300 font-bold block text-sm">• Lee-Ready Tick Rule &amp; CVD:</span>
+          <div class="text-slate-300 font-sans text-xs pt-1">
+            $$d_t = \begin{cases} +1 & \text{if } p_t > p_{t-1} \\ -1 & \text{if } p_t < p_{t-1} \\ d_{t-1} & \text{if } p_t = p_{t-1} \end{cases} \quad \implies \quad \text{CVD}_T = \sum_{t=1}^T d_t \cdot V_t$$
+          </div>
+          <p class="text-slate-400 font-sans text-[11px] pt-1">
+            Classifies aggressor direction on every Binance WebSocket trade, integrating cumulative delta over continuous volume bars.
+          </p>
+        </div>
+
+        <!-- Formula 2 -->
+        <div class="glass-card p-5 rounded-2xl space-y-2">
+          <span class="text-emerald-400 font-bold block text-sm">• 99% Expected Shortfall (CVaR Tail Risk):</span>
+          <div class="text-slate-300 font-sans text-xs pt-1">
+            $$\text{CVaR}_{\alpha}(X) = \mathbb{E}\left[ X \mid X \le \text{VaR}_{\alpha}(X) \right] = \frac{1}{\alpha}\int_{0}^{\alpha} \text{VaR}_u(X)\,du, \quad \alpha=0.01$$
+          </div>
+          <p class="text-slate-400 font-sans text-[11px] pt-1">
+            Evaluates the average loss in the worst 1% of statistical outcomes over rolling 300 dollar bars before permitting order entry.
+          </p>
+        </div>
+
+        <!-- Formula 3 -->
+        <div class="glass-card p-5 rounded-2xl space-y-2">
+          <span class="text-goldGlow font-bold block text-sm">• Fractional Kelly Position Sizing:</span>
+          <div class="text-slate-300 font-sans text-xs pt-1">
+            $$f^* = \max\left(0, p - \frac{1-p}{b}\right) \times \frac{1}{4} \times \text{Conviction}, \quad \text{Size} = \frac{\text{Equity} \times f^*}{1.5 \times \text{ATR}_\%}$$
+          </div>
+          <p class="text-slate-400 font-sans text-[11px] pt-1">
+            Scales risk capital proportional to AI conviction and inversely to current 14-period ATR market volatility.
+          </p>
+        </div>
+
+        <!-- Formula 4 -->
+        <div class="glass-card p-5 rounded-2xl space-y-2">
+          <span class="text-cyan-300 font-bold block text-sm">• O(1) Memory Streaming Variance:</span>
+          <div class="text-slate-300 font-sans text-xs pt-1">
+            $$\mu_t = (1-\alpha)\mu_{t-1} + \alpha x_t, \quad \sigma_t^2 = (1-\alpha)\sigma_{t-1}^2 + \alpha(x_t - \mu_t)^2$$
+          </div>
+          <p class="text-slate-400 font-sans text-[11px] pt-1">
+            Maintains real-time running mean and volatility on millions of trades without unbounded memory allocations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: ARCHITECTURAL COMPARISON MATRIX
+         ========================================================================= -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-white flex items-center gap-2.5">
+          <span>⚖️</span> 4. Traditional Algorithmic Bots vs. This Architecture
+        </h2>
+      </div>
+
+      <div class="overflow-x-auto glass-card rounded-2xl p-1 border border-slate-800">
+        <table class="w-full text-left text-xs font-sans border-collapse">
+          <thead>
+            <tr class="bg-slate-900/90 text-goldGlow font-mono border-b border-slate-800">
+              <th class="p-3.5">Component</th>
+              <th class="p-3.5">Traditional Algorithmic Bots</th>
+              <th class="p-3.5 text-cyan-300">This Project's Architecture</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-300">
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Bar Sampling</td>
+              <td class="p-3.5 text-slate-400">Fixed Time (1m, 5m, 1h)</td>
+              <td class="p-3.5 text-cyan-300 font-medium">Dual-Clock Dollar Bars ($1M) + Chronological Candles</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Order Flow</td>
+              <td class="p-3.5 text-slate-400">Basic Volume Indicators (OBV)</td>
+              <td class="p-3.5 text-cyan-300 font-medium">Multi-Scale Streaming EWMA CVD Divergence &amp; Anomaly Flags</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Decision Engine</td>
+              <td class="p-3.5 text-slate-400">Rigid IF/ELSE rules or single LLM prompt</td>
+              <td class="p-3.5 text-cyan-300 font-medium">State-Aware Multi-Agent MoE with 3-Round Adversarial Debate</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Trade Invalidation</td>
+              <td class="p-3.5 text-slate-400">Static price stop losses (easily hunted)</td>
+              <td class="p-3.5 text-cyan-300 font-medium">Semantic Structural Conditions (e.g. flow breakdown + RSI)</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Sizing &amp; Allocation</td>
+              <td class="p-3.5 text-slate-400">Fixed % per trade (e.g. 2%)</td>
+              <td class="p-3.5 text-cyan-300 font-medium">Volatility-Scaled Fractional Quarter-Kelly &times; AI Conviction</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Tail Risk Guard</td>
+              <td class="p-3.5 text-slate-400">Standard VaR / None</td>
+              <td class="p-3.5 text-cyan-300 font-medium">99% Expected Shortfall (CVaR) over Dollar Bar returns</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Position Lifecycle</td>
+              <td class="p-3.5 text-slate-400">Simple Take-Profit / Stop-Loss</td>
+              <td class="p-3.5 text-cyan-300 font-medium">4-Tier Dynamic FSM (The Banker, Toxic Evacuation, Choke, Decay)</td>
+            </tr>
+            <tr class="hover:bg-slate-900/40">
+              <td class="p-3.5 font-mono text-white font-semibold">Model Evolution</td>
+              <td class="p-3.5 text-slate-400">Static weights</td>
+              <td class="p-3.5 text-cyan-300 font-medium">Continuous Data Distillation Logging for SLM Fine-Tuning</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 6: NAVIGATION FOOTER & CTA
+         ========================================================================= -->
+    <div class="border-t border-slate-800 pt-8 pb-4 flex flex-wrap items-center justify-between gap-4">
+      <a href="../index.html#ongoing-projects"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-cyan-300 hover:text-white transition-colors font-bold">
+        <span>&larr; On-Going</span>
+      </a>
+
+      <a href="../index.html#projects"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-slate-300 hover:text-goldGlow transition-colors font-bold">
+        <span>Projects</span>
+      </a>
+
+      <a href="btc-cpro.html"
+        class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-goldGlow hover:text-white transition-colors font-bold">
+        <span>Next: CPro Momentum Transformer (SYS.02) &rarr;</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Kapil-Sandhu/agentic-trade-analyzer" target="_blank" rel="noopener"
+          class="px-5 py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-electricCyan to-cyan-400 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-2">
+          <span>GitHub Source Code</span> <span>↗</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       3. BOTTOM BAR (Transparent Cyan Glassmorphism with Bold Yellow Tagline)
+       ========================================================================= -->
+  <footer class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-6 flex flex-col items-center justify-center text-center mt-12">
+    <div class="flex items-center justify-center gap-2 text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
+      <span>Designed with</span>
+      <span class="text-rose-500 text-lg md:text-xl inline-block animate-pulse" title="love">❤️</span>
+      <span>in Germany</span>
+    </div>
+    <div class="text-xs md:text-sm font-mono font-bold text-cyan-300 mt-1">
+      &copy; 2026 Kapil Sandhu &middot; University of Bonn
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. GLOBAL STEVEN MENGIN-STYLE FLUID DUAL GOLD & CYAN CLOUDS
+       ========================================================================= */
+    const cloudCanvas = document.getElementById('globalCloudCanvas');
+    const cloudCtx = cloudCanvas.getContext('2d');
+    const starCanvas = document.getElementById('globalStarCanvas');
+    const starCtx = starCanvas.getContext('2d');
+    let cloudTime = 0;
+    let mouseX = 0.5, mouseY = 0.5;
+
+    function resizeGlobalCanvases() {
+      cloudCanvas.width = window.innerWidth;
+      cloudCanvas.height = window.innerHeight;
+      starCanvas.width = window.innerWidth;
+      starCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeGlobalCanvases);
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX / window.innerWidth;
+      mouseY = e.clientY / window.innerHeight;
+    });
+
+    const cloudBlobs = [
+      { x: 0.18, y: 0.22, r: 420, color: 'rgba(255, 184, 0, 0.16)', speed: 0.0010, phase: 0 },
+      { x: 0.82, y: 0.68, r: 440, color: 'rgba(0, 240, 255, 0.13)', speed: 0.0014, phase: 2.1 },
+      { x: 0.50, y: 0.45, r: 480, color: 'rgba(255, 199, 0, 0.10)', speed: 0.0008, phase: 4.3 },
+      { x: 0.85, y: 0.18, r: 380, color: 'rgba(0, 240, 255, 0.12)', speed: 0.0012, phase: 1.5 },
+      { x: 0.15, y: 0.82, r: 400, color: 'rgba(255, 140, 0, 0.11)', speed: 0.0009, phase: 3.4 },
+      { x: 0.55, y: 0.88, r: 440, color: 'rgba(0, 240, 255, 0.11)', speed: 0.0011, phase: 5.2 }
+    ];
+
+    function drawStevenMenginClouds() {
+      cloudCtx.clearRect(0, 0, cloudCanvas.width, cloudCanvas.height);
+      cloudTime += 0.012;
+
+      cloudCtx.save();
+      cloudCtx.globalCompositeOperation = 'screen';
+
+      cloudBlobs.forEach((blob) => {
+        const offsetX = Math.sin(cloudTime * blob.speed * 100 + blob.phase) * 80 + (mouseX - 0.5) * 50;
+        const offsetY = Math.cos(cloudTime * blob.speed * 80 + blob.phase) * 60 + (mouseY - 0.5) * 40;
+
+        const cx = blob.x * cloudCanvas.width + offsetX;
+        const cy = blob.y * cloudCanvas.height + offsetY;
+        const radius = blob.r + Math.sin(cloudTime * 0.4 + blob.phase) * 35;
+
+        const grad = cloudCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(10, radius));
+        grad.addColorStop(0, blob.color);
+        grad.addColorStop(0.5, blob.color.replace(/[\d\.]+\)$/, '0.04)'));
+        grad.addColorStop(1, 'rgba(5, 7, 13, 0)');
+
+        cloudCtx.fillStyle = grad;
+        cloudCtx.beginPath();
+        cloudCtx.arc(cx, cy, Math.max(10, radius), 0, Math.PI * 2);
+        cloudCtx.fill();
+      });
+
+      cloudCtx.restore();
+      requestAnimationFrame(drawStevenMenginClouds);
+    }
+
+    /* =========================================================================
+       2. GLOBAL BACKGROUND STARFIELD
+       ========================================================================= */
+    let stars = [];
+    resizeGlobalCanvases();
+    drawStevenMenginClouds();
+
+    for (let i = 0; i < 140; i++) {
+      stars.push({
+        x: Math.random() * starCanvas.width,
+        y: Math.random() * starCanvas.height,
+        radius: Math.random() * 1.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.008 + 0.003
+      });
+    }
+
+    function animateStars() {
+      starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+        starCtx.fillStyle = `rgba(255, 184, 0, ${Math.abs(s.alpha) * 0.6})`;
+        starCtx.beginPath();
+        starCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        starCtx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+</body>
+</html>

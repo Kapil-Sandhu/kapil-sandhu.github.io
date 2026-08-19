@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="16" fill="#05070D"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="#00F0FF" stroke-width="2.5"/>
+  <!-- Glowing Central Sun -->
+  <circle cx="32" cy="32" r="9" fill="#FFB800"/>
+  <!-- Orbital Ring Ellipse -->
+  <ellipse cx="32" cy="32" rx="22" ry="11" fill="none" stroke="#00F0FF" stroke-width="2" stroke-dasharray="3 3"/>
+  <!-- Saturn Ring Planet -->
+  <ellipse cx="48" cy="24" rx="8" ry="2.5" fill="none" stroke="#FDE68A" stroke-width="1.5" transform="rotate(-20 48 24)"/>
+  <circle cx="48" cy="24" r="4.5" fill="#D97706"/>
+  <!-- Small Cyan Planet -->
+  <circle cx="16" cy="40" r="3.5" fill="#00F0FF"/>
+</svg>

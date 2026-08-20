@@ -2238,119 +2238,7 @@
 
     <div class="space-y-6 sm:space-y-8">
 
-      <!-- EXPERIENCE CARD 1: UNIVERSITY OF BONN (AMBER/YELLOW THEME) -->
-      <div class="project-card-amber p-4 sm:p-6 md:p-8 rounded-2xl group">
-        <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span
-                class="text-[10px] font-mono text-goldGlow font-bold bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded-full">
-                Research Project · Germany 🇩🇪
-              </span>
-            </div>
-            <h3
-              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-goldGlow transition-colors">
-              University of Bonn
-            </h3>
-            <p class="text-xs sm:text-sm text-goldGlow font-mono font-semibold">Decoder Compact LLM as Classifier</p>
-          </div>
-          <span
-            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-amber-950/60 border border-amber-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
-            May 2026 – Jul 2026
-          </span>
-        </div>
-
-        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3 font-sans">
-          Engineered a specialized sequence classification architecture on top of compact decoder-only causal language
-          models (0.6B &amp; 1.7B parameters). Rather than prompting the LLM to generate autoregressive text tokens,
-          directly extracted the final token hidden state representations and routed them through a dedicated
-          classification head to eliminate generation hallucination.
-        </p>
-
-        <ul
-          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
-          <li>Attached custom linear/MLP classification projection heads atop final causal token states, converting
-            generative LLMs into fast, deterministic multi-class inference models.</li>
-          <li>Fine-tuned on 570,000+ sentence pairs using Low-Rank Adaptation (<code
-              class="text-goldGlow">LoRA bfloat16</code>) and PyTorch Distributed Data Parallel (<code
-              class="text-goldGlow">DDP</code>) with Ring-AllReduce synchronization across multi-GPU nodes.</li>
-          <li>Achieved high convergence speed and lower memory footprint compared to autoregressive generation setups
-            while preserving domain-specific classification boundaries.</li>
-        </ul>
-
-        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-amber-500/20">
-          <span
-            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Causal
-            Decoder
-            LLMs</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Classification
-            Head</span>
-          <span
-            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">PyTorch
-            DDP</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">LoRA
-            (bfloat16)</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Hugging
-            Face</span>
-          <span
-            class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">570k
-            Samples</span>
-        </div>
-      </div>
-
-      <!-- EXPERIENCE CARD 2: BLUESTOCK FINTECH (CYAN/BLUE THEME) -->
-      <div class="project-card-cyan p-4 sm:p-6 md:p-8 rounded-2xl group">
-        <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span
-                class="text-[10px] font-mono text-electricCyan font-bold bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded-full">
-                Industry Internship · Bluestock Fintech 🇮🇳
-              </span>
-            </div>
-            <h3
-              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-electricCyan transition-colors">
-              Bluestock Fintech
-            </h3>
-            <p class="text-xs sm:text-sm text-cyan-400 font-mono font-semibold">Software Development Engineer Intern</p>
-          </div>
-          <span
-            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
-            Feb 2025 – Jun 2025
-          </span>
-        </div>
-
-        <ul
-          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
-          <li>Built high-throughput fintech infrastructure, including Stock Scanner and real-time IPO management
-            microservices handling low-latency financial feeds.</li>
-          <li>Integrated machine learning models for quantitative market analytics, lowering query execution latencies
-            across Node.js, FastAPI &amp; PostgreSQL database layers.</li>
-          <li>Engineered resilient REST and WebSocket APIs to stream live ticker telemetry and market sentiment signals.
-          </li>
-        </ul>
-
-        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-cyan-500/20">
-          <span
-            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Node.js</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">FastAPI</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">PostgreSQL</span>
-          <span
-            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Redis</span>
-          <span
-            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">WebSockets</span>
-          <span
-            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Fintech
-            Infrastructure</span>
-        </div>
-      </div>
-
-      <!-- EXPERIENCE CARD 3: IIIT SONIPAT (AMBER/YELLOW THEME) -->
+      <!-- EXPERIENCE CARD 1: IIIT SONIPAT (AMBER/YELLOW THEME) -->
       <div class="project-card-amber p-4 sm:p-6 md:p-8 rounded-2xl group">
         <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
           <div>
@@ -2407,6 +2295,55 @@
           <span
             class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">89%
             MOTA</span>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE CARD 2: BLUESTOCK FINTECH (CYAN/BLUE THEME) -->
+      <div class="project-card-cyan p-4 sm:p-6 md:p-8 rounded-2xl group">
+        <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span
+                class="text-[10px] font-mono text-electricCyan font-bold bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded-full">
+                Industry Internship · Bluestock Fintech 🇮🇳
+              </span>
+            </div>
+            <h3
+              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-electricCyan transition-colors">
+              Bluestock Fintech
+            </h3>
+            <p class="text-xs sm:text-sm text-cyan-400 font-mono font-semibold">Software Development Engineer Intern</p>
+          </div>
+          <span
+            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
+            Feb 2025 – Jun 2025
+          </span>
+        </div>
+
+        <ul
+          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
+          <li>Built high-throughput fintech infrastructure, including Stock Scanner and real-time IPO management
+            microservices handling low-latency financial feeds.</li>
+          <li>Integrated machine learning models for quantitative market analytics, lowering query execution latencies
+            across Node.js, FastAPI &amp; PostgreSQL database layers.</li>
+          <li>Engineered resilient REST and WebSocket APIs to stream live ticker telemetry and market sentiment signals.
+          </li>
+        </ul>
+
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-cyan-500/20">
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Node.js</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">FastAPI</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">PostgreSQL</span>
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Redis</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">WebSockets</span>
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Fintech
+            Infrastructure</span>
         </div>
       </div>
 

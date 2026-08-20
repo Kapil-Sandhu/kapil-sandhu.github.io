@@ -439,133 +439,180 @@
 </head>
 
 <body
-  class="bg-obsidian text-slate-100 font-sans min-h-screen flex flex-col justify-between relative overflow-x-hidden selection:bg-goldGlow selection:text-black">
+  class="bg-obsidian text-slate-100 font-sans min-h-screen flex flex-col justify-between relative overflow-x-hidden w-full max-w-[100vw] selection:bg-goldGlow selection:text-black">
 
   <canvas id="globalCloudCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
   <canvas id="globalStarCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
 
   <nav
-    class="fixed top-0 left-0 w-full z-50 bg-cyan-950/35 backdrop-blur-xl border-b border-cyan-500/20 px-6 py-3.5 flex justify-between items-center">
-    <a href="#" class="font-heading font-extrabold text-xl text-white tracking-wide flex items-center gap-2">
+    class="fixed top-0 left-0 w-full z-50 bg-cyan-950/60 backdrop-blur-xl border-b border-cyan-500/20 px-3 sm:px-6 py-2.5 sm:py-3.5 flex justify-between items-center transition-all">
+    <a href="#"
+      class="font-heading font-extrabold text-lg sm:text-xl text-white tracking-wide flex items-center gap-1.5 sm:gap-2 shrink-0">
       <span class="text-goldGlow font-mono font-bold">&lt;</span>Kapil Sandhu<span
         class="text-electricCyan font-mono font-bold">/&gt;</span>
     </a>
-    <div class="hidden md:flex gap-7 text-[17px] font-bold text-slate-200 tracking-wide">
+
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex gap-6 xl:gap-7 text-[15px] xl:text-[17px] font-bold text-slate-200 tracking-wide">
       <a href="#about" class="hover:text-goldGlow transition-colors">About</a>
       <a href="#ongoing-projects" class="hover:text-goldGlow transition-colors">On-Going</a>
       <a href="#projects" class="hover:text-electricCyan transition-colors">Projects</a>
       <a href="#experience" class="hover:text-goldGlow transition-colors">Experience</a>
       <a href="#contact" class="hover:text-electricCyan transition-colors">Contact</a>
     </div>
-    <div class="flex items-center gap-3">
-      <a href="https://github.com/Kapil-Sandhu" target="_blank"
-        class="px-4 py-2 text-sm font-mono font-bold bg-amber-950/60 border border-goldGlow/50 text-goldGlow rounded-lg hover:bg-goldGlow hover:text-slate-950 transition-all shadow-md">
-        GitHub ↗
+
+    <!-- Action Buttons & Mobile Hamburger -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="https://github.com/Kapil-Sandhu" target="_blank" rel="noopener"
+        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold bg-amber-950/60 border border-goldGlow/50 text-goldGlow rounded-lg hover:bg-goldGlow hover:text-slate-950 transition-all shadow-md flex items-center gap-1">
+        <span>GitHub</span> <span class="hidden sm:inline">↗</span>
       </a>
-      <a href="./assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank"
-        class="px-4 py-2 text-sm font-mono font-bold bg-cyan-950/70 border border-cyan-400/60 text-cyan-300 rounded-lg hover:bg-electricCyan hover:text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-cyan-500/10">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          stroke-width="2.5">
+      <a href="./assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener"
+        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold bg-cyan-950/70 border border-cyan-400/60 text-cyan-300 rounded-lg hover:bg-electricCyan hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-md shadow-cyan-500/10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
         <span>CV</span>
       </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobileMenuBtn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu"
+        class="lg:hidden p-1.5 sm:p-2 text-slate-300 hover:text-white bg-slate-900/80 border border-slate-700/80 rounded-lg focus:outline-none">
+        <svg id="hamburgerIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="closeNavIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
   </nav>
 
+  <!-- Mobile Dropdown Navigation Drawer -->
+  <div id="mobileNavDrawer"
+    class="hidden lg:hidden fixed top-[54px] sm:top-[60px] left-0 w-full z-40 bg-slate-950/95 backdrop-blur-2xl border-b border-cyan-500/30 py-4 px-6 shadow-2xl transition-all">
+    <div class="flex flex-col gap-3.5 text-base font-bold text-slate-200 tracking-wide font-heading">
+      <a href="#about" onclick="toggleMobileNav()"
+        class="py-1 hover:text-goldGlow transition-colors border-b border-white/5 flex items-center justify-between">
+        <span>Profile &amp; Background</span> <span class="text-xs font-mono text-goldGlow">&rarr;</span>
+      </a>
+      <a href="#ongoing-projects" onclick="toggleMobileNav()"
+        class="py-1 hover:text-goldGlow transition-colors border-b border-white/5 flex items-center justify-between">
+        <span>On-Going Projects</span> <span class="text-xs font-mono text-goldGlow">&rarr;</span>
+      </a>
+      <a href="#projects" onclick="toggleMobileNav()"
+        class="py-1 hover:text-electricCyan transition-colors border-b border-white/5 flex items-center justify-between">
+        <span>Completed Projects</span> <span class="text-xs font-mono text-electricCyan">&rarr;</span>
+      </a>
+      <a href="#experience" onclick="toggleMobileNav()"
+        class="py-1 hover:text-goldGlow transition-colors border-b border-white/5 flex items-center justify-between">
+        <span>Experience &amp; Research</span> <span class="text-xs font-mono text-goldGlow">&rarr;</span>
+      </a>
+      <a href="#contact" onclick="toggleMobileNav()"
+        class="py-1 hover:text-electricCyan transition-colors flex items-center justify-between">
+        <span>Let&rsquo;s Connect</span> <span class="text-xs font-mono text-electricCyan">&rarr;</span>
+      </a>
+    </div>
+  </div>
+
   <section
-    class="relative z-10 w-full min-h-screen flex flex-col justify-between items-center px-4 md:px-8 pt-20 pb-6 border-none outline-none">
+    class="relative z-10 w-full min-h-screen flex flex-col justify-between items-center px-3 sm:px-6 md:px-8 pt-16 sm:pt-20 pb-4 sm:pb-6 border-none outline-none">
 
-    <div id="heroGrid" class="w-full max-w-7xl grid lg:grid-cols-12 gap-5 my-auto items-stretch pt-2 relative">
+    <div id="heroGrid"
+      class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 my-auto items-stretch pt-2 relative">
 
-      <!-- NN CANVAS: Expanded to 8 columns for maximum visual impact with Amber Glass Glow -->
+      <!-- NN CANVAS: 7 cols on laptop, 8 on xl desktop, full width on mobile/tablet -->
       <div id="nnPanel"
-        class="lg:col-span-8 relative min-h-[520px] md:min-h-[600px] rounded-3xl hero-nn-panel overflow-hidden flex flex-col justify-between p-4 shadow-2xl">
+        class="lg:col-span-7 xl:col-span-8 relative h-[320px] sm:h-[400px] lg:h-[520px] xl:h-[580px] rounded-2xl sm:rounded-3xl hero-nn-panel overflow-hidden flex flex-col justify-between p-3 sm:p-4 shadow-2xl">
         <canvas id="nnCanvas" class="w-full h-full absolute inset-0 z-10"></canvas>
 
-        <div class="relative z-20 flex justify-between text-[11px] font-mono text-slate-400 pointer-events-none px-4">
-          <span class="text-goldGlow font-bold flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-goldGlow nn-status-dot"></span> Input Layer (4)
+        <div
+          class="relative z-20 flex justify-between text-[10px] sm:text-[11px] font-mono text-slate-400 pointer-events-none px-2 sm:px-4">
+          <span class="text-goldGlow font-bold flex items-center gap-1 sm:gap-1.5">
+            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-goldGlow nn-status-dot"></span> In (4)
           </span>
           <span class="text-slate-500 font-mono hidden md:inline">Topology: 4 → 10 → 10 → 10 → 4 · 330 Synapses</span>
-          <span class="text-electricCyan font-bold flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-electricCyan nn-status-dot"></span> Output Logits (4)
+          <span class="text-electricCyan font-bold flex items-center gap-1 sm:gap-1.5">
+            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-electricCyan nn-status-dot"></span> Out (4)
           </span>
         </div>
 
-        <div class="relative z-20 flex justify-center text-[11px] font-mono pointer-events-none">
+        <div class="relative z-20 flex justify-center text-[10px] sm:text-[11px] font-mono pointer-events-none">
           <span id="feedbackLabel"
-            class="opacity-0 transition-all duration-300 bg-slate-950/90 border border-slate-700 px-4 py-0.5 rounded-full shadow-lg">
+            class="opacity-0 transition-all duration-300 bg-slate-950/90 border border-slate-700 px-3 sm:px-4 py-0.5 rounded-full shadow-lg text-[10px] sm:text-xs">
             Ready
           </span>
         </div>
       </div>
 
-
       <!-- RIGHT PANEL: Monitor / Screen with Cyan Glass Glow -->
       <div id="monitorPanel"
-        class="lg:col-span-4 monitor-panel hero-monitor-panel flex flex-col justify-between rounded-3xl shadow-2xl min-h-[520px] md:min-h-[600px] overflow-hidden">
+        class="lg:col-span-5 xl:col-span-4 monitor-panel hero-monitor-panel flex flex-col justify-between rounded-2xl sm:rounded-3xl shadow-2xl min-h-[440px] lg:h-[520px] xl:h-[580px] overflow-hidden">
         <!-- corner decorations -->
         <div class="monitor-corner-tr"></div>
         <div class="monitor-corner-bl"></div>
 
         <!-- TOP: Identity Header -->
-        <div class="px-6 pt-6 pb-4 border-b border-white/5">
-          <div class="flex items-center gap-2 mb-4">
+        <div class="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/5">
+          <div class="flex items-center gap-2 mb-2 sm:mb-3">
             <span id="engineStatus"
-              class="flex items-center gap-1.5 text-[10px] font-mono text-goldGlow bg-amber-950/60 border border-goldGlow/25 px-2.5 py-1 rounded-full whitespace-nowrap">
+              class="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-mono text-goldGlow bg-amber-950/60 border border-goldGlow/25 px-2.5 py-0.5 sm:py-1 rounded-full whitespace-nowrap">
               <span class="w-1.5 h-1.5 rounded-full bg-goldGlow nn-status-dot"></span> Neural Engine · Idle
             </span>
-            <span id="genLatency" class="text-[10px] font-mono text-slate-500">-- ms</span>
+            <span id="genLatency" class="text-[9px] sm:text-[10px] font-mono text-slate-500 ml-auto">-- ms</span>
           </div>
 
-          <h1 class="font-heading font-extrabold text-white hero-name-glow leading-none tracking-tight mb-1"
-            style="font-size: clamp(1.9rem, 3.5vw, 2.6rem);">
+          <h1 class="font-heading font-extrabold text-white hero-name-glow leading-tight tracking-tight mb-1"
+            style="font-size: clamp(1.6rem, 3.2vw, 2.5rem);">
             <span class="tagline-accent"> Kapil Sandhu</span>
           </h1>
-          <p class="text-[11px] font-mono text-slate-400 mt-2">MSc CS · University of Bonn &nbsp;·&nbsp; AI &amp; Deep
-            Learning</p>
+          <p class="text-[10px] sm:text-[11px] font-mono text-slate-400 mt-1 sm:mt-1.5 leading-snug">
+            MSc CS · University of Bonn &nbsp;·&nbsp; AI &amp; Deep Learning
+          </p>
         </div>
 
         <!-- MIDDLE: Cinematic Tagline Output -->
-        <div class="flex-1 flex flex-col px-6 pt-4 pb-5">
+        <div class="flex-1 flex flex-col px-4 sm:px-6 pt-3 sm:pt-4 pb-3 sm:pb-4">
           <!-- Sequence label with macOS dots -->
-          <div class="flex items-center gap-2 mb-2">
+          <div class="flex items-center gap-2 mb-1.5">
             <div class="flex gap-1">
               <span class="w-2 h-2 rounded-full bg-rose-500/80"></span>
               <span class="w-2 h-2 rounded-full bg-amber-400/80"></span>
               <span class="w-2 h-2 rounded-full bg-emerald-400/80"></span>
             </div>
-            <span class="text-[10px] font-mono text-slate-500">autoregressive_tagline.py</span>
-            <span class="text-[10px] ml-1">🎲</span>
-            <span id="tokenCounter" class="ml-auto text-[10px] font-mono text-goldGlow/70">0 / --</span>
+            <span class="text-[9px] sm:text-[10px] font-mono text-slate-500 truncate">autoregressive_tagline.py</span>
+            <span class="text-[9px] sm:text-[10px] ml-1">🎲</span>
+            <span id="tokenCounter" class="ml-auto text-[9px] sm:text-[10px] font-mono text-goldGlow/70">0 / --</span>
           </div>
 
           <!-- 'I am interested in' label -->
-          <p class="font-heading font-extrabold mt-3 mb-1"
-            style="font-size: clamp(1.05rem, 2vw, 1.35rem); background: linear-gradient(90deg, #FFB800 10%, #FFFFFF 15%, #00F0FF 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.01em;">
+          <p class="font-heading font-extrabold mt-1 sm:mt-2 mb-1 text-sm sm:text-base lg:text-lg"
+            style="background: linear-gradient(90deg, #FFB800 10%, #FFFFFF 15%, #00F0FF 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.01em;">
             I&rsquo;m interested in...
           </p>
 
           <!-- Tagline display: monitor screen -->
-          <div class="monitor-screen p-4 relative" style="min-height: 180px; margin-top: 18px;">
-            <div id="terminalScreen" class="min-h-[150px] flex flex-col justify-center relative z-10">
-              <p class="tagline-idle-text text-slate-600 text-sm font-mono leading-relaxed">
+          <div class="monitor-screen p-3 sm:p-4 relative flex-1 flex flex-col justify-center"
+            style="min-height: 120px; margin-top: 8px;">
+            <div id="terminalScreen" class="min-h-[100px] sm:min-h-[120px] flex flex-col justify-center relative z-10">
+              <p class="tagline-idle-text text-slate-600 text-xs sm:text-sm font-mono leading-relaxed">
                 // Press Resume to Start... <br>// Model: Neural Network...
               </p>
             </div>
           </div>
 
           <!-- Phase indicator -->
-          <div class="mt-4 pt-3 border-t border-white/5">
+          <div class="mt-3 pt-2.5 border-t border-white/5">
             <div class="flex items-center justify-between">
-              <span id="activePhaseText" class="text-[10px] font-mono text-slate-500">Pipeline: Idle</span>
-              <div class="flex items-center gap-3">
-                <span class="flex items-center gap-1 text-[10px] font-mono text-cyan-400/70">
+              <span id="activePhaseText" class="text-[9px] sm:text-[10px] font-mono text-slate-500">Pipeline:
+                Idle</span>
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-cyan-400/70">
                   <span class="w-1.5 h-1.5 rounded-full bg-electricCyan/70 animate-pulse"></span>Fwd
                 </span>
-                <span class="flex items-center gap-1 text-[10px] font-mono text-rose-400/70">
+                <span class="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-rose-400/70">
                   <span class="w-1.5 h-1.5 rounded-full bg-synapseRed/70 animate-pulse"></span>Bkprop
                 </span>
               </div>
@@ -574,10 +621,10 @@
         </div>
 
         <!-- BOTTOM: Controls -->
-        <div class="px-6 pb-6 pt-4 border-t border-white/5">
+        <div class="px-4 sm:px-6 pb-4 sm:pb-5 pt-2 sm:pt-3 border-t border-white/5">
           <div class="flex gap-2">
             <button id="sayHiBtn" onclick="toggleGeneration()"
-              class="generate-btn flex-1 py-3 text-slate-950 font-heading font-bold rounded-xl text-sm flex items-center justify-center gap-2">
+              class="generate-btn flex-1 py-2.5 sm:py-3 text-slate-950 font-heading font-bold rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2">
               <svg id="btnIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2.5">
                 <rect x="6" y="4" width="4" height="16" />
@@ -586,7 +633,7 @@
               <span id="btnLabel">Pause</span>
             </button>
             <button onclick="resetEngine()"
-              class="px-4 py-3 border border-slate-700/80 hover:border-slate-500 text-slate-400 hover:text-white rounded-xl text-xs font-mono transition-all">
+              class="px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-700/80 hover:border-slate-500 text-slate-400 hover:text-white rounded-xl text-xs font-mono transition-all">
               ↺
             </button>
           </div>
@@ -597,79 +644,83 @@
     </div>
 
     <!-- Bottom status bar -->
-    <div class="w-full max-w-7xl flex flex-wrap items-center justify-between gap-4 pt-3">
-      <div class="text-[11px] font-bold text-slate-600">
+    <div
+      class="w-full max-w-7xl flex flex-wrap items-center justify-between gap-2 sm:gap-4 pt-3 text-[10px] sm:text-[11px]">
+      <div class="font-bold text-slate-500 sm:text-slate-400">
         Autoregressive Sequence Modeling · Forward Pass + Backpropagation
       </div>
       <div
-        class="inline-flex items-center gap-2 px-4 py-1.5 text-[11px] font-mono text-goldGlow bg-amber-950/30 border border-goldGlow/20 rounded-xl">
+        class="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 font-mono text-goldGlow bg-amber-950/30 border border-goldGlow/20 rounded-xl">
         <span class="relative flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-goldGlow opacity-60"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-goldGlow"></span>
         </span>
-        Open to AI/ML Engineering roles &amp; Research collaboration
+        Open to AI/ML Roles &amp; Research
       </div>
     </div>
 
   </section>
 
-  <section id="about" class="relative z-10 py-24 px-6 max-w-6xl mx-auto w-full">
-    <div class="flex items-center gap-3 mb-10">
-      <div class="h-8 w-1.5 bg-goldGlow rounded-full"></div>
-      <h2 class="text-3xl font-heading font-bold text-white">Profile &amp; Background</h2>
+  <section id="about" class="relative z-10 py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto w-full">
+    <div class="flex items-center gap-3 mb-8 sm:mb-10">
+      <div class="h-7 sm:h-8 w-1.5 bg-goldGlow rounded-full"></div>
+      <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white">Profile &amp; Background</h2>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8 items-stretch">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
       <!-- Academic Journey Card (Amber/Gold Glass Glow) -->
-      <div class="project-card-amber p-8 md:p-10 rounded-2xl group flex flex-col justify-between"
-        style="min-height: 380px;">
+      <div class="project-card-amber p-5 sm:p-8 md:p-9 rounded-2xl group flex flex-col justify-between">
         <div>
           <h3
-            class="text-2xl md:text-3xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-8 flex items-center gap-3">
-            <span class="text-2xl">🎓</span> Academic Journey
+            class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-6 sm:mb-8 flex items-center gap-2.5 sm:gap-3">
+            <span class="text-xl sm:text-2xl">🎓</span> Academic Journey
           </h3>
-          <div class="space-y-10">
-            <div class="relative pl-6 border-l-2 border-amber-500/40">
+          <div class="space-y-8 sm:space-y-10">
+            <div class="relative pl-5 sm:pl-6 border-l-2 border-amber-500/40">
               <span
                 class="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-goldGlow shadow-[0_0_12px_#FFB800]"></span>
-              <div class="flex items-start justify-between gap-6">
-                <div>
+              <div class="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6">
+                <div class="flex-1">
                   <span
-                    class="text-xs font-mono text-goldGlow font-semibold bg-amber-950/70 border border-amber-500/30 px-2.5 py-0.5 rounded-full">Apr
+                    class="text-[11px] font-mono text-goldGlow font-semibold bg-amber-950/70 border border-amber-500/30 px-2.5 py-0.5 rounded-full">Apr
                     2026 – Present</span>
-                  <h4 class="text-lg font-bold text-yellow-500 mt-2">MSc in Computer Science</h4>
-                  <p class="text-sm text-slate-300">University of Bonn &middot; Bonn, Germany</p>
-                  <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">Expected CGPA: ~ 1.3 </p>
-                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Focus: Foundation models, transformer
+                  <h4 class="text-base sm:text-lg font-bold text-yellow-500 mt-2">MSc in Computer Science</h4>
+                  <p class="text-xs sm:text-sm text-slate-300">University of Bonn &middot; Bonn, Germany</p>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Expected CGPA: ~ 1.3 </p>
+                  <p class="text-xs text-slate-400 mt-1 leading-relaxed">Focus: Foundation models, transformer
                     architectures, sequence modeling, and scientific machine learning.</p>
                 </div>
                 <a href="https://www.uni-bonn.de/en" target="_blank" rel="noopener"
-                  class="shrink-0 mt-1 opacity-85 hover:opacity-100 transition-opacity" title="University of Bonn">
-                  <img src="./assets/uni-bonn.png" alt="University of Bonn" class="w-auto rounded-lg"
-                    style="height: 7.5rem; filter: brightness(1.5) contrast(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));" />
+                  class="shrink-0 opacity-90 hover:opacity-100 transition-opacity self-center sm:self-start"
+                  title="University of Bonn">
+                  <img src="./assets/uni-bonn.png" alt="University of Bonn"
+                    class="h-16 sm:h-20 md:h-24 w-auto rounded-lg object-contain"
+                    style="filter: brightness(1.4) contrast(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));" />
                 </a>
               </div>
             </div>
 
-            <div class="relative pl-6 border-l-2 border-cyan-500/40">
+            <div class="relative pl-5 sm:pl-6 border-l-2 border-cyan-500/40">
               <span
                 class="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-electricCyan shadow-[0_0_12px_#00F0FF]"></span>
-              <div class="flex items-start justify-between gap-6">
-                <div>
+              <div class="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6">
+                <div class="flex-1">
                   <span
-                    class="text-xs font-mono text-cyan-300 font-semibold bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">Oct
+                    class="text-[11px] font-mono text-cyan-300 font-semibold bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">Oct
                     2021 – Jun 2025</span>
-                  <h4 class="text-lg font-bold text-cyan-400 mt-2">BTech in Computer Science &amp; Engineering</h4>
-                  <p class="text-sm text-slate-300">IIIT Sonipat &middot; Sonipat, India</p>
-                  <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">Graduated Grade: 1.9 </p>
-                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">JEE Advanced Category Rank 1758 (in Top 1%
+                  <h4 class="text-base sm:text-lg font-bold text-cyan-400 mt-2">BTech in Computer Science &amp;
+                    Engineering</h4>
+                  <p class="text-xs sm:text-sm text-slate-300">IIIT Sonipat &middot; Sonipat, India</p>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Graduated Grade: 1.9 </p>
+                  <p class="text-xs text-slate-400 mt-1 leading-relaxed">JEE Advanced Category Rank 1758 (in Top 1%
                     nationally).</p>
                 </div>
                 <a href="https://iiitsonepat.ac.in/" target="_blank" rel="noopener"
-                  class="shrink-0 opacity-85 hover:opacity-100 transition-opacity" title="IIIT Sonepat"
-                  style="margin-top: 0.5rem;">
-                  <img src="./assets/iiits.png" alt="IIIT Sonepat" class="w-auto rounded-xl"
-                    style="height: 8.5rem; filter: brightness(1.5) contrast(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));" />
+                  class="shrink-0 opacity-90 hover:opacity-100 transition-opacity self-center sm:self-start"
+                  title="IIIT Sonepat">
+                  <img src="./assets/iiits.png" alt="IIIT Sonepat"
+                    class="h-16 sm:h-20 md:h-24 w-auto rounded-xl object-contain"
+                    style="filter: brightness(1.4) contrast(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));" />
                 </a>
               </div>
             </div>
@@ -678,14 +729,13 @@
       </div>
 
       <!-- Research Interests Card (Cyan Glass Glow) -->
-      <div class="project-card-cyan p-8 md:p-10 rounded-2xl group flex flex-col justify-between"
-        style="min-height: 380px;">
+      <div class="project-card-cyan p-5 sm:p-8 md:p-9 rounded-2xl group flex flex-col justify-between">
         <div>
           <h3
-            class="text-2xl md:text-3xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-8 flex items-center gap-3">
-            <span class="text-2xl">🔬</span> Research Interests
+            class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-6 sm:mb-8 flex items-center gap-2.5 sm:gap-3">
+            <span class="text-xl sm:text-2xl">🔬</span> Research Interests
           </h3>
-          <p class="text-slate-200 text-sm leading-relaxed mb-5">
+          <p class="text-slate-200 text-xs sm:text-sm leading-relaxed mb-4">
             Broadly, I'm interested in <strong class="text-goldGlow font-semibold">Portfolio risk management using
               Artificial Intelligence and Machine Learning algorithms</strong>,
             <strong class="text-white font-semibold">Large scale pre-training, Prompt engineering, Foundation models,
@@ -695,26 +745,31 @@
             <strong class="text-white font-semibold">Distributed Deep Learning (PyTorch DDP, LoRA)</strong>, and <strong
               class="text-goldGlow font-semibold">Multi-Agent Quantitative Decision Systems</strong>.
           </p>
-          <p class="text-slate-400 text-xs md:text-sm leading-relaxed mb-6">
+          <p class="text-slate-400 text-[11px] sm:text-xs md:text-sm leading-relaxed mb-5">
             Experienced with constructing real-time multi-agent consensus pipelines where multiple agents coordinate and
             debate with each other for better decision making, fine-tuning compact LLMs for causal domain-specific
             sequence classification tasks on 570k+ samples, and optimizing the DDP pipeline for optimal hardware
             utilization across downstream tasks.
           </p>
         </div>
-        <div class="pt-5 border-t border-slate-700/50">
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-3 py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">LLM
+        <div class="pt-4 border-t border-slate-700/50">
+          <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono">
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">LLM
               Architecture</span>
-            <span class="px-3 py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Causal
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Causal
               Modeling</span>
-            <span class="px-3 py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">Transformer
-            </span>
-            <span class="px-3 py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Multi-Agent
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">Transformer</span>
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Multi-Agent
               MoE</span>
-            <span class="px-3 py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">LoRA
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-goldGlow rounded-lg border border-amber-500/30">LoRA
               Fine-Tuning</span>
-            <span class="px-3 py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Real-time
+            <span
+              class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900/90 text-cyan-300 rounded-lg border border-cyan-500/30">Real-time
               Vision</span>
           </div>
         </div>
@@ -742,15 +797,16 @@
       </div>
     </div>
 
-    <div class="space-y-10">
+    <div class="space-y-8 sm:space-y-10">
 
       <!-- PROJECT CARD 1: YELLOW/AMBER THEME (Diagram Left, Description Right) -->
       <a href="projects/agentic-trade-analyzer.html"
-        class="project-card-amber p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center block">
+        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
-          <div class="diagram-frame diagram-frame-cyan p-3.5 arch-grid-bg relative">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+          <div class="diagram-frame diagram-frame-cyan p-2.5 sm:p-3.5 arch-grid-bg relative">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-electricCyan font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> ARCH // SYS.01:
                 MOE-MULTI-AGENT
@@ -899,10 +955,9 @@
                 text-anchor="middle">4-Tier Risk FSM</text>
             </svg>
 
-            <div class="mt-2 flex items-center justify-between text-[9px] font-mono text-slate-400">
-              <span class="text-cyan-300">Workflow: Raw Data &rarr; Multi-TF + DB &rarr; Tech Agent &rarr; Debate &rarr;
-                Master AI</span>
-              <span class="text-goldGlow font-bold">Final Decision</span>
+            <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
+              <span class="text-cyan-300 truncate">Raw &rarr; Multi-TF &rarr; Tech &rarr; Debate &rarr; Decision</span>
+              <span class="text-goldGlow font-bold shrink-0 ml-1">Final Decision</span>
             </div>
           </div>
         </div>
@@ -910,43 +965,45 @@
         <!-- RIGHT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 01 · MULTI-AGENT MoE &amp; QUANT
               </span>
               <span
-                class="text-[11px] font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+                class="text-[10px] sm:text-[11px] font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-2 sm:px-2.5 py-0.5 rounded-full">
                 Gemini API · Redis
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-1.5 sm:mb-2">
               Agentic Trade Analyzer
             </h3>
-            <p class="text-sm font-mono text-goldGlow mb-3">
+            <p class="text-xs sm:text-sm font-mono text-goldGlow mb-2.5 sm:mb-3">
               Multi-Agent Architecture &middot; Multi-Timeframe Input Data &middot; 3-Round Adversarial Debate
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-4">
-              Analyzes the price-action of BTC using <strong class="text-white">multi-timeframe OHLCV data</strong> combined with
-              <strong class="text-goldGlow">$1M Dollar Candles </strong>to provide agents with both macro-trend context and
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 sm:mb-4">
+              Analyzes the price-action of BTC using <strong class="text-white">multi-timeframe OHLCV data</strong>
+              combined with
+              <strong class="text-goldGlow">$1M Dollar Candles </strong>to provide agents with both macro-trend context
+              and
               microstructure order-flow signals for high-probability trade execution.
             </p>
 
-            <div class="space-y-1.5 mb-5 text-xs text-slate-300 font-mono">
-              <div class="flex items-start gap-2">
+            <div class="space-y-1 sm:space-y-1.5 mb-4 sm:mb-5 text-[11px] sm:text-xs text-slate-300 font-mono">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-goldGlow font-bold whitespace-nowrap">1. Tech Agent:</span>
                 <span>Summarizes raw OHLCV market streams and technical indicators.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-electricCyan font-bold whitespace-nowrap">2. Bull Agent 🐂:</span>
                 <span>Builds bullish evidence, long theses, and counters bear arguments.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-rose-400 font-bold whitespace-nowrap">3. Bear Agent 🐻:</span>
                 <span>Builds bearish risk arguments, short theses, and counters bull arguments.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-goldGlow font-bold whitespace-nowrap">4. Master Agent:</span>
                 <span>Synthesizes arguments from Bull vs. Bear agents and makes the final decision.</span>
               </div>
@@ -954,22 +1011,26 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
               <span
-                class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Python</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">PyTorch</span>
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Python</span>
               <span
-                class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">LangChain</span>
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Gemini
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">PyTorch</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">LangChain</span>
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Gemini
                 API</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Redis</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Redis</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Inspect Project Technical Architecture &amp; System Report <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
@@ -979,47 +1040,47 @@
 
       <!-- PROJECT CARD 2: CPRO (SYS.02) -->
       <a href="projects/btc-cpro.html"
-        class="project-card-cyan p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center block">
+        class="project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
           <div>
-            <div class="flex items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 02 · TIME-SERIES TRANSFORMERS &amp; QUANT
               </span>
               <span
-                class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                class="text-[10px] sm:text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-bold">
                 83.36% High-Conf Acc
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-1.5 sm:mb-2">
               CPro: Momentum Transformer
             </h3>
-            <p class="text-sm font-mono text-cyan-400 mb-3">
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mb-2.5 sm:mb-3">
               Multi-Scale RoPE Attention &middot; 4-State HMM Gate &middot; Symmetric CUSUM
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-4">
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 sm:mb-4">
               Institutional-grade Bitcoin direction &amp; volatility-conditioned momentum forecasting framework trained
               across <strong class="text-white">5+ years (3.15M bars)</strong> of tick data with purged/embargoed
               cross-validation and L-BFGS calibration.
             </p>
 
-            <div class="space-y-1.5 mb-5 text-xs text-slate-300 font-mono">
-              <div class="flex items-start gap-2">
+            <div class="space-y-1 sm:space-y-1.5 mb-4 sm:mb-5 text-[11px] sm:text-xs text-slate-300 font-mono">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-emerald-400 font-bold whitespace-nowrap">1. CUSUM Filtering:</span>
                 <span>329.6k discrete volatility events (~12.5% density) &amp; Triple-Barrier labels.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-goldGlow font-bold whitespace-nowrap">2. 4-State HMM Gate:</span>
                 <span>Dynamic gate suppresses chop (State 0) &amp; enables momentum (States 1 &amp; 2).</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-cyan-300 font-bold whitespace-nowrap">3. Multi-Scale MSMT:</span>
                 <span>Cross-timeframe RoPE attention (1m, 5m, 15m, 1h) + 11 dynamic candle features.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-electricCyan font-bold whitespace-nowrap">4. Selective Alpha:</span>
                 <span>83.36% high-confidence accuracy (MCC: 0.6558) &amp; 82.62% backtest win rate.</span>
               </div>
@@ -1027,28 +1088,34 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
               <span
-                class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">PyTorch</span>
-              <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Lion
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">PyTorch</span>
+              <span
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Lion
                 Optimizer</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">RoPE
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">RoPE
                 Attention</span>
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Gaussian
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Gaussian
                 HMM</span>
-              <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">CUSUM
+              <span
+                class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">CUSUM
                 Filter</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">L-BFGS</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">L-BFGS</span>
             </div>
 
-            <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Inspect Project Technical Architecture &amp; System Report <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
               <span onclick="event.preventDefault(); window.open('https://github.com/Kapil-Sandhu/CPro', '_blank')"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-900/90 hover:bg-slate-800 text-cyan-300 border border-cyan-500/40 hover:border-cyan-400 font-mono font-bold text-xs rounded-xl transition-all shadow-md">
+                class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-2 bg-slate-900/90 hover:bg-slate-800 text-cyan-300 border border-cyan-500/40 hover:border-cyan-400 font-mono font-bold text-xs rounded-xl transition-all shadow-md">
                 <span>GitHub</span> <span>↗</span>
               </span>
             </div>
@@ -1057,8 +1124,9 @@
 
         <!-- RIGHT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6 order-1 md:order-2">
-          <div class="diagram-frame diagram-frame-amber p-3.5 arch-grid-bg relative">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[10px] font-mono">
+          <div class="diagram-frame diagram-frame-amber p-2.5 sm:p-3.5 arch-grid-bg relative">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-goldGlow font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-goldGlow animate-ping"></span> ARCH // SYS.02: MSMT PIPELINE
               </span>
@@ -1193,10 +1261,10 @@
                 font-weight="800" text-anchor="middle">+5.15% &middot; 82.6% Win</text>
             </svg>
 
-            <div class="mt-2 flex items-center justify-between text-[9px] font-mono text-slate-400">
-              <span class="text-cyan-300">Architecture: CUSUM &rarr; Multi-TF &rarr; RoPE Attn &rarr; HMM Gate &rarr;
+            <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
+              <span class="text-cyan-300 truncate">CUSUM &rarr; Multi-TF &rarr; RoPE Attn &rarr; HMM &rarr;
                 L-BFGS</span>
-              <span class="text-goldGlow font-bold">Accuracy: 83.36%</span>
+              <span class="text-goldGlow font-bold shrink-0 ml-1">Acc: 83.36%</span>
             </div>
           </div>
         </div>
@@ -1209,31 +1277,33 @@
   <!-- =========================================================================
        SECTION: COMPLETED RESEARCH & FEATURED PROJECTS
        ========================================================================= -->
-  <section id="projects" class="relative z-10 py-16 px-6 max-w-6xl mx-auto w-full">
-    <div class="flex flex-wrap justify-between items-end mb-10 gap-4">
+  <section id="projects" class="relative z-10 py-16 px-4 sm:px-6 max-w-6xl mx-auto w-full">
+    <div class="flex flex-wrap justify-between items-end mb-8 sm:mb-10 gap-4">
       <div>
         <div class="flex items-center gap-3 mb-2">
-          <div class="h-8 w-1.5 bg-electricCyan rounded-full"></div>
-          <h2 class="text-3xl font-heading font-bold text-white">Completed Research &amp; Featured Projects</h2>
+          <div class="h-7 sm:h-8 w-1.5 bg-electricCyan rounded-full"></div>
+          <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white">Completed Research &amp; Featured Projects
+          </h2>
           <span
             class="text-xs font-mono text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-bold">Published
             Benchmarks</span>
         </div>
-        <p class="text-slate-400 text-sm max-w-3xl">
+        <p class="text-slate-400 text-xs sm:text-sm max-w-3xl">
           Completed empirical research benchmarks, sequence classification architectures, and computer vision systems.
         </p>
       </div>
     </div>
 
-    <div class="space-y-10">
+    <div class="space-y-8 sm:space-y-10">
 
       <!-- PROJECT CARD 3: AMBER THEME (Diagram Left, Description Right) -->
       <a href="projects/causal-nli.html"
-        class="project-card-amber p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center block">
+        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
-          <div class="diagram-frame diagram-frame-cyan p-3.5 arch-grid-bg relative">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+          <div class="diagram-frame diagram-frame-cyan p-2.5 sm:p-3.5 arch-grid-bg relative">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-electricCyan font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> ARCH // SYS.03: CAUSAL NLI
               </span>
@@ -1328,9 +1398,9 @@
                 text-anchor="middle">0.00% UNK</text>
             </svg>
 
-            <div class="mt-2 flex items-center justify-between text-[9px] font-mono text-slate-400">
+            <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
               <span>Task: Causal Generative Next-Token</span>
-              <span class="text-cyan-300 font-bold">SNLI Accuracy: 90.43%</span>
+              <span class="text-cyan-300 font-bold">SNLI Acc: 90.43%</span>
             </div>
           </div>
         </div>
@@ -1338,43 +1408,43 @@
         <!-- RIGHT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 03 · AUTOREGRESSIVE NLP &amp; LLMs
               </span>
               <span
-                class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                class="text-[10px] sm:text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-bold">
                 90.43% SNLI Acc
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-1.5 sm:mb-2">
               Natural Language Inference with Causal LMs
             </h3>
-            <p class="text-sm font-mono text-goldGlow mb-3">
+            <p class="text-xs sm:text-sm font-mono text-goldGlow mb-2.5 sm:mb-3">
               Qwen3 (0.6B &amp; 1.7B) &middot; Cross-Genre Generalization &middot; Adversarial Negation
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-4">
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 sm:mb-4">
               Generative 3-way Natural Language Inference (<strong class="text-white">entailment</strong>, <strong
                 class="text-white">neutral</strong>, <strong class="text-white">contradiction</strong>) using
               decoder-only causal language models without auxiliary classification heads.
             </p>
 
-            <div class="space-y-1.5 mb-5 text-xs text-slate-300 font-mono">
-              <div class="flex items-start gap-2">
+            <div class="space-y-1 sm:space-y-1.5 mb-4 sm:mb-5 text-[11px] sm:text-xs text-slate-300 font-mono">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-emerald-400 font-bold whitespace-nowrap">1. In-Domain SFT:</span>
                 <span>Accuracy jumps from 41.29% &rarr; 90.43% on SNLI.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-cyan-300 font-bold whitespace-nowrap">2. Cross-Genre MNLI:</span>
                 <span>83.83% zero-shot transfer across 10 unseen domains.</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-goldGlow font-bold whitespace-nowrap">3. Adversarial Negation:</span>
                 <span>Evaluated on 6,607 inverted hypothesis pairs (60.10%).</span>
               </div>
-              <div class="flex items-start gap-2">
+              <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-electricCyan font-bold whitespace-nowrap">4. Format Precision:</span>
                 <span>0.00% unknown rate after fine-tuning vs 6.80% in zero-shot baselines.</span>
               </div>
@@ -1382,24 +1452,26 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
               <span
-                class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">PyTorch</span>
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">PyTorch</span>
               <span
-                class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">HuggingFace</span>
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">HuggingFace</span>
               <span
-                class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Qwen3-1.7B</span>
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Qwen3-1.7B</span>
               <span
-                class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">bfloat16</span>
-              <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">SNLI
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">bfloat16</span>
+              <span
+                class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">SNLI
                 &amp; Multi-NLI</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Explore Full Architecture &amp; Case Study <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
@@ -1409,33 +1481,33 @@
 
       <!-- PROJECT CARD 4: CYAN THEME (Description Left, Diagram Right) -->
       <a href="projects/park-vision-ai.html"
-        class="block project-card-cyan p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center transition-all">
+        class="block project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl transition-all">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
           <div>
-            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 04 · COMPUTER VISION &amp; ANPR
               </span>
               <span
-                class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                class="text-[10px] sm:text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-bold">
                 89% MOTA Tracking
               </span>
               <span
-                class="text-[11px] font-mono text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 28 FPS Edge Live
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-1.5 sm:mb-2">
               Park-Vision AI
             </h3>
-            <p class="text-sm font-mono text-cyan-400 mb-3">
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mb-2.5 sm:mb-3">
               Cascaded YOLOv8 &middot; SORT Kalman Trajectory &middot; Inverted Binarization &middot; Scipy
               Interpolation
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-5">
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               Production-grade computer vision pipeline engineered for real-time multi-vehicle localization, SORT Kalman
               state estimation (7D kinematic vector), localized license plate detection, and EasyOCR with
               position-specific character disambiguation heuristics and Scipy 1D linear trajectory gap-filling.
@@ -1443,26 +1515,33 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">YOLOv8n +
-                Custom YOLO</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">SORT Kalman
-                (7D)</span>
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Hungarian
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">YOLOv8n
+                + Custom YOLO</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">SORT
+                Kalman (7D)</span>
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Hungarian
                 IoU</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">EasyOCR
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">EasyOCR
                 Engine</span>
-              <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Syntax
+              <span
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Syntax
                 Disambiguation</span>
-              <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">Scipy
+              <span
+                class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">Scipy
                 Gap-Filling</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Inspect Project Technical Architecture &amp; System Report <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
@@ -1471,8 +1550,9 @@
         <!-- RIGHT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6 order-1 md:order-2">
           <div
-            class="diagram-frame diagram-frame-amber p-3.5 arch-grid-bg relative rounded-2xl border border-amber-500/20">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[10px] font-mono">
+            class="diagram-frame diagram-frame-amber p-2.5 sm:p-3.5 arch-grid-bg relative rounded-2xl border border-amber-500/20">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-goldGlow font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-goldGlow animate-ping"></span> ARCH // SYS.04: CASCADED MOT +
                 ALPR
@@ -1578,9 +1658,9 @@
                 text-anchor="middle">output_video.mp4</text>
             </svg>
 
-            <div class="mt-2 flex items-center justify-between text-[9px] font-mono text-slate-400">
-              <span class="text-cyan-300">Cascaded YOLO &rarr; SORT MOT &rarr; Inverted OCR &rarr; Scipy Gap-Fill</span>
-              <span class="text-goldGlow font-bold">Accuracy: 89% MOTA</span>
+            <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
+              <span class="text-cyan-300 truncate">YOLO &rarr; SORT MOT &rarr; Invert OCR &rarr; Scipy Gap-Fill</span>
+              <span class="text-goldGlow font-bold shrink-0 ml-1">MOTA: 89%</span>
             </div>
           </div>
         </div>
@@ -1589,12 +1669,13 @@
 
       <!-- PROJECT CARD 5: YELLOW/AMBER THEME (Diagram Left, Description Right) -->
       <a href="projects/road-eye.html"
-        class="block project-card-amber p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center rounded-3xl relative overflow-hidden transition-all duration-300">
+        class="block project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl relative overflow-hidden transition-all duration-300">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
           <div
-            class="diagram-frame diagram-frame-cyan p-3.5 arch-grid-bg relative rounded-2xl border border-cyan-500/20">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+            class="diagram-frame diagram-frame-cyan p-2.5 sm:p-3.5 arch-grid-bg relative rounded-2xl border border-cyan-500/20">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-electricCyan font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> ARCH // SYS.05: DYNAMIC ROI
                 PIPELINE
@@ -1662,9 +1743,9 @@
                 text-anchor="middle">Flow Rate</text>
             </svg>
 
-            <div class="mt-2 flex items-center justify-between text-[9px] font-mono text-slate-400">
-              <span>Multi-Class Directional Flow Line</span>
-              <span class="text-goldGlow font-bold">FPS Gain: 2.43x</span>
+            <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
+              <span class="truncate">Multi-Class Directional Flow Line</span>
+              <span class="text-goldGlow font-bold shrink-0 ml-1">FPS Gain: 2.43x</span>
             </div>
           </div>
         </div>
@@ -1672,24 +1753,24 @@
         <!-- RIGHT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 05 · EDGE VISION &amp; FLOW TELEMETRY
               </span>
               <span
-                class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                class="text-[10px] sm:text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-bold">
                 &lt; 15ms Latency
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-goldGlow transition-colors mb-1.5 sm:mb-2">
               Road-Eye Traffic Monitor
             </h3>
-            <p class="text-sm font-mono text-slate-300 mb-3">
+            <p class="text-xs sm:text-sm font-mono text-slate-300 mb-2.5 sm:mb-3">
               Dynamic Region-of-Interest Cropping &middot; High-Throughput Edge YOLOv8
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-5">
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               High-throughput vehicle detection and highway traffic flow analytics system. Employs dynamic
               Region-of-Interest (ROI) spatial cropping to eliminate 68.8% of redundant pixel computation, boosting edge
               YOLOv8
@@ -1699,24 +1780,30 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">OpenCV</span>
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">YOLOv8</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Python
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">OpenCV</span>
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">YOLOv8</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Python
                 3.8+</span>
-              <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Dynamic
+              <span
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Dynamic
                 ROI</span>
               <span
-                class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Telemetry</span>
-              <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">-68.8%
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Telemetry</span>
+              <span
+                class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">-68.8%
                 FLOPs</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Inspect Project Technical Architecture &amp; System Report <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
@@ -1726,28 +1813,28 @@
 
       <!-- PROJECT CARD 6: CYAN THEME (Description Left, Diagram Right) -->
       <a href="projects/astro-vista.html"
-        class="block project-card-cyan p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-8 items-center rounded-3xl relative overflow-hidden transition-all duration-300">
+        class="block project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl relative overflow-hidden transition-all duration-300">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
           <div>
-            <div class="flex items-center gap-2 mb-2.5">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
               <span
-                class="text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                class="text-[10px] sm:text-[11px] font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2 sm:px-2.5 py-0.5 rounded-full font-semibold">
                 06 · INTERACTIVE WEBGL &amp; ASTRODYNAMICS
               </span>
               <span
-                class="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                class="text-[10px] sm:text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 sm:px-2.5 py-0.5 rounded-full font-bold">
                 60 FPS WebGL
               </span>
             </div>
             <h3
-              class="text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-2">
+              class="text-xl sm:text-2xl font-heading font-extrabold text-white group-hover:text-electricCyan transition-colors mb-1.5 sm:mb-2">
               Astro-Vista 3D
             </h3>
-            <p class="text-sm font-mono text-cyan-400 mb-3">
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mb-2.5 sm:mb-3">
               Interactive 3D Solar Simulation &middot; Keplerian Orbital Mechanics &middot; Radial UV Rings
             </p>
-            <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-5">
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               Interactive 3D Solar System simulation built with Three.js and WebGL. Features the Sun, all 8 celestial
               planets textured in 8K, custom radial polar UV mapping for Saturn's rings, a dynamic 100+ asteroid belt,
               collision-free camera zooming, and dual-layer real-time orbital time controllers.
@@ -1755,26 +1842,33 @@
           </div>
 
           <div>
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-mono">
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Three.js
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 text-[11px] sm:text-xs font-mono">
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Three.js
                 (r128)</span>
-              <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">WebGL /
-                GLSL</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">JavaScript
+              <span
+                class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">WebGL
+                / GLSL</span>
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">JavaScript
                 ES6+</span>
-              <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Kepler
+              <span
+                class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Kepler
                 Math</span>
-              <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Radial UV
-                Rings</span>
-              <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">60 FPS
-                Realtime</span>
+              <span
+                class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Radial
+                UV Rings</span>
+              <span
+                class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">60
+                FPS Realtime</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span
-                class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                Inspect Project Technical Architecture &amp; System Report <span
-                  class="group-hover:translate-x-1 transition-transform">→</span>
+                class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
+                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
+                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
@@ -1783,8 +1877,9 @@
         <!-- RIGHT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6 order-1 md:order-2">
           <div
-            class="diagram-frame diagram-frame-amber p-3.5 arch-grid-bg relative rounded-2xl border border-amber-500/20">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[10px] font-mono">
+            class="diagram-frame diagram-frame-amber p-2.5 sm:p-3.5 arch-grid-bg relative rounded-2xl border border-amber-500/20">
+            <div
+              class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[9px] sm:text-[10px] font-mono">
               <span class="text-goldGlow font-bold flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-goldGlow animate-ping"></span> ARCH // SYS.06: 3D SOLAR SYSTEM
               </span>
@@ -1978,16 +2073,16 @@
     </div>
   </section>
 
-  <section id="experience" class="relative z-10 py-16 px-6 max-w-6xl mx-auto w-full">
-    <div class="flex items-center gap-3 mb-8">
-      <div class="h-8 w-1.5 bg-goldGlow rounded-full"></div>
-      <h2 class="text-3xl font-heading font-bold text-white">Experiences</h2>
+  <section id="experience" class="relative z-10 py-16 px-4 sm:px-6 max-w-6xl mx-auto w-full">
+    <div class="flex items-center gap-3 mb-8 sm:mb-10">
+      <div class="h-7 sm:h-8 w-1.5 bg-goldGlow rounded-full"></div>
+      <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white">Experiences</h2>
     </div>
 
-    <div class="space-y-6">
+    <div class="space-y-6 sm:space-y-8">
 
       <!-- EXPERIENCE CARD 1: UNIVERSITY OF BONN (AMBER/YELLOW THEME) -->
-      <div class="project-card-amber p-6 md:p-8 rounded-2xl group">
+      <div class="project-card-amber p-4 sm:p-6 md:p-8 rounded-2xl group">
         <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
           <div>
             <div class="flex items-center gap-2 mb-1">
@@ -1996,25 +2091,27 @@
                 Research Project · Germany 🇩🇪
               </span>
             </div>
-            <h3 class="text-xl font-heading font-bold text-white group-hover:text-goldGlow transition-colors">
+            <h3
+              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-goldGlow transition-colors">
               University of Bonn
             </h3>
-            <p class="text-sm text-goldGlow font-mono font-semibold">Decoder Compact LLM as Classifier</p>
+            <p class="text-xs sm:text-sm text-goldGlow font-mono font-semibold">Decoder Compact LLM as Classifier</p>
           </div>
           <span
-            class="text-xs font-mono text-slate-300 bg-amber-950/60 border border-amber-500/30 px-3 py-1 rounded-full">
+            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-amber-950/60 border border-amber-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
             May 2026 – Jul 2026
           </span>
         </div>
 
-        <p class="text-slate-300 text-sm leading-relaxed mb-3 font-sans">
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3 font-sans">
           Engineered a specialized sequence classification architecture on top of compact decoder-only causal language
           models (0.6B &amp; 1.7B parameters). Rather than prompting the LLM to generate autoregressive text tokens,
           directly extracted the final token hidden state representations and routed them through a dedicated
           classification head to eliminate generation hallucination.
         </p>
 
-        <ul class="space-y-2 text-slate-300 text-sm list-disc list-inside leading-relaxed mb-4">
+        <ul
+          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
           <li>Attached custom linear/MLP classification projection heads atop final causal token states, converting
             generative LLMs into fast, deterministic multi-class inference models.</li>
           <li>Fine-tuned on 570,000+ sentence pairs using Low-Rank Adaptation (<code
@@ -2024,24 +2121,31 @@
             while preserving domain-specific classification boundaries.</li>
         </ul>
 
-        <div class="flex flex-wrap gap-2 text-xs font-mono pt-3 border-t border-amber-500/20">
-          <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Causal Decoder
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-amber-500/20">
+          <span
+            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Causal
+            Decoder
             LLMs</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Classification
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Classification
             Head</span>
-          <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">PyTorch
+          <span
+            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">PyTorch
             DDP</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">LoRA
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">LoRA
             (bfloat16)</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">Hugging
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">Hugging
             Face</span>
-          <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">570k
+          <span
+            class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">570k
             Samples</span>
         </div>
       </div>
 
       <!-- EXPERIENCE CARD 2: BLUESTOCK FINTECH (CYAN/BLUE THEME) -->
-      <div class="project-card-cyan p-6 md:p-8 rounded-2xl group">
+      <div class="project-card-cyan p-4 sm:p-6 md:p-8 rounded-2xl group">
         <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
           <div>
             <div class="flex items-center gap-2 mb-1">
@@ -2050,18 +2154,20 @@
                 Industry Internship · Bluestock Fintech 🇮🇳
               </span>
             </div>
-            <h3 class="text-xl font-heading font-bold text-white group-hover:text-electricCyan transition-colors">
+            <h3
+              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-electricCyan transition-colors">
               Bluestock Fintech
             </h3>
-            <p class="text-sm text-cyan-400 font-mono font-semibold">Software Development Engineer Intern</p>
+            <p class="text-xs sm:text-sm text-cyan-400 font-mono font-semibold">Software Development Engineer Intern</p>
           </div>
           <span
-            class="text-xs font-mono text-slate-300 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full">
+            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
             Feb 2025 – Jun 2025
           </span>
         </div>
 
-        <ul class="space-y-2 text-slate-300 text-sm list-disc list-inside leading-relaxed mb-4">
+        <ul
+          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
           <li>Built high-throughput fintech infrastructure, including Stock Scanner and real-time IPO management
             microservices handling low-latency financial feeds.</li>
           <li>Integrated machine learning models for quantitative market analytics, lowering query execution latencies
@@ -2070,19 +2176,25 @@
           </li>
         </ul>
 
-        <div class="flex flex-wrap gap-2 text-xs font-mono pt-3 border-t border-cyan-500/20">
-          <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Node.js</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">FastAPI</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">PostgreSQL</span>
-          <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Redis</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">WebSockets</span>
-          <span class="bg-slate-900/90 text-cyan-300 px-2.5 py-1 rounded-md border border-cyan-500/30">Fintech
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-cyan-500/20">
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Node.js</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">FastAPI</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">PostgreSQL</span>
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Redis</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">WebSockets</span>
+          <span
+            class="bg-slate-900/90 text-cyan-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-cyan-500/30">Fintech
             Infrastructure</span>
         </div>
       </div>
 
       <!-- EXPERIENCE CARD 3: IIIT SONIPAT (AMBER/YELLOW THEME) -->
-      <div class="project-card-amber p-6 md:p-8 rounded-2xl group">
+      <div class="project-card-amber p-4 sm:p-6 md:p-8 rounded-2xl group">
         <div class="flex flex-wrap justify-between items-baseline mb-3 gap-2">
           <div>
             <div class="flex items-center gap-2 mb-1">
@@ -2091,24 +2203,27 @@
                 Bachelor's Thesis · IIIT Sonipat 🎓
               </span>
             </div>
-            <h3 class="text-xl font-heading font-bold text-white group-hover:text-goldGlow transition-colors">
+            <h3
+              class="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-goldGlow transition-colors">
               IIIT Sonipat
             </h3>
-            <p class="text-sm text-goldGlow font-mono font-semibold">Autonomous Vehicle Localization &amp; Tracking
+            <p class="text-xs sm:text-sm text-goldGlow font-mono font-semibold">Autonomous Vehicle Localization &amp;
+              Tracking
               (Park-Vision AI)</p>
           </div>
           <span
-            class="text-xs font-mono text-slate-300 bg-amber-950/60 border border-amber-500/30 px-3 py-1 rounded-full">
+            class="text-[11px] sm:text-xs font-mono text-slate-300 bg-amber-950/60 border border-amber-500/30 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full">
             Feb 2025 – May 2025
           </span>
         </div>
 
-        <p class="text-slate-300 text-sm leading-relaxed mb-3 font-sans">
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3 font-sans">
           Conducted bachelor's thesis research on edge-optimized multi-vehicle spatial localization, continuous temporal
           trajectory estimation, and automated number plate recognition (ANPR) on 1080p RTSP video streams.
         </p>
 
-        <ul class="space-y-2 text-slate-300 text-sm list-disc list-inside leading-relaxed mb-4">
+        <ul
+          class="space-y-1.5 sm:space-y-2 text-slate-300 text-xs sm:text-sm list-disc list-inside leading-relaxed mb-4">
           <li>Combined custom CNN feature extractors with YOLOv8 bounding-box detection to accurately locate multi-class
             vehicles under varying illumination and camera angles.</li>
           <li>Integrated the Simple Online and Realtime Tracking (<code class="text-goldGlow">SORT</code>) algorithm
@@ -2118,15 +2233,22 @@
             identify and catalogue license plates in real-time at 28 FPS.</li>
         </ul>
 
-        <div class="flex flex-wrap gap-2 text-xs font-mono pt-3 border-t border-amber-500/20">
-          <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">Computer
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono pt-3 border-t border-amber-500/20">
+          <span
+            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">Computer
             Vision</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">YOLOv8</span>
-          <span class="bg-slate-900/90 text-goldGlow px-2.5 py-1 rounded-md border border-amber-500/30">SORT Kalman
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">YOLOv8</span>
+          <span
+            class="bg-slate-900/90 text-goldGlow px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-amber-500/30">SORT
+            Kalman
             Filters</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">EasyOCR</span>
-          <span class="bg-slate-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">OpenCV</span>
-          <span class="bg-slate-900/90 text-emerald-400 px-2.5 py-1 rounded-md border border-emerald-500/30">89%
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">EasyOCR</span>
+          <span
+            class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">OpenCV</span>
+          <span
+            class="bg-slate-900/90 text-emerald-400 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-emerald-500/30">89%
             MOTA</span>
         </div>
       </div>
@@ -2134,23 +2256,23 @@
     </div>
   </section>
 
-  <section id="contact" class="relative z-10 py-16 px-4 md:px-8 max-w-4xl mx-auto w-full">
+  <section id="contact" class="relative z-10 py-16 px-3 sm:px-6 max-w-4xl mx-auto w-full">
 
     <!-- Section Header -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center gap-2 mb-2">
         <div class="h-6 w-1.5 bg-goldGlow rounded-full"></div>
-        <h2 class="text-3xl font-heading font-bold text-white">Let's Connect</h2>
+        <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white">Let's Connect</h2>
         <div class="h-6 w-1.5 bg-electricCyan rounded-full"></div>
       </div>
-      <p class="text-slate-400 text-xs md:text-sm font-mono max-w-lg mx-auto">
+      <p class="text-slate-400 text-xs sm:text-sm font-mono max-w-lg mx-auto px-2">
         Available for AI/ML Engineering roles, Quantitative System Development &amp; Research Collaborations
       </p>
     </div>
 
     <!-- CENTERED CONTACT FORM CARD (AMBER THEME) -->
-    <div class="project-card-amber p-6 md:p-10 rounded-3xl relative max-w-2xl mx-auto shadow-2xl">
-      <div class="flex items-center justify-between border-b border-amber-500/20 pb-4 mb-6">
+    <div class="project-card-amber p-4 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl relative max-w-2xl mx-auto shadow-2xl">
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-3 sm:pb-4 mb-4 sm:mb-6">
         <div class="flex items-center gap-2">
           <span class="relative flex h-2.5 w-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -2159,61 +2281,65 @@
           <span class="text-xs font-mono text-goldGlow font-bold">Direct Transmission Portal</span>
         </div>
         <span
-          class="text-[10px] font-mono text-slate-400 bg-slate-900/80 border border-slate-700/60 px-2.5 py-0.5 rounded-full">
+          class="text-[10px] font-mono text-slate-400 bg-slate-900/80 border border-slate-700/60 px-2 sm:px-2.5 py-0.5 rounded-full">
           Bonn (CET) · Active
         </span>
       </div>
 
-      <form id="portfolioContactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+      <form id="portfolioContactForm" onsubmit="handleContactSubmit(event)" class="space-y-3.5 sm:space-y-4">
         <!-- Web3Forms Configuration -->
         <input type="hidden" name="access_key" value="c960571e-72a0-433d-8027-f4a4d8442abe">
         <input type="hidden" name="from_name" value="Portfolio Transmission Portal">
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">YOUR NAME *</label>
+            <label class="block text-[11px] sm:text-xs font-mono text-slate-300 mb-1 sm:mb-1.5 font-semibold">YOUR NAME
+              *</label>
             <input type="text" name="name" required placeholder="Collaborator / Hiring Lead"
-              class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
+              class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
           </div>
           <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">YOUR EMAIL *</label>
+            <label class="block text-[11px] sm:text-xs font-mono text-slate-300 mb-1 sm:mb-1.5 font-semibold">YOUR EMAIL
+              *</label>
             <input type="email" name="email" required placeholder="contact@company.com"
-              class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
+              class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">SUBJECT / TOPIC</label>
+          <label class="block text-[11px] sm:text-xs font-mono text-slate-300 mb-1 sm:mb-1.5 font-semibold">SUBJECT /
+            TOPIC</label>
           <input type="text" name="custom_subject"
             placeholder="Project collaboration / Engineering role / Quant architecture"
-            class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
+            class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white focus:outline-none transition-all placeholder:text-slate-600">
         </div>
 
         <div>
-          <label class="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">MESSAGE *</label>
+          <label class="block text-[11px] sm:text-xs font-mono text-slate-300 mb-1 sm:mb-1.5 font-semibold">MESSAGE
+            *</label>
           <textarea name="message" rows="4" required
             placeholder="Hi Kapil, I'd like to discuss sequence modeling, LLM pipelines, or opportunity..."
-            class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-all placeholder:text-slate-600 resize-none"></textarea>
+            class="w-full bg-slate-950/80 border border-slate-700/80 focus:border-goldGlow rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white focus:outline-none transition-all placeholder:text-slate-600 resize-none"></textarea>
         </div>
 
         <!-- Real-Time Feedback Notification Box -->
         <div id="contactStatusBox" class="hidden"></div>
 
         <button id="contactSubmitBtn" type="submit"
-          class="w-full py-3.5 bg-gradient-to-r from-goldGlow via-amber-400 to-amberFire hover:brightness-110 text-slate-950 font-bold rounded-xl shadow-lg transition-all font-heading text-sm flex items-center justify-center gap-2">
+          class="w-full py-3 sm:py-3.5 bg-gradient-to-r from-goldGlow via-amber-400 to-amberFire hover:brightness-110 text-slate-950 font-bold rounded-xl shadow-lg transition-all font-heading text-xs sm:text-sm flex items-center justify-center gap-2">
           <span>Transmit Message</span> <span>🚀</span>
         </button>
       </form>
 
       <div
-        class="mt-6 pt-4 border-t border-amber-500/15 flex flex-wrap justify-between items-center gap-3 text-xs font-mono text-slate-400">
-        <div class="flex items-center gap-2">
+        class="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-amber-500/15 flex flex-wrap justify-between items-center gap-2.5 sm:gap-3 text-xs font-mono text-slate-400">
+        <div class="flex items-center gap-1.5 sm:gap-2">
           <span>Primary Email:</span>
           <span class="text-goldGlow font-semibold">Kapilsandhu2021@gmail.com</span>
         </div>
         <button type="button" onclick="copyEmailToClipboard()"
-          class="px-3 py-1.5 bg-slate-900 border border-slate-700 hover:border-goldGlow text-slate-300 hover:text-white rounded-lg transition-colors flex items-center gap-1.5 text-xs">
+          class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-900 border border-slate-700 hover:border-goldGlow text-slate-300 hover:text-white rounded-lg transition-colors flex items-center gap-1.5 text-xs">
           <span>📋</span> <span>Copy Address</span>
         </button>
       </div>
@@ -2227,14 +2353,14 @@
   </section>
   <!-- BOTTOM BAR: SLEEK TRANSPARENT CYAN WITH BOLD YELLOW MESSAGE -->
   <footer
-    class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-6 flex flex-col items-center justify-center text-center">
+    class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
     <div
-      class="flex items-center justify-center gap-2 text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
+      class="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
       <span>Designed with</span>
-      <span class="text-rose-500 text-lg md:text-xl inline-block animate-pulse" title="love">❤️</span>
+      <span class="text-rose-500 text-base sm:text-lg md:text-xl inline-block animate-pulse" title="love">❤️</span>
       <span>in Germany</span>
     </div>
-    <div class="text-xs md:text-sm font-mono font-bold text-cyan-300 mt-1">
+    <div class="text-[11px] sm:text-xs md:text-sm font-mono font-bold text-cyan-300 mt-1">
       &copy; 2026 Kapil Sandhu &middot; University of Bonn
     </div>
   </footer>
@@ -2242,6 +2368,26 @@
   <div id="modalContainer"></div>
 
   <script>
+    /* =========================================================================
+       0. MOBILE MENU CONTROLLER
+       ========================================================================= */
+    function toggleMobileNav() {
+      const drawer = document.getElementById('mobileNavDrawer');
+      const hamburger = document.getElementById('hamburgerIcon');
+      const closeIcon = document.getElementById('closeNavIcon');
+      if (!drawer) return;
+      const isOpen = !drawer.classList.contains('hidden');
+      if (isOpen) {
+        drawer.classList.add('hidden');
+        if (hamburger) hamburger.classList.remove('hidden');
+        if (closeIcon) closeIcon.classList.add('hidden');
+      } else {
+        drawer.classList.remove('hidden');
+        if (hamburger) hamburger.classList.add('hidden');
+        if (closeIcon) closeIcon.classList.remove('hidden');
+      }
+    }
+
     /* =========================================================================
        1. GLOBAL STEVEN MENGIN-STYLE FLUID GOLDEN CLOUDS
        ========================================================================= */
@@ -2353,7 +2499,6 @@
     window.addEventListener('resize', resizeNNCanvas);
     setTimeout(resizeNNCanvas, 100);
 
-
     // EXACT TOPOLOGY: 4 Input -> 3 Hidden (10 nodes each) -> 4 Output (330 synapses)
     const layers = [4, 10, 10, 10, 4];
     const synapses = [];
@@ -2447,18 +2592,18 @@
     }
     setAllNodesActive();
 
-    // Node coordinates: hidden layers spread further than input/output
+    // Node coordinates: dynamically adaptive for mobile, tablet, and desktop
     function getNodeCoords(layerIdx, nodeIdx) {
       const w = nnCanvas.width;
       const h = nnCanvas.height;
-      const paddingX = 40;
+      const isMobile = w < 480;
+      const isTablet = w < 768;
+      const paddingX = isMobile ? 18 : (isTablet ? 28 : 40);
       const x = paddingX + (layerIdx / (layers.length - 1)) * (w - paddingX * 2);
       const count = layers[layerIdx];
 
-      // Hidden layers get tight top/bottom margin so 10 nodes spread tall;
-      // input/output (4 nodes) are centered with generous margin.
       const isHidden = layerIdx > 0 && layerIdx < layers.length - 1;
-      const topPadding = isHidden ? 10 : 70;
+      const topPadding = isHidden ? (isMobile ? 12 : 10) : (isMobile ? 32 : (isTablet ? 50 : 70));
       const availableHeight = h - topPadding * 2;
       const spacingY = availableHeight / (count + 1);
       const y = topPadding + (nodeIdx + 1) * spacingY;

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AstroVista 3D — Real-Time 3D Solar System & Astrodynamics Engine | Kapil Sandhu</title>
   <link rel="icon" type="image/svg+xml" href="../assets/favicons/favicon-astrovista.svg">
-  <meta name="description" content="Interactive 3D Solar System simulation built with Three.js and WebGL. Features 8 celestial planets with 8K textures, Keplerian orbital mechanics, custom radial UV mapping for Saturn's rings, procedural asteroid belt, and dual-layer time controls.">
+  <meta name="description"
+    content="Interactive 3D Solar System simulation built with Three.js and WebGL. Features 8 celestial planets with 8K textures, Keplerian orbital mechanics, custom radial UV mapping for Saturn's rings, procedural asteroid belt, and dual-layer time controls.">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +15,9 @@
   <!-- Google Fonts: Space Grotesk, Inter, Fira Code, Orbitron -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- KaTeX for Mathematical Equations -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -55,6 +59,7 @@
       border: 1px solid rgba(255, 184, 0, 0.22);
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     }
+
     .glass-card-cyan {
       background: rgba(8, 18, 36, 0.75);
       backdrop-filter: blur(16px);
@@ -62,6 +67,7 @@
       border: 1px solid rgba(0, 240, 255, 0.28);
       box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.08);
     }
+
     .glass-card-amber {
       background: rgba(22, 16, 8, 0.75);
       backdrop-filter: blur(16px);
@@ -69,58 +75,112 @@
       border: 1px solid rgba(255, 184, 0, 0.32);
       box-shadow: 0 8px 32px 0 rgba(255, 184, 0, 0.08);
     }
+
     .bg-grid-pattern {
       background-size: 36px 36px;
-      background-image: 
+      background-image:
         linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
     }
+
     .hero-glow-cyan {
       box-shadow: 0 0 45px -10px rgba(0, 240, 255, 0.35);
     }
+
     .hero-glow-amber {
       box-shadow: 0 0 45px -10px rgba(255, 184, 0, 0.35);
     }
+
     .arch-flow-pulse {
       animation: archPulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
+
     @keyframes archPulse {
-      0%, 100% { opacity: 0.35; stroke-dashoffset: 0; }
-      50% { opacity: 1; stroke-dashoffset: -12; }
+
+      0%,
+      100% {
+        opacity: 0.35;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        opacity: 1;
+        stroke-dashoffset: -12;
+      }
     }
+
     .solar-rotate-cw {
       animation: solarOrbitCW 32s linear infinite;
       transform-origin: 510px 180px;
     }
+
     .solar-rotate-ccw {
       animation: solarOrbitCCW 44s linear infinite;
       transform-origin: 510px 180px;
     }
+
     @keyframes solarOrbitCW {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
+
     @keyframes solarOrbitCCW {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
+      from {
+        transform: rotate(360deg);
+      }
+
+      to {
+        transform: rotate(0deg);
+      }
     }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
       background: rgba(5, 7, 13, 0.8);
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: rgba(0, 240, 255, 0.35);
       border-radius: 4px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(0, 240, 255, 0.6);
     }
+
+    /* KaTeX Mathematical Formulas Mobile Optimization */
+    .katex-display {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      max-width: 100% !important;
+      padding: 6px 0 !important;
+      margin: 0.4em 0 !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .katex {
+      font-size: 0.96em;
+    }
+
+    @media (max-width: 640px) {
+      .katex {
+        font-size: 0.84em;
+      }
+    }
   </style>
 </head>
-<body class="bg-deepNavy text-slate-200 font-sans antialiased selection:bg-cyan-500/30 selection:text-white bg-grid-pattern min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+<body
+  class="bg-deepNavy text-slate-200 font-sans antialiased selection:bg-cyan-500/30 selection:text-white bg-grid-pattern min-h-screen flex flex-col justify-between relative overflow-x-hidden w-full max-w-[100vw]">
 
   <!-- Dynamic Cloud & Star Background Canvases -->
   <canvas id="globalCloudCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
@@ -129,25 +189,28 @@
   <!-- =========================================================================
        1. NAVIGATION TOP BAR (Standardized Cyan Glassmorphism)
        ========================================================================= -->
-  <header class="sticky top-0 z-50 w-full bg-cyan-950/35 backdrop-blur-xl border-b border-cyan-500/20 py-3.5 px-4 md:px-8">
+  <header
+    class="sticky top-0 z-50 w-full bg-cyan-950/45 backdrop-blur-xl border-b border-cyan-500/20 py-2.5 sm:py-3.5 px-3 sm:px-6 md:px-8">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <!-- Logo / Back Link -->
-      <a href="../index.html" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 font-mono font-bold text-base shadow-lg group-hover:scale-105 group-hover:border-cyan-400 transition-all">
+      <a href="../index.html" class="flex items-center gap-2 sm:gap-3 group">
+        <div
+          class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-300 font-mono font-bold text-sm sm:text-base shadow-lg group-hover:scale-105 group-hover:border-cyan-400 transition-all shrink-0">
           KS
         </div>
         <div class="flex flex-col">
-          <span class="text-white font-heading font-extrabold text-lg md:text-xl tracking-tight group-hover:text-goldGlow transition-colors">
+          <span
+            class="text-white font-heading font-extrabold text-base sm:text-lg md:text-xl tracking-tight group-hover:text-goldGlow transition-colors">
             Kapil Sandhu
           </span>
-          <span class="text-[11px] font-mono text-cyan-300 font-bold -mt-0.5">
+          <span class="text-[10px] sm:text-[11px] font-mono text-cyan-300 font-bold -mt-0.5">
             Uni Bonn · AI &amp; ML Research
           </span>
         </div>
       </a>
 
       <!-- Navigation & Action Links -->
-      <div class="flex items-center gap-3 md:gap-4">
+      <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
         <a href="../index.html#ongoing-projects"
           class="hidden sm:inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-cyan-300 hover:text-white transition-colors font-bold">
           <span>&larr;</span> <span>On-Going</span>
@@ -158,8 +221,8 @@
         </a>
 
         <a href="https://github.com/Kapil-Sandhu/Astro-Vista" target="_blank" rel="noopener"
-          class="px-3.5 py-2 text-xs font-mono font-bold text-slate-200 hover:text-white bg-slate-900/90 border border-slate-700 hover:border-goldGlow rounded-xl transition-all flex items-center gap-1.5 shadow-md">
-          <svg class="w-4 h-4 text-goldGlow" fill="currentColor" viewBox="0 0 24 24">
+          class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-mono font-bold text-slate-200 hover:text-white bg-slate-900/90 border border-slate-700 hover:border-goldGlow rounded-xl transition-all flex items-center gap-1.5 shadow-md">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-goldGlow" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
           </svg>
@@ -167,12 +230,13 @@
         </a>
 
         <a href="../assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener"
-          class="px-4 py-2 text-xs font-mono font-extrabold text-slate-950 bg-gradient-to-r from-cyan-400 to-electricCyan hover:from-cyan-300 hover:to-cyan-200 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 flex items-center gap-1.5 cursor-pointer">
+          class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-mono font-extrabold text-slate-950 bg-gradient-to-r from-cyan-400 to-electricCyan hover:from-cyan-300 hover:to-cyan-200 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 flex items-center gap-1.5 cursor-pointer">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          <span>Download CV</span>
+          <span class="hidden sm:inline">Download CV</span>
+          <span class="sm:hidden">CV</span>
         </a>
       </div>
     </div>
@@ -181,44 +245,50 @@
   <!-- =========================================================================
        2. HERO SECTION & PROJECT BANNER
        ========================================================================= -->
-  <main class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 space-y-12 flex-1">
+  <main
+    class="relative z-10 w-full max-w-7xl min-w-0 mx-auto px-3 sm:px-6 md:px-8 py-6 sm:py-10 md:py-12 space-y-10 sm:space-y-12 flex-1">
 
     <!-- Hero Title & Breadcrumb -->
-    <div class="space-y-4">
-      <div class="flex flex-wrap items-center gap-2.5">
-        <span class="px-3 py-1 text-xs font-mono font-bold bg-cyan-950/80 border border-cyan-500/40 text-electricCyan rounded-full">
+    <div class="space-y-3 sm:space-y-4">
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2.5">
+        <span
+          class="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono font-bold bg-cyan-950/80 border border-cyan-500/40 text-electricCyan rounded-full">
           SYS.06 · INTERACTIVE WEBGL &amp; 3D ASTRODYNAMICS
         </span>
-        <span class="px-3 py-1 text-xs font-mono font-semibold bg-amber-950/80 border border-amber-500/40 text-goldGlow rounded-full">
+        <span
+          class="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono font-semibold bg-amber-950/80 border border-amber-500/40 text-goldGlow rounded-full">
           60 FPS Real-Time Engine
         </span>
-        <span class="px-3 py-1 text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 rounded-full font-bold">
+        <span
+          class="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 rounded-full font-bold">
           8 Planets + 100+ Asteroids
         </span>
-        <span class="px-3 py-1 text-xs font-mono text-slate-400 bg-slate-900/80 border border-slate-700/60 rounded-full">
+        <span
+          class="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono text-slate-400 bg-slate-900/80 border border-slate-700/60 rounded-full">
           Three.js (r128) · WebGL · OrbitControls
         </span>
       </div>
 
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
         <div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight">
+          <h1 class="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight">
             AstroVista 3D
           </h1>
-          <p class="text-base sm:text-lg font-mono text-cyan-300 mt-2 max-w-3xl">
-            Interactive Browser-Based 3D Solar System Simulation Engine with Keplerian Orbital Mechanics, Custom Radial UV Ring Unwraps &amp; Dual-Layer Time Controllers
+          <p class="text-xs sm:text-base md:text-lg font-mono text-cyan-300 mt-1.5 sm:mt-2 max-w-3xl">
+            Interactive Browser-Based 3D Solar System Simulation Engine with Keplerian Orbital Mechanics, Custom Radial
+            UV Ring Unwraps &amp; Dual-Layer Time Controllers
           </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3 shrink-0">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0">
           <a href="https://github.com/Kapil-Sandhu/Astro-Vista" target="_blank" rel="noopener"
-            class="px-5 py-3 text-xs md:text-sm font-mono font-bold bg-gradient-to-r from-electricCyan via-cyan-400 to-cyan-500 text-slate-950 rounded-xl hover:brightness-110 shadow-lg shadow-cyan-500/20 transition-all flex items-center gap-2">
+            class="px-4 sm:px-5 py-2.5 sm:py-3 text-xs md:text-sm font-mono font-bold bg-gradient-to-r from-electricCyan via-cyan-400 to-cyan-500 text-slate-950 rounded-xl hover:brightness-110 shadow-lg shadow-cyan-500/20 transition-all flex items-center gap-2">
             <span>View Source Code</span>
             <span>&nearr;</span>
           </a>
           <a href="#solar-system-architecture"
-            class="px-4 py-3 text-xs md:text-sm font-mono border border-cyan-500/30 text-cyan-300 hover:text-white hover:border-cyan-400 rounded-xl bg-slate-950/40 transition-colors">
-            <span>Inspect Solar Model</span> &darr;
+            class="px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm font-mono border border-cyan-500/30 text-cyan-300 hover:text-white hover:border-cyan-400 rounded-xl bg-slate-950/40 transition-colors">
+            <span>Explore 3D Architecture</span> &darr;
           </a>
         </div>
       </div>
@@ -274,16 +344,19 @@
             </h2>
           </div>
           <p class="text-xs font-mono text-cyan-400 mt-1">
-            Sun (PointLight $R=30$) &rarr; Rocky Orbits (Mercury, Venus, Earth, Mars) &rarr; Asteroid Belt ($D=72\dots78$) &rarr; Gas Giants (Jupiter, Saturn, Uranus, Neptune)
+            Sun (PointLight $R=30$) &rarr; Rocky Orbits (Mercury, Venus, Earth, Mars) &rarr; Asteroid Belt
+            ($D=72\dots78$) &rarr; Gas Giants (Jupiter, Saturn, Uranus, Neptune)
           </p>
         </div>
-        <span class="px-3 py-1 text-xs font-mono bg-amber-950/80 border border-amber-500/40 text-goldGlow rounded-lg self-start md:self-auto font-bold">
+        <span
+          class="px-3 py-1 text-xs font-mono bg-amber-950/80 border border-amber-500/40 text-goldGlow rounded-lg self-start md:self-auto font-bold">
           Three.js Scene Graph (r128)
         </span>
       </div>
 
       <!-- High-Fidelity Responsive Solar System SVG Diagram -->
-      <div class="diagram-frame diagram-frame-cyan p-4 md:p-6 bg-slate-950/90 rounded-2xl border border-cyan-500/30 overflow-x-auto">
+      <div
+        class="diagram-frame diagram-frame-cyan p-4 md:p-6 bg-slate-950/90 rounded-2xl border border-cyan-500/30 overflow-x-auto">
         <svg viewBox="0 0 1020 360" class="w-full min-w-[880px] h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <!-- Solar Core & Glow Radiance Gradients -->
@@ -331,26 +404,34 @@
                CONCENTRIC KEPLERIAN ORBITAL ELLIPSES (Centered at x=510, y=180)
                ============================================================= -->
           <!-- 1. Mercury Orbit (r=65, 30) -->
-          <ellipse cx="510" cy="180" rx="68" ry="30" stroke="#00F0FF" stroke-width="0.8" stroke-opacity="0.35" stroke-dasharray="2 3" />
+          <ellipse cx="510" cy="180" rx="68" ry="30" stroke="#00F0FF" stroke-width="0.8" stroke-opacity="0.35"
+            stroke-dasharray="2 3" />
           <!-- 2. Venus Orbit (r=105, 46) -->
-          <ellipse cx="510" cy="180" rx="108" ry="48" stroke="#FDE68A" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="3 4" />
+          <ellipse cx="510" cy="180" rx="108" ry="48" stroke="#FDE68A" stroke-width="0.8" stroke-opacity="0.4"
+            stroke-dasharray="3 4" />
           <!-- 3. Earth Orbit (r=150, 66) -->
           <ellipse cx="510" cy="180" rx="154" ry="68" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.55" />
           <!-- 4. Mars Orbit (r=195, 86) -->
-          <ellipse cx="510" cy="180" rx="198" ry="88" stroke="#F87171" stroke-width="0.8" stroke-opacity="0.45" stroke-dasharray="3 3" />
+          <ellipse cx="510" cy="180" rx="198" ry="88" stroke="#F87171" stroke-width="0.8" stroke-opacity="0.45"
+            stroke-dasharray="3 3" />
 
           <!-- 5. Asteroid Belt Procedural Band (r=230..255, 102..114) -->
-          <ellipse cx="510" cy="180" rx="236" ry="104" stroke="#94A3B8" stroke-width="8" stroke-opacity="0.12" stroke-dasharray="1 8" class="arch-flow-pulse" />
-          <ellipse cx="510" cy="180" rx="246" ry="109" stroke="#CBD5E1" stroke-width="6" stroke-opacity="0.10" stroke-dasharray="2 12" />
+          <ellipse cx="510" cy="180" rx="236" ry="104" stroke="#94A3B8" stroke-width="8" stroke-opacity="0.12"
+            stroke-dasharray="1 8" class="arch-flow-pulse" />
+          <ellipse cx="510" cy="180" rx="246" ry="109" stroke="#CBD5E1" stroke-width="6" stroke-opacity="0.10"
+            stroke-dasharray="2 12" />
 
           <!-- 6. Jupiter Orbit (r=295, 128) -->
-          <ellipse cx="510" cy="180" rx="300" ry="132" stroke="#F59E0B" stroke-width="1.1" stroke-opacity="0.5" stroke-dasharray="4 4" />
+          <ellipse cx="510" cy="180" rx="300" ry="132" stroke="#F59E0B" stroke-width="1.1" stroke-opacity="0.5"
+            stroke-dasharray="4 4" />
           <!-- 7. Saturn Orbit (r=360, 156) -->
           <ellipse cx="510" cy="180" rx="368" ry="160" stroke="#FCD34D" stroke-width="1.1" stroke-opacity="0.5" />
           <!-- 8. Uranus Orbit (r=425, 182) -->
-          <ellipse cx="510" cy="180" rx="432" ry="186" stroke="#67E8F9" stroke-width="0.9" stroke-opacity="0.4" stroke-dasharray="4 5" />
+          <ellipse cx="510" cy="180" rx="432" ry="186" stroke="#67E8F9" stroke-width="0.9" stroke-opacity="0.4"
+            stroke-dasharray="4 5" />
           <!-- 9. Neptune Orbit (r=485, 208) -->
-          <ellipse cx="510" cy="180" rx="490" ry="208" stroke="#38BDF8" stroke-width="0.9" stroke-opacity="0.4" stroke-dasharray="5 5" />
+          <ellipse cx="510" cy="180" rx="490" ry="208" stroke="#38BDF8" stroke-width="0.9" stroke-opacity="0.4"
+            stroke-dasharray="5 5" />
 
           <!-- =============================================================
                CENTRAL SUN & CORONA RADIANCE (x=510, y=180)
@@ -360,12 +441,17 @@
           <!-- Main Solar Mesh -->
           <circle cx="510" cy="180" r="26" fill="#FFB800" filter="url(#sun-bloom)" />
           <circle cx="510" cy="180" r="26" fill="url(#sun-radial-glow)" />
-          <text x="510" y="184" fill="#0A0E1A" font-size="9" font-family="'Space Grotesk', sans-serif" font-weight="900" text-anchor="middle">SUN</text>
+          <text x="510" y="184" fill="#0A0E1A" font-size="9" font-family="'Space Grotesk', sans-serif" font-weight="900"
+            text-anchor="middle">SUN</text>
           <!-- PointLight Radiance Rays -->
-          <line x1="510" y1="140" x2="510" y2="120" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="2 2" />
-          <line x1="510" y1="220" x2="510" y2="240" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="2 2" />
-          <line x1="465" y1="180" x2="445" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="2 2" />
-          <line x1="555" y1="180" x2="575" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="2 2" />
+          <line x1="510" y1="140" x2="510" y2="120" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+            stroke-dasharray="2 2" />
+          <line x1="510" y1="220" x2="510" y2="240" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+            stroke-dasharray="2 2" />
+          <line x1="465" y1="180" x2="445" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+            stroke-dasharray="2 2" />
+          <line x1="555" y1="180" x2="575" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+            stroke-dasharray="2 2" />
 
           <!-- =============================================================
                PLANETARY BODIES WITH ORBITAL NODES & LABELS
@@ -373,30 +459,38 @@
           <!-- 1. Mercury (Angle ~ 310 deg: cx=554, cy=157) -->
           <g>
             <circle cx="554" cy="157" r="4" fill="#94A3B8" stroke="#E2E8F0" stroke-width="0.8" />
-            <text x="554" y="148" fill="#CBD5E1" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Mercury</text>
-            <text x="554" y="172" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=40 · ω=0.40</text>
+            <text x="554" y="148" fill="#CBD5E1" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+              text-anchor="middle">Mercury</text>
+            <text x="554" y="172" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=40 · ω=0.40</text>
           </g>
 
           <!-- 2. Venus (Angle ~ 140 deg: cx=427, cy=211) -->
           <g>
             <circle cx="427" cy="211" r="5.5" fill="#FDE68A" stroke="#F59E0B" stroke-width="0.8" />
-            <text x="427" y="228" fill="#FDE68A" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Venus</text>
-            <text x="427" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=48 · ω=0.30</text>
+            <text x="427" y="228" fill="#FDE68A" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+              text-anchor="middle">Venus</text>
+            <text x="427" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=48 · ω=0.30</text>
           </g>
 
           <!-- 3. Earth (Angle ~ 30 deg: cx=643, cy=146) + Atmosphere Halo -->
           <g filter="url(#planet-glow-cyan)">
             <circle cx="643" cy="146" r="7.8" fill="rgba(0, 240, 255, 0.2)" />
             <circle cx="643" cy="146" r="6.2" fill="#0284C7" stroke="#00F0FF" stroke-width="1.2" />
-            <text x="643" y="132" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="800" text-anchor="middle">Earth ⊕</text>
-            <text x="643" y="164" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=57 · ω=0.25 (1.05x Glow)</text>
+            <text x="643" y="132" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="800"
+              text-anchor="middle">Earth ⊕</text>
+            <text x="643" y="164" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=57 · ω=0.25 (1.05x Glow)</text>
           </g>
 
           <!-- 4. Mars (Angle ~ 220 deg: cx=358, cy=237) -->
           <g>
             <circle cx="358" cy="237" r="5" fill="#EF4444" stroke="#FCA5A5" stroke-width="0.8" />
-            <text x="358" y="254" fill="#FCA5A5" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Mars ♂</text>
-            <text x="358" y="264" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=66 · ω=0.20</text>
+            <text x="358" y="254" fill="#FCA5A5" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+              text-anchor="middle">Mars ♂</text>
+            <text x="358" y="264" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=66 · ω=0.20</text>
           </g>
 
           <!-- 5. Asteroid Belt Representative Particles -->
@@ -408,7 +502,8 @@
             <circle cx="746" cy="174" r="1.3" fill="#94A3B8" />
             <circle cx="752" cy="186" r="1.6" fill="#FDE68A" />
             <rect x="230" y="295" width="140" height="24" rx="4" fill="#0A0E1A" stroke="#64748B" stroke-width="0.8" />
-            <text x="300" y="311" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace" font-weight="600" text-anchor="middle">Asteroid Belt (100+ Debris)</text>
+            <text x="300" y="311" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace" font-weight="600"
+              text-anchor="middle">Asteroid Belt (100+ Debris)</text>
             <line x1="300" y1="295" x2="274" y2="195" stroke="#64748B" stroke-width="0.8" stroke-dasharray="2 2" />
           </g>
 
@@ -418,32 +513,41 @@
             <!-- Cloud bands -->
             <line x1="626" y1="56" x2="648" y2="56" stroke="#B45309" stroke-width="1.8" />
             <line x1="625" y1="63" x2="649" y2="63" stroke="#FDE68A" stroke-width="1.2" stroke-opacity="0.8" />
-            <text x="637" y="40" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace" font-weight="800" text-anchor="middle">Jupiter ♃ (R=10)</text>
-            <text x="637" y="84" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=90 · ω=0.15</text>
+            <text x="637" y="40" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace" font-weight="800"
+              text-anchor="middle">Jupiter ♃ (R=10)</text>
+            <text x="637" y="84" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=90 · ω=0.15</text>
           </g>
 
           <!-- 7. Saturn (Angle ~ 170 deg: cx=148, cy=208) + Custom Radial UV Ring -->
           <g>
             <!-- Planar Ring System -->
-            <ellipse cx="148" cy="208" rx="22" ry="6" fill="url(#saturn-ring-grad)" stroke="#FDE68A" stroke-width="0.6" transform="rotate(-22 148 208)" />
+            <ellipse cx="148" cy="208" rx="22" ry="6" fill="url(#saturn-ring-grad)" stroke="#FDE68A" stroke-width="0.6"
+              transform="rotate(-22 148 208)" />
             <!-- Planet Core -->
             <circle cx="148" cy="208" r="9" fill="#CA8A04" stroke="#FEF08A" stroke-width="1" />
-            <text x="148" y="228" fill="#FDE68A" font-size="8" font-family="'Fira Code', monospace" font-weight="800" text-anchor="middle">Saturn ♄</text>
-            <text x="148" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">Radial UV Unwrap (D=115 · ω=0.10)</text>
+            <text x="148" y="228" fill="#FDE68A" font-size="8" font-family="'Fira Code', monospace" font-weight="800"
+              text-anchor="middle">Saturn ♄</text>
+            <text x="148" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">Radial UV Unwrap (D=115 · ω=0.10)</text>
           </g>
 
           <!-- 8. Uranus (Angle ~ 335 deg: cx=901, cy=101) -->
           <g>
             <circle cx="901" cy="101" r="7.5" fill="#06B6D4" stroke="#67E8F9" stroke-width="1" />
-            <text x="901" y="86" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Uranus ♅</text>
-            <text x="901" y="119" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=135 · ω=0.08</text>
+            <text x="901" y="86" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+              text-anchor="middle">Uranus ♅</text>
+            <text x="901" y="119" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=135 · ω=0.08</text>
           </g>
 
           <!-- 9. Neptune (Angle ~ 205 deg: cx=66, cy=268) -->
           <g>
             <circle cx="66" cy="268" r="7" fill="#2563EB" stroke="#60A5FA" stroke-width="1" />
-            <text x="66" y="287" fill="#60A5FA" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700" text-anchor="middle">Neptune ♆</text>
-            <text x="66" y="297" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace" text-anchor="middle">D=155 · ω=0.06</text>
+            <text x="66" y="287" fill="#60A5FA" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+              text-anchor="middle">Neptune ♆</text>
+            <text x="66" y="297" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              text-anchor="middle">D=155 · ω=0.06</text>
           </g>
 
           <!-- =============================================================
@@ -451,27 +555,36 @@
                ============================================================= -->
           <!-- Top Left Badge: Camera & Raycasting Pipeline -->
           <rect x="20" y="15" width="220" height="52" rx="7" fill="#070D1A" stroke="#00F0FF" stroke-width="1" />
-          <text x="32" y="32" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700">THREE.PerspectiveCamera</text>
-          <text x="32" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Pos (0, 100, 140) · Target (0, 0, 0)</text>
-          <text x="32" y="58" fill="#10B981" font-size="7" font-family="'Fira Code', monospace">updateMinDistance() Clamping</text>
+          <text x="32" y="32" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace"
+            font-weight="700">THREE.PerspectiveCamera</text>
+          <text x="32" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Pos (0, 100, 140) · Target
+            (0, 0, 0)</text>
+          <text x="32" y="58" fill="#10B981" font-size="7" font-family="'Fira Code', monospace">updateMinDistance()
+            Clamping</text>
 
           <!-- Top Right Badge: Time Dilation Multipliers -->
           <rect x="780" y="15" width="220" height="52" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1" />
-          <text x="792" y="32" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700">DUAL-LAYER TIME SCALING</text>
-          <text x="792" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Global Speed × Planet Slider</text>
-          <text x="792" y="58" fill="#FDE68A" font-size="7" font-family="'Fira Code', monospace">θ(t) = θ₀ + (ω · μ_global · μ_i) · Δt</text>
+          <text x="792" y="32" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace"
+            font-weight="700">DUAL-LAYER TIME SCALING</text>
+          <text x="792" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Global Speed × Planet
+            Slider</text>
+          <text x="792" y="58" fill="#FDE68A" font-size="7" font-family="'Fira Code', monospace">θ(t) = θ₀ + (ω ·
+            μ_global · μ_i) · Δt</text>
         </svg>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono pt-2 text-slate-300">
         <div class="bg-slate-900/60 p-3.5 rounded-xl border border-cyan-500/20">
-          <span class="text-electricCyan font-bold">1. PointLight Sun Origin:</span> Illuminates the entire celestial hierarchy radially from $(0,0,0)$, creating physically realistic day/night terminator boundaries.
+          <span class="text-electricCyan font-bold">1. PointLight Sun Origin:</span> Illuminates the entire celestial
+          hierarchy radially from $(0,0,0)$, creating physically realistic day/night terminator boundaries.
         </div>
         <div class="bg-slate-900/60 p-3.5 rounded-xl border border-amber-500/20">
-          <span class="text-goldGlow font-bold">2. Custom Polar Ring UVs:</span> Mathematical re-mapping of Cartesian vertices into concentric polar UV coordinates guarantees distortion-free Saturn rings.
+          <span class="text-goldGlow font-bold">2. Custom Polar Ring UVs:</span> Mathematical re-mapping of Cartesian
+          vertices into concentric polar UV coordinates guarantees distortion-free Saturn rings.
         </div>
         <div class="bg-slate-900/60 p-3.5 rounded-xl border border-emerald-500/20">
-          <span class="text-emerald-400 font-bold">3. Collision-Free Zoom:</span> Dynamic `updateMinDistance` recalculates Euclidean distance to target meshes, preventing camera clipping through planetary surfaces.
+          <span class="text-emerald-400 font-bold">3. Collision-Free Zoom:</span> Dynamic `updateMinDistance`
+          recalculates Euclidean distance to target meshes, preventing camera clipping through planetary surfaces.
         </div>
       </div>
     </section>
@@ -488,7 +601,10 @@
       </div>
 
       <p class="text-sm md:text-base text-slate-300 leading-relaxed">
-        <strong class="text-white">AstroVista</strong> is an interactive, browser-based 3D Solar System simulation engine engineered with <strong>Three.js (r128)</strong> and <strong>WebGL</strong>. It provides real-time, exploratory visualization of our celestial neighborhood—featuring the Sun, the eight major planets, Saturn's complex ring system, and a procedurally distributed asteroid belt of over 100+ individual orbital bodies.
+        <strong class="text-white">AstroVista</strong> is an interactive, browser-based 3D Solar System simulation
+        engine engineered with <strong>Three.js (r128)</strong> and <strong>WebGL</strong>. It provides real-time,
+        exploratory visualization of our celestial neighborhood—featuring the Sun, the eight major planets, Saturn's
+        complex ring system, and a procedurally distributed asteroid belt of over 100+ individual orbital bodies.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
@@ -497,7 +613,8 @@
             <span>🪐</span> Interactive Cosmic Exploration
           </div>
           <p class="text-slate-400 leading-relaxed">
-            Users can freely rotate, tilt, pan, and zoom through interplanetary space using responsive camera OrbitControls, inspecting surface topographies and orbital mechanics from any perspective.
+            Users can freely rotate, tilt, pan, and zoom through interplanetary space using responsive camera
+            OrbitControls, inspecting surface topographies and orbital mechanics from any perspective.
           </p>
         </div>
 
@@ -506,7 +623,8 @@
             <span>⚡</span> Zero-Dependency Web Architecture
           </div>
           <p class="text-slate-400 leading-relaxed">
-            Runs natively in any WebGL-compliant browser without specialized desktop plugins, bulky native runtimes, or complex build toolchains—delivering immediate 60 FPS performance.
+            Runs natively in any WebGL-compliant browser without specialized desktop plugins, bulky native runtimes, or
+            complex build toolchains—delivering immediate 60 FPS performance.
           </p>
         </div>
 
@@ -515,7 +633,8 @@
             <span>🎨</span> 8K Texture Mapping &amp; Coronal Glow
           </div>
           <p class="text-slate-400 leading-relaxed">
-            Features ultra-high-resolution planetary texture maps, Earth atmospheric scattering shells ($1.05\times R$), and a concentric additive solar corona overlay ($1.2\times R$).
+            Features ultra-high-resolution planetary texture maps, Earth atmospheric scattering shells ($1.05\times R$),
+            and a concentric additive solar corona overlay ($1.2\times R$).
           </p>
         </div>
 
@@ -524,89 +643,67 @@
             <span>🔊</span> Deep-Space Audio Immersion
           </div>
           <p class="text-slate-400 leading-relaxed">
-            Integrates an ambient cosmic background soundscape (`Deep Space Sound.mp3`) paired with interactive sci-fi HUD hover tooltips triggered via NDC raycasting.
+            Integrates an ambient cosmic background soundscape (`Deep Space Sound.mp3`) paired with interactive sci-fi
+            HUD hover tooltips triggered via NDC raycasting.
           </p>
         </div>
       </div>
     </section>
 
     <!-- =========================================================================
-         6. SECTION 2: MATHEMATICAL FORMULATIONS & ORBITAL MECHANICS
+         SECTION 2: MATHEMATICAL FORMULATIONS & ASTRODYNAMICS
          ========================================================================= -->
-    <section class="glass-card-amber p-6 md:p-8 rounded-3xl space-y-6">
+    <section class="glass-card p-6 md:p-8 rounded-3xl space-y-6">
       <div class="flex items-center gap-3">
         <span class="text-2xl">📐</span>
-        <h2 class="text-xl md:text-2xl font-heading font-bold text-white">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-goldGlow">
           2. Mathematical Formulations &amp; Astrodynamics
         </h2>
       </div>
 
       <div class="space-y-6 text-xs md:text-sm text-slate-300">
-        <!-- 2.1 Orbital Speed Formulation -->
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/30 space-y-2">
-          <h3 class="text-goldGlow font-mono font-bold text-sm md:text-base">
-            2.1 Keplerian Angular Velocity &amp; Polar Orbital Motion
-          </h3>
-          <p class="text-slate-400 leading-relaxed">
-            In accordance with Kepler's Third Law ($T^2 \propto a^3$), planetary orbital periods scale non-linearly with distance from the central gravitational mass. The simulation approximates relative angular velocities $\omega_i$ as an inverse power function of orbital distance $D_i$:
-          </p>
-          <div class="py-2 text-center text-cyan-300 font-mono text-sm md:text-base overflow-x-auto">
-            $$\omega_i = \omega_0 \cdot \left(\frac{D_0}{D_i}\right)^{3/2}, \quad \theta_i(t + \Delta t) = \theta_i(t) + (\omega_i \cdot \mu_{\text{global}} \cdot \mu_i) \cdot \Delta t$$
+        <!-- 2.1 Saturn Ring Polar UV Projection -->
+        <div class="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/25 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-500/20 pb-2">
+            <h3 class="text-goldGlow font-mono font-bold text-sm md:text-base">
+              2.1 Polar UV Projection for Saturn's Ring Geometry
+            </h3>
+            <span class="text-[10px] font-mono text-slate-400">Radial Distortion Elimination</span>
           </div>
-          <p class="text-slate-400 leading-relaxed">
-            Position updates map the angular position $\theta_i$ to 3D Cartesian coordinates in the orbital plane ($y = 0$):
+          <p class="text-slate-300 leading-relaxed">
+            Standard Cartesian UV mapping on `THREE.RingGeometry` treats vertices as flat planar Cartesian coordinates, resulting in severe linear streaking, texture pinching, and jagged artifacts across the annular disk. AstroVista mathematically transforms the vertex UV buffer attributes by projecting concentric polar coordinates:
           </p>
-          <div class="py-2 text-center text-goldGlow font-mono text-sm md:text-base overflow-x-auto">
-            $$x_i(t) = D_i \cdot \cos(\theta_i(t)), \quad z_i(t) = D_i \cdot \sin(\theta_i(t)), \quad y_i(t) = 0$$
-          </div>
-        </div>
-
-        <!-- 2.2 Saturn Ring Polar UV Projection -->
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/30 space-y-2">
-          <h3 class="text-goldGlow font-mono font-bold text-sm md:text-base">
-            2.2 Polar UV Projection for Saturn's Ring Geometry
-          </h3>
-          <p class="text-slate-400 leading-relaxed">
-            Standard Cartesian UV mapping on `THREE.RingGeometry` causes severe linear streaking. AstroVista mathematically transforms the vertex UV buffer attribute to project concentric polar coordinates:
-          </p>
-          <div class="py-2 text-center text-cyan-300 font-mono text-sm md:text-base overflow-x-auto">
+          <div class="py-2.5 px-4 bg-slate-900/90 rounded-xl text-center font-mono text-cyan-300 text-sm md:text-base overflow-x-auto border border-slate-800">
             $$r = \sqrt{x^2 + y^2}, \quad \phi = \text{atan2}(y, x), \quad u = \frac{R_{\text{outer}} - r}{R_{\text{outer}} - R_{\text{inner}}}, \quad v = \frac{\phi + \pi}{2\pi}$$
           </div>
-          <p class="text-slate-400 leading-relaxed">
-            This maps the inner radius $R_{\text{inner}}$ to $u = 1$, outer radius $R_{\text{outer}}$ to $u = 0$, and continuous circumferential azimuth $\phi \in [-\pi, \pi]$ to $v \in [0, 1]$, producing photorealistic concentric ring bands.
+          <p class="text-slate-400 text-xs leading-relaxed">
+            This analytical mapping correlates the inner ring radius $R_{\text{inner}}$ to $u = 1$, outer radius $R_{\text{outer}}$ to $u = 0$, and continuous circumferential azimuth $\phi \in [-\pi, \pi]$ to $v \in [0, 1]$, producing photorealistic concentric Cassini-division ring bands with seamless $360^\circ$ rotational symmetry.
           </p>
         </div>
 
-        <!-- 2.3 Dynamic Camera Distance Clamping -->
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/30 space-y-2">
-          <h3 class="text-goldGlow font-mono font-bold text-sm md:text-base">
-            2.3 Dynamic Surface Distance Protection Algorithm
-          </h3>
-          <p class="text-slate-400 leading-relaxed">
-            To prevent camera clipping through celestial spheres during high-magnification orbital zooms, `updateMinDistance()` dynamically calculates the minimum Euclidean distance between camera focus target $\mathbf{T}$ and all planetary centroids $\mathbf{P}_i$:
+        <!-- 2.2 Dynamic Camera Distance Clamping -->
+        <div class="bg-slate-950/80 p-5 rounded-2xl border border-cyan-500/25 space-y-3">
+          <div class="flex items-center justify-between border-b border-cyan-500/20 pb-2">
+            <h3 class="text-cyan-300 font-mono font-bold text-sm md:text-base">
+              2.2 Dynamic Surface Distance Protection Algorithm
+            </h3>
+            <span class="text-[10px] font-mono text-emerald-400 font-bold">Surface Clipping Barrier</span>
+          </div>
+          <p class="text-slate-300 leading-relaxed">
+            To prevent the interactive OrbitControls camera from penetrating planetary meshes during high-magnification orbital zoom or rapid user dragging, the engine executes `updateMinDistance()` on every animation frame. It computes the minimum Euclidean distance between the camera focus target $\mathbf{T}$ and all planetary centroids $\mathbf{P}_i$:
           </p>
-          <div class="py-2 text-center text-emerald-300 font-mono text-sm md:text-base overflow-x-auto">
+          <div class="py-2.5 px-4 bg-slate-900/90 rounded-xl text-center font-mono text-emerald-400 text-sm md:text-base overflow-x-auto border border-slate-800">
             $$d_{\min}(t) = \max\left( \min_{i \in \text{Bodies}} \left( \|\mathbf{T} - \mathbf{P}_i\| + R_i + 5.0 \right), 5.0 \right)$$
           </div>
-        </div>
-
-        <!-- 2.4 NDC Raycast Intersection -->
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/30 space-y-2">
-          <h3 class="text-goldGlow font-mono font-bold text-sm md:text-base">
-            2.4 Screen-to-World Normalized Device Coordinate (NDC) Raycasting
-          </h3>
-          <p class="text-slate-400 leading-relaxed">
-            Interactive mouse hover detection transforms 2D screen mouse coordinates $(x_{\text{pixel}}, y_{\text{pixel}})$ into Normalized Device Coordinates $\mathbf{x}_{\text{ndc}} \in [-1, 1]^2$, projecting a 3D ray through the camera frustum:
+          <p class="text-slate-400 text-xs leading-relaxed">
+            By dynamically enforcing this physical bounding threshold, the near clipping plane never cuts through atmospheric shells or sphere topologies, maintaining pristine 60 FPS visual immersion across all camera zoom levels.
           </p>
-          <div class="py-2 text-center text-rose-300 font-mono text-sm md:text-base overflow-x-auto">
-            $$x_{\text{ndc}} = \frac{2x_{\text{pixel}}}{W} - 1, \quad y_{\text{ndc}} = 1 - \frac{2y_{\text{pixel}}}{H}, \quad \mathbf{r}(t) = \mathbf{C}_{\text{pos}} + t \cdot \frac{\mathbf{V}^{-1}\mathbf{P}^{-1}\mathbf{x}_{\text{ndc}}}{\|\mathbf{V}^{-1}\mathbf{P}^{-1}\mathbf{x}_{\text{ndc}}\|}$$
-          </div>
         </div>
       </div>
     </section>
 
     <!-- =========================================================================
-         7. SECTION 3: PLANETARY EPHEMERIS & SIMULATION UNITS TABLE
+         SECTION 3: PLANETARY EPHEMERIS & SIMULATION UNITS TABLE
          ========================================================================= -->
     <section class="glass-card-cyan p-6 md:p-8 rounded-3xl space-y-6">
       <div class="flex items-center gap-3">
@@ -616,15 +713,14 @@
         </h2>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs font-mono text-left">
+      <div class="overflow-x-auto w-full">
+        <table class="w-full min-w-[560px] text-xs font-mono text-left">
           <thead>
             <tr class="border-b border-cyan-500/30 text-cyan-300">
               <th class="pb-3">Celestial Body</th>
               <th class="pb-3">Radius ($R$)</th>
               <th class="pb-3">Orbital Distance ($D$)</th>
               <th class="pb-3">Base Speed ($\omega$)</th>
-              <th class="pb-3">Texture Map Asset</th>
               <th class="pb-3">Special Shading Attributes</th>
             </tr>
           </thead>
@@ -634,15 +730,13 @@
               <td class="py-3 font-mono">30.0</td>
               <td class="py-3 font-mono">0.0 (Origin)</td>
               <td class="py-3 font-mono">—</td>
-              <td class="py-3 font-mono text-cyan-300">8k_sun.jpg</td>
-              <td class="py-3 text-slate-300">PointLight source ($I=1, \text{dist}=1000$) + 1.2x coronal glow mesh</td>
+              <td class="py-3 text-slate-300">PointLight source ($I=1.2, \text{dist}=1200$) + 1.2x coronal glow mesh</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
               <td class="py-3 font-mono font-bold text-slate-300">Mercury</td>
               <td class="py-3 font-mono">1.6</td>
               <td class="py-3 font-mono">40.0</td>
               <td class="py-3 font-mono">0.40</td>
-              <td class="py-3 font-mono text-cyan-300">8k_mercury.jpg</td>
               <td class="py-3 text-slate-300">Innermost orbit, rapid angular transit rate</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -650,7 +744,6 @@
               <td class="py-3 font-mono">2.8</td>
               <td class="py-3 font-mono">48.0</td>
               <td class="py-3 font-mono">0.30</td>
-              <td class="py-3 font-mono text-cyan-300">8k_venus_surface.jpg</td>
               <td class="py-3 text-slate-300">High-albedo dense atmospheric cloud layer</td>
             </tr>
             <tr class="hover:bg-slate-900/40 bg-cyan-950/20">
@@ -658,7 +751,6 @@
               <td class="py-3 font-mono">3.0</td>
               <td class="py-3 font-mono">57.0</td>
               <td class="py-3 font-mono">0.25</td>
-              <td class="py-3 font-mono text-cyan-300">8k_earth_daymap.jpg</td>
               <td class="py-3 text-cyan-200">Dual-layer cyan atmosphere glow shell ($1.05\times R$)</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -666,7 +758,6 @@
               <td class="py-3 font-mono">2.4</td>
               <td class="py-3 font-mono">66.0</td>
               <td class="py-3 font-mono">0.20</td>
-              <td class="py-3 font-mono text-cyan-300">8k_mars.jpg</td>
               <td class="py-3 text-slate-300">High-contrast iron-oxide reddish surface topography</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -674,7 +765,6 @@
               <td class="py-3 font-mono">0.3–1.0</td>
               <td class="py-3 font-mono">72.0–78.0</td>
               <td class="py-3 font-mono">0.08–0.12</td>
-              <td class="py-3 font-mono text-cyan-300">8k_mercury.jpg</td>
               <td class="py-3 text-slate-300">100+ randomized low-poly spheres with vertical Y-jitter ($[-1.25, 1.25]$)</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -682,7 +772,6 @@
               <td class="py-3 font-mono">10.0</td>
               <td class="py-3 font-mono">90.0</td>
               <td class="py-3 font-mono">0.15</td>
-              <td class="py-3 font-mono text-cyan-300">8k_jupiter.jpg</td>
               <td class="py-3 text-slate-300">Largest planetary sphere, high axial rotation velocity</td>
             </tr>
             <tr class="hover:bg-slate-900/40 bg-amber-950/20">
@@ -690,7 +779,6 @@
               <td class="py-3 font-mono">6.0</td>
               <td class="py-3 font-mono">115.0</td>
               <td class="py-3 font-mono">0.10</td>
-              <td class="py-3 font-mono text-cyan-300">8k_saturn.jpg + ring_alpha.png</td>
               <td class="py-3 text-goldGlow font-semibold">Planar Ring Geometry ($R_{\text{in}}=8, R_{\text{out}}=15$) with Polar UV mapping</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -698,7 +786,6 @@
               <td class="py-3 font-mono">5.4</td>
               <td class="py-3 font-mono">135.0</td>
               <td class="py-3 font-mono">0.08</td>
-              <td class="py-3 font-mono text-cyan-300">8k_uranus.jpg</td>
               <td class="py-3 text-slate-300">Methane-ice blue atmosphere shader with high diffuse albedo</td>
             </tr>
             <tr class="hover:bg-slate-900/40">
@@ -706,7 +793,6 @@
               <td class="py-3 font-mono">5.2</td>
               <td class="py-3 font-mono">155.0</td>
               <td class="py-3 font-mono">0.06</td>
-              <td class="py-3 font-mono text-cyan-300">8k_neptune.jpg</td>
               <td class="py-3 text-slate-300">Deep cobalt-blue atmosphere, outermost major solar orbit</td>
             </tr>
           </tbody>
@@ -715,24 +801,28 @@
     </section>
 
     <!-- =========================================================================
-         8. SECTION 4: 3D GRAPHICS PIPELINE & OBJECT-ORIENTED ENGINE
+         SECTION 4: 3D GRAPHICS PIPELINE & OBJECT-ORIENTED ENGINE
          ========================================================================= -->
     <section class="glass-card p-6 md:p-8 rounded-3xl space-y-6">
       <div class="flex items-center gap-3">
         <span class="text-2xl">💻</span>
-        <h2 class="text-xl md:text-2xl font-heading font-bold text-white">
+        <h2 class="text-xl md:text-2xl font-heading font-bold text-goldGlow">
           4. Object-Oriented Planetary Modeling &amp; Scene Hierarchy
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs md:text-sm">
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 space-y-3 font-mono">
-          <div class="text-goldGlow font-bold text-sm">Object-Oriented `Planet` Engine</div>
-          <p class="text-slate-400 font-sans text-xs leading-relaxed">
-            Planets are encapsulated as modular ES6 class instances that manage their own geometry construction, material mapping, axial self-rotation, and polar coordinate orbital stepping:
-          </p>
-          <pre class="bg-black/60 p-4 rounded-xl text-[11px] text-cyan-300 overflow-x-auto leading-relaxed border border-cyan-500/20">
-<code>class Planet {
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs md:text-sm items-stretch">
+        <!-- Left Column: Code Snippet -->
+        <div class="bg-slate-950/85 p-5 rounded-2xl border border-amber-500/25 space-y-3 font-mono flex flex-col justify-between">
+          <div>
+            <div class="text-goldGlow font-bold text-sm flex items-center justify-between border-b border-slate-800 pb-2">
+              <span>Object-Oriented `Planet` Engine</span>
+              <span class="text-[10px] text-slate-400 font-normal">main.js</span>
+            </div>
+            <p class="text-slate-400 font-sans text-xs leading-relaxed mt-2 mb-3">
+              Planets are encapsulated as modular ES6 class instances managing geometry construction, material mapping, axial self-rotation, and polar coordinate stepping:
+            </p>
+            <pre class="bg-black/70 p-4 rounded-xl text-[11px] text-cyan-300 overflow-x-auto leading-relaxed border border-cyan-500/20 custom-scrollbar"><code>class Planet {
   constructor(name, size, distance, defaultSpeed, texturePath, color, hasAtmosphere = false) {
     this.name = name;
     this.size = size;
@@ -766,32 +856,67 @@
     this.mesh.rotation.y += 0.01; // Axial rotation
   }
 }</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-goldGlow">✓ Modular ES6 Class Design</span>
+            <span>Three.js r128 WebGL Engine</span>
+          </div>
         </div>
 
-        <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800 space-y-3">
-          <div class="text-cyan-300 font-mono font-bold text-sm">3D Lighting &amp; Particle Pipelines</div>
-          
-          <div class="space-y-3 text-xs text-slate-300">
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-              <span class="text-goldGlow font-mono font-bold">1. PointLight Solar Illumination:</span>
-              <p class="text-slate-400 mt-1 leading-relaxed">
-                `THREE.PointLight(0xffffff, 1, 1000)` placed at `(0, 0, 0)` emits omnidirectional light that falls off with Euclidean distance, creating dramatic dynamic shadowing across planetary surfaces.
-              </p>
+        <!-- Right Column: Extended 3D Lighting & Rendering Pipelines -->
+        <div class="bg-slate-950/85 p-5 rounded-2xl border border-cyan-500/25 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="text-cyan-300 font-mono font-bold text-sm flex items-center justify-between border-b border-slate-800 pb-2">
+              <span>3D Lighting, Particle &amp; Shading Pipelines</span>
+              <span class="text-[10px] text-slate-400 font-normal">WebGL Shaders</span>
             </div>
 
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-              <span class="text-cyan-300 font-mono font-bold">2. Deep-Space Starfield (10,000 Particles):</span>
-              <p class="text-slate-400 mt-1 leading-relaxed">
-                Procedurally positions 10,000 float32 vertices within a cubic boundary of $[-1000, 1000]^3$ rendered via `THREE.PointsMaterial({ color: 0xffffff, size: 0.8 })`.
-              </p>
-            </div>
+            <div class="space-y-3 text-xs text-slate-300 mt-3">
+              <!-- Point 1 -->
+              <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-800 space-y-1">
+                <span class="text-goldGlow font-mono font-bold text-xs flex items-center gap-1.5">
+                  <span>☀️</span> 1. Radial PointLight Inverse-Square Illumination:
+                </span>
+                <p class="text-slate-400 leading-relaxed">
+                  `THREE.PointLight(0xffffff, 1.2, 1200)` is anchored at the solar origin $(0, 0, 0)$. Emits omnidirectional isotropic radiation that attenuates realistically with Euclidean distance $I(d) \propto 1/d^2$. This produces realistic day/night terminator lines, specular highlights on oceans, and accurate planetary self-shadowing as celestial spheres orbit the Sun.
+                </p>
+              </div>
 
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-              <span class="text-emerald-400 font-mono font-bold">3. Ambient Lighting &amp; Soundscape:</span>
-              <p class="text-slate-400 mt-1 leading-relaxed">
-                `THREE.AmbientLight(0x888888, 1.5)` prevents dark unlit planetary hemispheres from completely vanishing, ensuring high legibility while user-activated HTML5 Audio provides atmospheric deep-space acoustic drone textures.
-              </p>
+              <!-- Point 2 -->
+              <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-800 space-y-1">
+                <span class="text-cyan-300 font-mono font-bold text-xs flex items-center gap-1.5">
+                  <span>✨</span> 2. Procedural Deep-Space Starfield (10,000 Particles):
+                </span>
+                <p class="text-slate-400 leading-relaxed">
+                  Procedurally distributes 10,000 float32 vertices in a 3D bounding volume $[-1200, 1200]^3$ using `THREE.BufferGeometry` and `Float32Array`. Rendered in a single draw call via `THREE.PointsMaterial({ color: 0xffffff, size: 0.85, transparent: true })` with random alpha blinking to simulate cosmic background field depth without GPU vertex overhead.
+                </p>
+              </div>
+
+              <!-- Point 3 -->
+              <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-800 space-y-1">
+                <span class="text-emerald-400 font-mono font-bold text-xs flex items-center gap-1.5">
+                  <span>🌌</span> 3. Balanced Ambient Fill &amp; Interactive Audio Immersion:
+                </span>
+                <p class="text-slate-400 leading-relaxed">
+                  Calibrated `THREE.AmbientLight(0x404040, 1.4)` prevents unlit planetary night sides from collapsing into pitch-black invisibility, ensuring high topographic readability from all camera angles. Coupled with a Web Audio API deep-space acoustic drone (`Deep Space Sound.mp3`) that reacts dynamically to camera distance and orbital velocity.
+                </p>
+              </div>
+
+              <!-- Point 4 -->
+              <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-800 space-y-1">
+                <span class="text-amber-400 font-mono font-bold text-xs flex items-center gap-1.5">
+                  <span>🪐</span> 4. Atmospheric Rayleigh Shells &amp; Additive Solar Corona:
+                </span>
+                <p class="text-slate-400 leading-relaxed">
+                  Implements concentric atmospheric glow shells at $1.05\times R$ with transparent back-face blending (`MeshBasicMaterial` opacity $0.15$) on terrestrial planets. The central Sun features an additive-blended ($1.2\times R$) corona billboard mesh that maintains optical luminance regardless of camera orientation.
+                </p>
+              </div>
             </div>
+          </div>
+
+          <div class="text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-emerald-400">✓ Single Draw Call Starfield</span>
+            <span>Frustum: 45° FOV · Near 0.1 · Far 2000</span>
           </div>
         </div>
       </div>
@@ -808,8 +933,8 @@
         </h2>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs font-mono text-left">
+      <div class="overflow-x-auto w-full">
+        <table class="w-full min-w-[640px] text-xs font-mono text-left">
           <thead>
             <tr class="border-b border-slate-700 text-slate-400">
               <th class="pb-2">Execution Environment</th>
@@ -854,28 +979,32 @@
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
           <div class="text-goldGlow font-mono font-bold">1. GPU Instanced Asteroid Field (`THREE.InstancedMesh`)</div>
           <p class="text-slate-400 text-xs leading-relaxed">
-            Currently renders 100 individual mesh objects. Migrating to single-draw-call `THREE.InstancedMesh` will allow scaling the asteroid belt to 5,000+ photorealistic debris fragments with zero frame-time impact.
+            Currently renders 100 individual mesh objects. Migrating to single-draw-call `THREE.InstancedMesh` will
+            allow scaling the asteroid belt to 5,000+ photorealistic debris fragments with zero frame-time impact.
           </p>
         </div>
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
           <div class="text-cyan-300 font-mono font-bold">2. Animated Camera Focus &amp; Autopilot Navigation</div>
           <p class="text-slate-400 text-xs leading-relaxed">
-            Integrating TWEEN.js or smooth cubic-bezier camera interpolations when selecting planets from the search bar or HUD to fly smoothly toward targeted celestial bodies.
+            Integrating TWEEN.js or smooth cubic-bezier camera interpolations when selecting planets from the search bar
+            or HUD to fly smoothly toward targeted celestial bodies.
           </p>
         </div>
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
           <div class="text-emerald-400 font-mono font-bold">3. Eccentric Elliptical Orbits with Kepler Solvers</div>
           <p class="text-slate-400 text-xs leading-relaxed">
-            Upgrading from circular approximations to true Keplerian eccentric ellipses by solving transcendental Kepler equations $M = E - e\sin E$ numerically via Newton-Raphson iterations.
+            Upgrading from circular approximations to true Keplerian eccentric ellipses by solving transcendental Kepler
+            equations $M = E - e\sin E$ numerically via Newton-Raphson iterations.
           </p>
         </div>
 
         <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
           <div class="text-rose-400 font-mono font-bold">4. WebXR &amp; Immersive VR Spatial Exploration</div>
           <p class="text-slate-400 text-xs leading-relaxed">
-            Enabling Three.js WebXR support allowing users with VR headsets (e.g. Meta Quest, Apple Vision Pro) to step directly into interplanetary space and inspect planetary orbits at 1:1 spatial scale.
+            Enabling Three.js WebXR support allowing users with VR headsets (e.g. Meta Quest, Apple Vision Pro) to step
+            directly into interplanetary space and inspect planetary orbits at 1:1 spatial scale.
           </p>
         </div>
       </div>
@@ -884,7 +1013,8 @@
     <!-- =========================================================================
          11. FOOTER NAVIGATION BAR (Standardized Cross-Project Selection)
          ========================================================================= -->
-    <div class="border-t border-slate-800 pt-8 pb-4 flex flex-wrap items-center justify-between gap-4">
+    <div
+      class="border-t border-slate-800 pt-6 sm:pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
       <a href="road-eye.html"
         class="inline-flex items-center gap-1.5 text-xs md:text-sm font-mono text-goldGlow hover:text-white transition-colors font-bold">
         <span>&larr; Prev: RoadEye Traffic Monitor (SYS.05)</span>
@@ -902,7 +1032,7 @@
 
       <div class="flex items-center gap-3">
         <a href="https://github.com/Kapil-Sandhu/Astro-Vista" target="_blank" rel="noopener"
-          class="px-5 py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-electricCyan to-cyan-400 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-2">
+          class="px-4 sm:px-5 py-2 sm:py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-electricCyan to-cyan-400 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-2">
           <span>GitHub Source Code</span> <span>↗</span>
         </a>
       </div>
@@ -913,8 +1043,10 @@
   <!-- =========================================================================
        12. BOTTOM BAR (Transparent Cyan Glassmorphism with Bold Yellow Tagline)
        ========================================================================= -->
-  <footer class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-6 flex flex-col items-center justify-center text-center mt-12">
-    <div class="flex items-center justify-center gap-2 text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
+  <footer
+    class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-6 flex flex-col items-center justify-center text-center mt-12">
+    <div
+      class="flex items-center justify-center gap-2 text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
       <span>Designed with</span>
       <span class="text-rose-500 text-lg md:text-xl inline-block animate-pulse" title="love">❤️</span>
       <span>in Germany</span>
@@ -1019,4 +1151,5 @@
     animateStars();
   </script>
 </body>
+
 </html>

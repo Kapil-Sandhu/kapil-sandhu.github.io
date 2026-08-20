@@ -38,59 +38,104 @@
     }
   </script>
   <style>
+    /* =========================================================================
+       APPLE iOS / visionOS FROSTED GLASSMORPHISM DESIGN SYSTEM
+       ========================================================================= */
     .glass-panel {
-      background: linear-gradient(135deg, rgba(16, 12, 4, 0.58) 0%, rgba(10, 14, 26, 0.68) 100%);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(255, 184, 0, 0.28);
-      box-shadow: 0 10px 35px -10px rgba(255, 184, 0, 0.14), inset 0 0 20px rgba(255, 184, 0, 0.03);
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.06) 0%, rgba(18, 14, 6, 0.32) 40%, rgba(8, 12, 22, 0.42) 100%);
+      backdrop-filter: blur(32px) saturate(210%) contrast(108%);
+      -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(108%);
+      border: 1px solid rgba(255, 184, 0, 0.28);
+      border-radius: 24px;
+      box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.55),
+        0 0 25px rgba(255, 184, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(255, 184, 0, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .glass-panel:hover {
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.10) 0%, rgba(22, 16, 8, 0.38) 40%, rgba(10, 14, 26, 0.48) 100%);
       border-color: rgba(255, 184, 0, 0.65);
-      box-shadow: 0 18px 50px rgba(255, 184, 0, 0.25), inset 0 0 30px rgba(255, 184, 0, 0.06);
+      box-shadow:
+        0 25px 65px -10px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(255, 184, 0, 0.22),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6),
+        inset 0 0 25px rgba(255, 184, 0, 0.05);
       transform: translateY(-3px);
     }
 
     .glass-panel-cyan {
-      background: linear-gradient(135deg, rgba(4, 18, 30, 0.58) 0%, rgba(10, 14, 26, 0.68) 100%);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(0, 240, 255, 0.28);
-      box-shadow: 0 10px 35px -10px rgba(0, 240, 255, 0.14), inset 0 0 20px rgba(0, 240, 255, 0.03);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.06) 0%, rgba(4, 18, 30, 0.32) 40%, rgba(8, 12, 22, 0.42) 100%);
+      backdrop-filter: blur(32px) saturate(210%) contrast(108%);
+      -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(108%);
+      border: 1px solid rgba(0, 240, 255, 0.28);
+      border-radius: 24px;
+      box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.55),
+        0 0 25px rgba(0, 240, 255, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(0, 240, 255, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .glass-panel-cyan:hover {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.10) 0%, rgba(6, 24, 40, 0.38) 40%, rgba(10, 14, 26, 0.48) 100%);
       border-color: rgba(0, 240, 255, 0.65);
-      box-shadow: 0 18px 50px rgba(0, 240, 255, 0.25), inset 0 0 30px rgba(0, 240, 255, 0.06);
+      box-shadow:
+        0 25px 65px -10px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(0, 240, 255, 0.22),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6),
+        inset 0 0 25px rgba(0, 240, 255, 0.05);
       transform: translateY(-3px);
     }
 
-    /* ── Hero Panels with Subtle Refined Glass & Reduced Glow ── */
+    /* ── Hero Panels with Refined Apple Glass Vibrancy ── */
     .hero-nn-panel {
-      background: linear-gradient(135deg, rgba(16, 12, 4, 0.42) 0%, rgba(10, 14, 26, 0.55) 100%);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 184, 0, 0.2);
-      box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 184, 0, 0.05), inset 0 0 20px rgba(255, 184, 0, 0.02);
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.05) 0%, rgba(16, 12, 4, 0.28) 40%, rgba(8, 12, 22, 0.38) 100%);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      border: 1px solid rgba(255, 184, 0, 0.24);
+      box-shadow:
+        0 15px 45px -10px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(255, 184, 0, 0.06),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 0 20px rgba(255, 184, 0, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .hero-nn-panel:hover {
-      border-color: rgba(255, 184, 0, 0.38);
-      box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.7), 0 0 22px rgba(255, 184, 0, 0.1), inset 0 0 25px rgba(255, 184, 0, 0.04);
+      border-color: rgba(255, 184, 0, 0.45);
+      box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(255, 184, 0, 0.12),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
+        inset 0 0 25px rgba(255, 184, 0, 0.04);
     }
 
     .hero-monitor-panel {
-      background: linear-gradient(135deg, rgba(4, 18, 30, 0.42) 0%, rgba(10, 14, 26, 0.55) 100%);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.05), inset 0 0 20px rgba(0, 240, 255, 0.02);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, rgba(4, 18, 30, 0.28) 40%, rgba(8, 12, 22, 0.38) 100%);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      border: 1px solid rgba(0, 240, 255, 0.24);
+      box-shadow:
+        0 15px 45px -10px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(0, 240, 255, 0.06),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 240, 255, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .hero-monitor-panel:hover {
-      border-color: rgba(0, 240, 255, 0.38);
-      box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.7), 0 0 22px rgba(0, 240, 255, 0.1), inset 0 0 25px rgba(0, 240, 255, 0.04);
+      border-color: rgba(0, 240, 255, 0.45);
+      box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(0, 240, 255, 0.12),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
+        inset 0 0 25px rgba(0, 240, 255, 0.04);
     }
 
     .cursor-blink {
@@ -323,67 +368,105 @@
       text-transform: uppercase;
     }
 
-    /* ── Alternating Project Cards & Architecture Diagram Frames ── */
+    /* ── Apple iOS / visionOS Glass Project Cards ── */
     .project-card-amber {
-      background: linear-gradient(135deg, rgba(20, 14, 4, 0.58) 0%, rgba(10, 14, 26, 0.68) 100%);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(255, 184, 0, 0.32);
-      border-radius: 24px;
-      box-shadow: 0 12px 40px -10px rgba(255, 184, 0, 0.18), inset 0 0 25px rgba(255, 184, 0, 0.03);
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.07) 0%, rgba(20, 14, 5, 0.30) 40%, rgba(8, 12, 22, 0.40) 100%);
+      backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      border: 1px solid rgba(255, 184, 0, 0.30);
+      border-radius: 26px;
+      box-shadow:
+        0 20px 55px -10px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(255, 184, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+        inset 0 0 25px rgba(255, 184, 0, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       position: relative;
     }
 
     .project-card-amber:hover {
-      border-color: rgba(255, 184, 0, 0.7);
-      box-shadow: 0 20px 55px rgba(255, 184, 0, 0.28), inset 0 0 35px rgba(255, 184, 0, 0.06);
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.12) 0%, rgba(24, 17, 6, 0.36) 40%, rgba(10, 14, 26, 0.46) 100%);
+      border-color: rgba(255, 184, 0, 0.75);
+      box-shadow:
+        0 28px 70px -10px rgba(0, 0, 0, 0.65),
+        0 0 42px rgba(255, 184, 0, 0.22),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.65),
+        inset 0 0 30px rgba(255, 184, 0, 0.05);
       transform: translateY(-4px);
     }
 
     .project-card-cyan {
-      background: linear-gradient(135deg, rgba(4, 18, 30, 0.58) 0%, rgba(10, 14, 26, 0.68) 100%);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(0, 240, 255, 0.32);
-      border-radius: 24px;
-      box-shadow: 0 12px 40px -10px rgba(0, 240, 255, 0.18), inset 0 0 25px rgba(0, 240, 255, 0.03);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.07) 0%, rgba(4, 18, 30, 0.30) 40%, rgba(8, 12, 22, 0.40) 100%);
+      backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      border: 1px solid rgba(0, 240, 255, 0.30);
+      border-radius: 26px;
+      box-shadow:
+        0 20px 55px -10px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(0, 240, 255, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+        inset 0 0 25px rgba(0, 240, 255, 0.02);
       transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       position: relative;
     }
 
     .project-card-cyan:hover {
-      border-color: rgba(0, 240, 255, 0.7);
-      box-shadow: 0 20px 55px rgba(0, 240, 255, 0.28), inset 0 0 35px rgba(0, 240, 255, 0.06);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.12) 0%, rgba(6, 24, 40, 0.36) 40%, rgba(10, 14, 26, 0.46) 100%);
+      border-color: rgba(0, 240, 255, 0.75);
+      box-shadow:
+        0 28px 70px -10px rgba(0, 0, 0, 0.65),
+        0 0 42px rgba(0, 240, 255, 0.22),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.65),
+        inset 0 0 30px rgba(0, 240, 255, 0.05);
       transform: translateY(-4px);
     }
 
     .diagram-frame {
-      background: rgba(3, 7, 18, 0.65);
-      backdrop-filter: blur(16px);
-      border-radius: 16px;
+      background: rgba(3, 7, 18, 0.40);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-radius: 18px;
       position: relative;
       overflow: hidden;
-      box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.7);
+      box-shadow:
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 0 25px rgba(0, 0, 0, 0.6),
+        0 8px 32px rgba(0, 0, 0, 0.35);
       transition: all 0.3s ease;
     }
 
     .diagram-frame-cyan {
-      border: 1.5px solid rgba(0, 240, 255, 0.35);
-      box-shadow: 0 0 22px rgba(0, 240, 255, 0.1), inset 0 0 25px rgba(0, 240, 255, 0.04);
+      border: 1px solid rgba(0, 240, 255, 0.30);
+      box-shadow:
+        0 0 25px rgba(0, 240, 255, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(0, 240, 255, 0.03);
     }
 
     .diagram-frame-cyan:hover {
       border-color: rgba(0, 240, 255, 0.75);
-      box-shadow: 0 0 35px rgba(0, 240, 255, 0.22), inset 0 0 35px rgba(0, 240, 255, 0.08);
+      box-shadow:
+        0 0 35px rgba(0, 240, 255, 0.20),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4),
+        inset 0 0 30px rgba(0, 240, 255, 0.06);
     }
 
     .diagram-frame-amber {
-      border: 1.5px solid rgba(255, 184, 0, 0.35);
-      box-shadow: 0 0 22px rgba(255, 184, 0, 0.1), inset 0 0 25px rgba(255, 184, 0, 0.04);
+      border: 1px solid rgba(255, 184, 0, 0.30);
+      box-shadow:
+        0 0 25px rgba(255, 184, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 184, 0, 0.03);
     }
 
     .diagram-frame-amber:hover {
       border-color: rgba(255, 184, 0, 0.75);
-      box-shadow: 0 0 35px rgba(255, 184, 0, 0.22), inset 0 0 35px rgba(255, 184, 0, 0.08);
+      box-shadow:
+        0 0 35px rgba(255, 184, 0, 0.20),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4),
+        inset 0 0 30px rgba(255, 184, 0, 0.06);
     }
 
     .arch-flow-pulse {
@@ -399,23 +482,33 @@
 
     .arch-grid-bg {
       background-image:
-        radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
       background-size: 16px 16px;
     }
 
-    /* ── Dedicated Theme Modals with Distinct Glow Colors ── */
+    /* ── Apple visionOS High-Frosted Modals ── */
     .project-modal-amber {
-      background: linear-gradient(145deg, rgba(16, 12, 4, 0.94) 0%, rgba(10, 14, 26, 0.97) 100%);
-      backdrop-filter: blur(28px);
-      border: 1.5px solid rgba(255, 184, 0, 0.45);
-      box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 184, 0, 0.16), inset 0 0 30px rgba(255, 184, 0, 0.03);
+      background: linear-gradient(145deg, rgba(20, 15, 5, 0.78) 0%, rgba(10, 14, 26, 0.88) 100%);
+      backdrop-filter: blur(40px) saturate(220%) contrast(106%);
+      -webkit-backdrop-filter: blur(40px) saturate(220%) contrast(106%);
+      border: 1px solid rgba(255, 184, 0, 0.40);
+      box-shadow:
+        0 30px 90px -10px rgba(0, 0, 0, 0.95),
+        0 0 45px rgba(255, 184, 0, 0.16),
+        inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+        inset 0 0 35px rgba(255, 184, 0, 0.03);
     }
 
     .project-modal-cyan {
-      background: linear-gradient(145deg, rgba(4, 18, 30, 0.94) 0%, rgba(10, 14, 26, 0.97) 100%);
-      backdrop-filter: blur(28px);
-      border: 1.5px solid rgba(0, 240, 255, 0.45);
-      box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 240, 255, 0.16), inset 0 0 30px rgba(0, 240, 255, 0.03);
+      background: linear-gradient(145deg, rgba(5, 20, 35, 0.78) 0%, rgba(10, 14, 26, 0.88) 100%);
+      backdrop-filter: blur(40px) saturate(220%) contrast(106%);
+      -webkit-backdrop-filter: blur(40px) saturate(220%) contrast(106%);
+      border: 1px solid rgba(0, 240, 255, 0.40);
+      box-shadow:
+        0 30px 90px -10px rgba(0, 0, 0, 0.95),
+        0 0 45px rgba(0, 240, 255, 0.16),
+        inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+        inset 0 0 35px rgba(0, 240, 255, 0.03);
     }
 
     .modal-scroll-area::-webkit-scrollbar {
@@ -435,6 +528,72 @@
     .modal-scroll-area::-webkit-scrollbar-thumb:hover {
       background: rgba(255, 255, 255, 0.35);
     }
+
+    /* ── Apple iOS / visionOS Top Bar & Bottom Bar Cyan Glass ── */
+    .apple-glass-nav {
+      background: linear-gradient(180deg, rgba(0, 240, 255, 0.12) 0%, rgba(4, 28, 48, 0.60) 50%, rgba(2, 16, 32, 0.72) 100%);
+      backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      border-bottom: 1.5px solid rgba(0, 240, 255, 0.38);
+      box-shadow:
+        0 10px 35px 0 rgba(0, 0, 0, 0.50),
+        0 0 25px rgba(0, 240, 255, 0.15),
+        inset 0 1px 1.5px 0 rgba(0, 240, 255, 0.40),
+        inset 0 -1px 1px 0 rgba(0, 240, 255, 0.15);
+    }
+
+    .apple-glass-drawer {
+      background: linear-gradient(180deg, rgba(4, 30, 52, 0.88) 0%, rgba(2, 18, 36, 0.94) 100%);
+      backdrop-filter: blur(40px) saturate(220%) contrast(108%);
+      -webkit-backdrop-filter: blur(40px) saturate(220%) contrast(108%);
+      border-bottom: 1.5px solid rgba(0, 240, 255, 0.40);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.80),
+        0 0 30px rgba(0, 240, 255, 0.20),
+        inset 0 1px 1px 0 rgba(0, 240, 255, 0.35);
+    }
+
+    .apple-glass-footer {
+      background: linear-gradient(180deg, rgba(0, 240, 255, 0.15) 0%, rgba(4, 32, 54, 0.65) 45%, rgba(2, 18, 36, 0.78) 100%);
+      backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(108%);
+      border-top: 1.5px solid rgba(0, 240, 255, 0.42);
+      box-shadow:
+        0 -10px 40px -5px rgba(0, 0, 0, 0.60),
+        0 0 35px rgba(0, 240, 255, 0.22),
+        inset 0 1.5px 2px 0 rgba(0, 240, 255, 0.50),
+        inset 0 0 25px rgba(0, 240, 255, 0.08);
+    }
+
+    .apple-glass-btn-amber {
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.12) 0%, rgba(20, 15, 6, 0.45) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 184, 0, 0.45);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 4px 15px rgba(255, 184, 0, 0.10);
+    }
+
+    .apple-glass-btn-amber:hover {
+      background: linear-gradient(135deg, rgba(255, 184, 0, 0.90) 0%, rgba(255, 106, 0, 0.90) 100%);
+      border-color: #FFB800;
+      color: #05070D !important;
+      box-shadow: 0 6px 22px rgba(255, 184, 0, 0.40);
+    }
+
+    .apple-glass-btn-cyan {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.12) 0%, rgba(4, 18, 30, 0.45) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 4px 15px rgba(0, 240, 255, 0.10);
+    }
+
+    .apple-glass-btn-cyan:hover {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.90) 0%, rgba(0, 128, 255, 0.90) 100%);
+      border-color: #00F0FF;
+      color: #05070D !important;
+      box-shadow: 0 6px 22px rgba(0, 240, 255, 0.40);
+    }
   </style>
 </head>
 
@@ -445,7 +604,7 @@
   <canvas id="globalStarCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
 
   <nav
-    class="fixed top-0 left-0 w-full z-50 bg-cyan-950/60 backdrop-blur-xl border-b border-cyan-500/20 px-3 sm:px-6 py-2.5 sm:py-3.5 flex justify-between items-center transition-all">
+    class="fixed top-0 left-0 w-full z-50 apple-glass-nav px-3 sm:px-6 py-2.5 sm:py-3.5 flex justify-between items-center transition-all">
     <a href="#"
       class="font-heading font-extrabold text-lg sm:text-xl text-white tracking-wide flex items-center gap-1.5 sm:gap-2 shrink-0">
       <span class="text-goldGlow font-mono font-bold">&lt;</span>Kapil Sandhu<span
@@ -464,15 +623,15 @@
     <!-- Action Buttons & Mobile Hamburger -->
     <div class="flex items-center gap-2 sm:gap-3">
       <a href="https://github.com/Kapil-Sandhu" target="_blank" rel="noopener"
-        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold bg-amber-950/60 border border-goldGlow/50 text-goldGlow rounded-lg hover:bg-goldGlow hover:text-slate-950 transition-all shadow-md flex items-center gap-1">
+        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold apple-glass-btn-amber text-goldGlow rounded-xl transition-all shadow-md flex items-center gap-1">
         <span>GitHub</span> <span class="hidden sm:inline">↗</span>
       </a>
-      <a href="./assets/Kapil_Sandhu_CV.pdf" download="Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener"
-        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold bg-cyan-950/70 border border-cyan-400/60 text-cyan-300 rounded-lg hover:bg-electricCyan hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-md shadow-cyan-500/10">
+      <a href="./assets/Kapil_Sandhu_CV.pdf" target="_blank" rel="noopener noreferrer"
+        class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-mono font-bold apple-glass-btn-cyan text-cyan-300 rounded-xl transition-all flex items-center gap-1.5 shadow-md">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor" stroke-width="2.5">
+          stroke="currentColor" stroke-width="2.2">
           <path stroke-linecap="round" stroke-linejoin="round"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
         <span>CV</span>
       </a>
@@ -492,7 +651,7 @@
 
   <!-- Mobile Dropdown Navigation Drawer -->
   <div id="mobileNavDrawer"
-    class="hidden lg:hidden fixed top-[54px] sm:top-[60px] left-0 w-full z-40 bg-slate-950/95 backdrop-blur-2xl border-b border-cyan-500/30 py-4 px-6 shadow-2xl transition-all">
+    class="hidden lg:hidden fixed top-[54px] sm:top-[60px] left-0 w-full z-40 apple-glass-drawer py-4 px-6 shadow-2xl transition-all">
     <div class="flex flex-col gap-3.5 text-base font-bold text-slate-200 tracking-wide font-heading">
       <a href="#about" onclick="toggleMobileNav()"
         class="py-1 hover:text-goldGlow transition-colors border-b border-white/5 flex items-center justify-between">
@@ -800,8 +959,8 @@
     <div class="space-y-8 sm:space-y-10">
 
       <!-- PROJECT CARD 1: YELLOW/AMBER THEME (Diagram Left, Description Right) -->
-      <a href="projects/agentic-trade-analyzer.html"
-        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
+      <div onclick="openModal('modal-agentic-trade')"
+        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl transition-all">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
           <div class="diagram-frame diagram-frame-cyan p-2.5 sm:p-3.5 arch-grid-bg relative">
@@ -881,7 +1040,7 @@
               <text x="161" y="77" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
                 text-anchor="middle">1m, 5m, 15m, 1h, 4h</text>
               <text x="161" y="89" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
-                text-anchor="middle">RSI · MACD · BB</text>
+                text-anchor="middle">RSI &middot; MACD &middot; BB</text>
               <text x="161" y="99" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">KRS Liquidity</text>
 
@@ -1028,19 +1187,19 @@
             <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
 
       <!-- PROJECT CARD 2: CPRO (SYS.02) -->
-      <a href="projects/btc-cpro.html"
-        class="project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
+      <div onclick="openModal('modal-btc-cpro')"
+        class="project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl transition-all">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
           <div>
@@ -1059,7 +1218,7 @@
               CPro: Momentum Transformer
             </h3>
             <p class="text-xs sm:text-sm font-mono text-cyan-400 mb-2.5 sm:mb-3">
-              Multi-Scale RoPE Attention &middot; 4-State HMM Gate &middot; Mult-Timeframe Input
+              Multi-Scale RoPE Attention &middot; 4-State HMM Gate &middot; Symmetric CUSUM
             </p>
             <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3.5 sm:mb-4">
               Institutional-grade Bitcoin direction &amp; volatility-conditioned momentum forecasting framework trained
@@ -1073,12 +1232,12 @@
                 <span>329.6k discrete volatility events (~12.5% density) &amp; Triple-Barrier labels.</span>
               </div>
               <div class="flex items-start gap-1.5 sm:gap-2">
-                <span class="text-goldGlow font-bold whitespace-nowrap">2. 4-State HMM Gate:</span>
-                <span>Dynamic gate suppresses chop (State 0) &amp; enables momentum (States 1 &amp; 2).</span>
+                <span class="text-cyan-300 font-bold whitespace-nowrap">2. Leakage Guard:</span>
+                <span>Purged &amp; embargoed splitting with 200-bar boundary gap eliminates lookahead bias.</span>
               </div>
               <div class="flex items-start gap-1.5 sm:gap-2">
-                <span class="text-cyan-300 font-bold whitespace-nowrap">3. Multi-Scale MSMT:</span>
-                <span>Cross-timeframe RoPE attention (1m, 5m, 15m, 1h) + 11 dynamic candle features.</span>
+                <span class="text-goldGlow font-bold whitespace-nowrap">3. 4-State HMM Gate:</span>
+                <span>Dynamic gate suppresses chop (State 0) &amp; enables momentum (States 1 &amp; 2).</span>
               </div>
               <div class="flex items-start gap-1.5 sm:gap-2">
                 <span class="text-electricCyan font-bold whitespace-nowrap">4. Selective Alpha:</span>
@@ -1107,16 +1266,12 @@
                 class="bg-slate-900/90 text-slate-300 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border border-slate-700">L-BFGS</span>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+            <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
-              </span>
-              <span onclick="event.preventDefault(); window.open('https://github.com/Kapil-Sandhu/CPro', '_blank')"
-                class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-2 bg-slate-900/90 hover:bg-slate-800 text-cyan-300 border border-cyan-500/40 hover:border-cyan-400 font-mono font-bold text-xs rounded-xl transition-all shadow-md">
-                <span>GitHub</span> <span>↗</span>
               </span>
             </div>
           </div>
@@ -1154,23 +1309,25 @@
               </defs>
 
               <!-- Connection Flow Lines -->
-              <path d="M 88 115 C 100 115, 100 75, 112 75" stroke="#00F0FF" stroke-width="1.5"
-                class="arch-flow-pulse" />
-              <path d="M 88 145 C 100 145, 100 185, 112 185" stroke="#FFB800" stroke-width="1.5"
-                class="arch-flow-pulse" />
-
-              <path d="M 210 75 C 222 75, 222 115, 234 115" stroke="#00F0FF" stroke-width="1.5"
-                class="arch-flow-pulse" />
-              <path d="M 210 185 C 222 185, 222 145, 234 145" stroke="#FFB800" stroke-width="1.5"
+              <path d="M 88 115 C 98 115, 98 75, 106 75" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+              <path d="M 88 145 C 98 145, 98 185, 106 185" stroke="#FFB800" stroke-width="1.5"
                 class="arch-flow-pulse" />
 
-              <!-- HMM to Gate Top Injection -->
-              <path d="M 290 55 C 290 85, 335 85, 335 105" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
-
-              <path d="M 334 130 L 356 130" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
-              <path d="M 450 115 C 462 115, 462 75, 474 75" stroke="#10B981" stroke-width="1.5"
+              <path d="M 204 75 C 214 75, 214 115, 224 115" stroke="#00F0FF" stroke-width="1.5"
                 class="arch-flow-pulse" />
-              <path d="M 450 145 C 462 145, 462 185, 474 185" stroke="#FFB800" stroke-width="1.5"
+              <path d="M 204 185 C 214 185, 214 145, 224 145" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Leakage Guard to MSMT Core -->
+              <path d="M 318 130 L 338 130" stroke="#00F0FF" stroke-width="1.5" class="arch-flow-pulse" />
+
+              <!-- HMM to MSMT Core Top Injection -->
+              <path d="M 392 62 L 392 75" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+
+              <!-- MSMT Core to Output Heads -->
+              <path d="M 446 115 C 456 115, 456 76, 466 76" stroke="#10B981" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 446 145 C 456 145, 456 185, 466 185" stroke="#FFB800" stroke-width="1.5"
                 class="arch-flow-pulse" />
 
               <!-- 1. Raw Market Ticks Box -->
@@ -1185,90 +1342,90 @@
                 text-anchor="middle">2020 &rarr; 2025</text>
 
               <!-- 2A. Multi-Scale Stationarity -->
-              <rect x="112" y="45" width="98" height="60" rx="7" fill="#06111C" stroke="#00F0FF" stroke-width="1.2" />
-              <text x="161" y="63" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+              <rect x="106" y="45" width="98" height="60" rx="7" fill="#06111C" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="155" y="63" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
                 text-anchor="middle">1) MULTI-TF TENSORS</text>
-              <text x="161" y="77" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+              <text x="155" y="77" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
                 text-anchor="middle">1m, 5m, 15m, 1h</text>
-              <text x="161" y="89" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="155" y="89" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">EMA &middot; VWAP Dist.</text>
-              <text x="161" y="99" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="155" y="99" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">11 Dyn. Candles</text>
 
               <!-- 2B. CUSUM Events & Triple Barrier -->
-              <rect x="112" y="155" width="98" height="60" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
-              <text x="161" y="173" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+              <rect x="106" y="155" width="98" height="60" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
+              <text x="155" y="173" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
                 text-anchor="middle">2) CUSUM FILTER</text>
-              <text x="161" y="187" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+              <text x="155" y="187" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
                 text-anchor="middle">329.6k Events</text>
-              <text x="161" y="199" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="155" y="199" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">Triple-Barrier (1.5x)</text>
-              <text x="161" y="209" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="155" y="209" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">Dir + Strength Score</text>
 
-              <!-- 3. HMM Regime Gate Top -->
-              <rect x="234" y="20" width="112" height="40" rx="6" fill="#150E06" stroke="#FFB800" stroke-width="1" />
-              <text x="290" y="35" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
-                text-anchor="middle">4-STATE GAUSSIAN HMM</text>
-              <text x="290" y="48" fill="#FDE68A" font-size="6.5" font-family="'Inter', sans-serif"
-                text-anchor="middle">Regime Posteriors $\mathbf{p}_{\text{HMM}}$</text>
+              <!-- 3. Purged & Embargoed Splitting (LEAKAGE GUARD BEFORE MSMT) -->
+              <rect x="224" y="95" width="94" height="70" rx="8" fill="#0F172A" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="271" y="114" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">3) LEAKAGE GUARD</text>
+              <text x="271" y="128" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Purged &amp; Embargoed</text>
+              <text x="271" y="141" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">200-Bar Boundary Gap</text>
+              <text x="271" y="153" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">Train/Test Split</text>
 
-              <!-- 3. MSMT Transformer Core -->
-              <rect x="234" y="75" width="100" height="100" rx="8" fill="#070D1A" stroke="#00F0FF" stroke-width="1.3"
-                filter="url(#glow-c2)" />
-              <text x="284" y="96" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700"
-                text-anchor="middle">MSMT CORE</text>
-              <text x="284" y="110" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+              <!-- 4A. HMM Regime Gate Top -->
+              <rect x="338" y="20" width="108" height="42" rx="6" fill="#150E06" stroke="#FFB800" stroke-width="1" />
+              <text x="392" y="35" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">4-STATE GAUSSIAN HMM</text>
+              <text x="392" y="49" fill="#FDE68A" font-size="6.5" font-family="'Inter', sans-serif"
+                text-anchor="middle">Latent Regime Posteriors</text>
+
+              <!-- 4B. MSMT Transformer Core -->
+              <rect x="338" y="75" width="108" height="100" rx="8" fill="#070D1A" stroke="#FFB800" stroke-width="1.3"
+                filter="url(#glow-g2)" />
+              <text x="392" y="95" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">MSMT TRANSFORMER</text>
+              <text x="392" y="109" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
                 text-anchor="middle">RevIN + RoPE Attn</text>
-              <line x1="242" y1="117" x2="326" y2="117" stroke="rgba(0,240,255,0.3)" stroke-width="1" />
-              <text x="284" y="130" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+              <line x1="346" y1="116" x2="438" y2="116" stroke="rgba(255,184,0,0.3)" stroke-width="1" />
+              <text x="392" y="129" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">Cross-TF Fusion</text>
-              <text x="284" y="142" fill="#FFB800" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="392" y="141" fill="#FFB800" font-size="6.5" font-family="'Fira Code', monospace"
                 font-weight="700" text-anchor="middle">Sigmoid HMM Gate</text>
-              <text x="284" y="154" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
+              <text x="392" y="153" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
                 text-anchor="middle">Lion + OneCycleLR</text>
-              <text x="284" y="165" fill="#FDA4AF" font-size="6" font-family="'Fira Code', monospace"
+              <text x="392" y="164" fill="#FDA4AF" font-size="6" font-family="'Fira Code', monospace"
                 text-anchor="middle">Multi-Task: Focal+KL</text>
 
-              <!-- 4. Purged & Embargoed Splitting -->
-              <rect x="356" y="95" width="94" height="70" rx="8" fill="#0F172A" stroke="#FFB800" stroke-width="1.2" />
-              <text x="403" y="115" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
-                text-anchor="middle">LEAKAGE GUARD</text>
-              <text x="403" y="130" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
-                text-anchor="middle">Purged &amp; Embargoed</text>
-              <text x="403" y="143" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
-                text-anchor="middle">200-Bar Boundary Gap</text>
-              <text x="403" y="155" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
-                text-anchor="middle">L-BFGS $T^*=0.924$</text>
-
               <!-- 5A. Direction Output Head -->
-              <rect x="474" y="50" width="88" height="50" rx="6" fill="#081510" stroke="#10B981" stroke-width="1.3"
-                filter="url(#glow-g2)" />
-              <text x="518" y="68" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+              <rect x="466" y="50" width="96" height="52" rx="6" fill="#081510" stroke="#10B981" stroke-width="1.3"
+                filter="url(#glow-c2)" />
+              <text x="514" y="67" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
                 text-anchor="middle">DIRECTION HEAD</text>
-              <text x="518" y="80" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
+              <text x="514" y="80" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
                 text-anchor="middle">Bull / Skip / Bear</text>
-              <text x="518" y="92" fill="#34D399" font-size="7.5" font-family="'Fira Code', monospace" font-weight="800"
+              <text x="514" y="92" fill="#34D399" font-size="7.5" font-family="'Fira Code', monospace" font-weight="800"
                 text-anchor="middle">83.36% High-Conf</text>
 
               <!-- 5B. Strength & Backtest Head -->
-              <rect x="474" y="160" width="88" height="50" rx="6" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
-              <text x="518" y="178" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
-                text-anchor="middle">FEE-ADJ. BACKTEST</text>
-              <text x="518" y="190" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
-                text-anchor="middle">3,447 Trades (2025)</text>
-              <text x="518" y="202" fill="#10B981" font-size="7.5" font-family="'Fira Code', monospace"
+              <rect x="466" y="158" width="96" height="54" rx="6" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
+              <text x="514" y="174" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">L-BFGS &amp; BACKTEST</text>
+              <text x="514" y="187" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
+                text-anchor="middle">T*=0.924 &middot; 3,447 Trades</text>
+              <text x="514" y="200" fill="#10B981" font-size="7.5" font-family="'Fira Code', monospace"
                 font-weight="800" text-anchor="middle">+5.15% &middot; 82.6% Win</text>
             </svg>
 
             <div class="mt-2 flex items-center justify-between text-[8.5px] sm:text-[9px] font-mono text-slate-400">
-              <span class="text-cyan-300 truncate">CUSUM &rarr; Multi-TF &rarr; RoPE Attn &rarr; HMM &rarr;
+              <span class="text-cyan-300 truncate">CUSUM &rarr; Leakage Guard &rarr; RoPE Attn &rarr; HMM &rarr;
                 L-BFGS</span>
               <span class="text-goldGlow font-bold shrink-0 ml-1">Acc: 83.36%</span>
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
     </div>
   </section>
@@ -1297,8 +1454,8 @@
     <div class="space-y-8 sm:space-y-10">
 
       <!-- PROJECT CARD 3: AMBER THEME (Diagram Left, Description Right) -->
-      <a href="projects/causal-nli.html"
-        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center block">
+      <div onclick="openModal('modal-causal-nli')"
+        class="project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl transition-all">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
           <div class="diagram-frame diagram-frame-cyan p-2.5 sm:p-3.5 arch-grid-bg relative">
@@ -1469,18 +1626,18 @@
             <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
 
       <!-- PROJECT CARD 4: CYAN THEME (Description Left, Diagram Right) -->
-      <a href="projects/park-vision-ai.html"
+      <div onclick="openModal('modal-park-vision')"
         class="block project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl transition-all">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
@@ -1539,8 +1696,8 @@
             <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
@@ -1664,11 +1821,11 @@
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
 
       <!-- PROJECT CARD 5: YELLOW/AMBER THEME (Diagram Left, Description Right) -->
-      <a href="projects/road-eye.html"
+      <div onclick="openModal('modal-road-eye')"
         class="block project-card-amber p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl relative overflow-hidden transition-all duration-300">
         <!-- LEFT: Project Architecture Diagram -->
         <div class="w-full md:col-span-6 lg:col-span-6">
@@ -1801,18 +1958,18 @@
             <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
 
       <!-- PROJECT CARD 6: CYAN THEME (Description Left, Diagram Right) -->
-      <a href="projects/astro-vista.html"
+      <div onclick="openModal('modal-astro-vista')"
         class="block project-card-cyan p-4 sm:p-6 md:p-8 cursor-pointer group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-8 items-center rounded-2xl sm:rounded-3xl relative overflow-hidden transition-all duration-300">
         <!-- LEFT: Project Description -->
         <div class="w-full md:col-span-6 lg:col-span-6 flex flex-col justify-between order-2 md:order-1">
@@ -1866,8 +2023,8 @@
             <div class="flex items-center gap-3">
               <span
                 class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 font-heading font-bold text-xs rounded-xl shadow-lg group-hover:brightness-110 transition-all">
-                <span class="hidden sm:inline">Inspect Project Technical Architecture &amp; System Report</span>
-                <span class="sm:hidden">View Architecture &amp; Report</span>
+                <span class="hidden sm:inline">View System Architecture &amp; Flowchart</span>
+                <span class="sm:hidden">View Flowchart</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </span>
             </div>
@@ -2068,7 +2225,7 @@
             </div>
           </div>
         </div>
-      </a>
+      </div>
 
     </div>
   </section>
@@ -2353,7 +2510,7 @@
   </section>
   <!-- BOTTOM BAR: SLEEK TRANSPARENT CYAN WITH BOLD YELLOW MESSAGE -->
   <footer
-    class="relative z-10 w-full bg-cyan-950/30 backdrop-blur-xl border-t border-cyan-500/20 py-4 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
+    class="relative z-10 w-full apple-glass-footer py-2.5 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
     <div
       class="flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg font-heading font-extrabold text-goldGlow tracking-wide">
       <span>Designed with</span>
@@ -2361,11 +2518,1518 @@
       <span>in Germany</span>
     </div>
     <div class="text-[11px] sm:text-xs md:text-sm font-mono font-bold text-cyan-300 mt-1">
-      &copy; 2026 Kapil Sandhu &middot; University of Bonn
+      &copy; 2026 &middot; Kapil Sandhu &middot;
     </div>
   </footer>
 
-  <div id="modalContainer"></div>
+
+  <div id="modalContainer">
+    <!-- =========================================================================
+         MODAL 1: AGENTIC TRADE ANALYZER (SYS.01)
+         ========================================================================= -->
+    <div id="modal-agentic-trade"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-amber w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-amber-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-amber-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.01 · MOE-MULTI-AGENT
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+                Gemini API · Redis · LangChain
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                Live Order-Flow
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">Agentic Trade Analyzer</h3>
+            <p class="text-xs sm:text-sm font-mono text-goldGlow mt-0.5">Multi-Agent MoE Architecture &amp; Execution
+              Pipeline</p>
+          </div>
+          <button onclick="closeModal('modal-agentic-trade')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-cyan p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+              <span class="text-electricCyan font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> SYSTEM PIPELINE FLOWCHART
+              </span>
+              <span class="text-slate-400">Sequential Execution Loop</span>
+            </div>
+            <svg viewBox="0 0 570 260" class="w-full min-w-[500px] md:min-w-full h-auto drop-shadow-2xl" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad-gold-p1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFB800" />
+                  <stop offset="100%" stop-color="#FF6A00" />
+                </linearGradient>
+                <linearGradient id="grad-cyan-p1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#0080FF" />
+                </linearGradient>
+                <filter id="glow-c-p1" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.6" />
+                </filter>
+                <filter id="glow-g-p1" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFB800" flood-opacity="0.6" />
+                </filter>
+              </defs>
+
+              <!-- Connection Flow Lines -->
+              <!-- Raw to Multi-TF & Dollar Candles -->
+              <path d="M 88 115 C 100 115, 100 75, 112 75" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 88 145 C 100 145, 100 185, 112 185" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Multi-TF & Dollar Candles to Tech Agent -->
+              <path d="M 210 75 C 222 75, 222 115, 234 115" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 210 185 C 222 185, 222 145, 234 145" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Tech Agent to Bull & Bear -->
+              <path d="M 322 115 C 336 115, 336 74, 350 74" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 322 145 C 336 145, 336 186, 350 186" stroke="#FF3366" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Bull & Bear to Master AI -->
+              <path d="M 438 74 C 452 74, 452 115, 466 115" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 438 186 C 452 186, 452 145, 466 145" stroke="#FF3366" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Debate Inter-Agent Pulse Arrows -->
+              <path d="M 394 98 L 394 116" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+              <path d="M 394 144 L 394 162" stroke="#FFB800" stroke-width="1.5" stroke-dasharray="3,3" />
+
+              <!-- 1. Raw Market Data Box -->
+              <rect x="8" y="95" width="80" height="70" rx="8" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="48" y="116" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">RAW DATA</text>
+              <text x="48" y="131" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Binance WS</text>
+              <text x="48" y="144" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace"
+                text-anchor="middle">BTC/USDT L2</text>
+              <text x="48" y="156" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Live Ingestion</text>
+
+              <!-- 2A. 1) Multi-Timeframe OHLCV Box -->
+              <rect x="112" y="45" width="98" height="60" rx="7" fill="#06111C" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="161" y="63" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">1) MULTI-TF OHLCV</text>
+              <text x="161" y="77" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">1m, 5m, 15m, 1h, 4h</text>
+              <text x="161" y="89" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">RSI · MACD · BB</text>
+              <text x="161" y="99" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">KRS Liquidity</text>
+
+              <!-- 2B. 2) Dollar Candle Box -->
+              <rect x="112" y="155" width="98" height="60" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1.2" />
+              <text x="161" y="173" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">2) $1M DOLLAR BARS</text>
+              <text x="161" y="187" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Volume Sampling</text>
+              <text x="161" y="199" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Streaming CVD</text>
+              <text x="161" y="209" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Lee-Ready Ticks</text>
+
+              <!-- 3. Technical Agent Box -->
+              <rect x="234" y="95" width="88" height="70" rx="8" fill="#0F172A" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="278" y="115" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">TECH AGENT</text>
+              <text x="278" y="130" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Summarize Data</text>
+              <text x="278" y="143" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Pydantic Schemas</text>
+              <text x="278" y="155" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Market Context</text>
+
+              <!-- 4. Adversarial MoE Arena -->
+              <rect x="342" y="20" width="104" height="220" rx="9" fill="#05070D" stroke="#FFB800" stroke-width="1"
+                stroke-dasharray="4,4" fill-opacity="0.75" />
+              <text x="394" y="38" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">3-ROUND DEBATE</text>
+
+              <!-- Bull Agent -->
+              <rect x="350" y="50" width="88" height="48" rx="6" fill="#0A1624" stroke="#00F0FF" stroke-width="1.2"
+                filter="url(#glow-c-p1)" />
+              <text x="394" y="68" fill="#00F0FF" font-size="8" font-family="'Space Grotesk', sans-serif"
+                font-weight="700" text-anchor="middle">Bull Agent 🐂</text>
+              <text x="394" y="80" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
+                text-anchor="middle">Argues to BUY</text>
+              <text x="394" y="91" fill="#67E8F9" font-size="6" font-family="'Fira Code', monospace"
+                text-anchor="middle">+CVD Momentum</text>
+
+              <!-- Debate 3-Round Center Core -->
+              <circle cx="394" cy="130" r="14" fill="#0F172A" stroke="#FFB800" stroke-width="1.2" />
+              <text x="394" y="133" fill="#FFB800" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">3-RND</text>
+
+              <!-- Bear Agent -->
+              <rect x="350" y="162" width="88" height="48" rx="6" fill="#1C0F17" stroke="#FF3366" stroke-width="1.2" />
+              <text x="394" y="180" fill="#FF3366" font-size="8" font-family="'Space Grotesk', sans-serif"
+                font-weight="700" text-anchor="middle">Bear Agent 🐻</text>
+              <text x="394" y="192" fill="#E2E8F0" font-size="6.5" font-family="'Inter', sans-serif"
+                text-anchor="middle">Argues to SELL</text>
+              <text x="394" y="203" fill="#FDA4AF" font-size="6" font-family="'Fira Code', monospace"
+                text-anchor="middle">-Liquidity Wall</text>
+
+              <!-- 5. Master AI & Final Decision -->
+              <rect x="466" y="80" width="96" height="100" rx="8" fill="#081510" stroke="#FFB800" stroke-width="1.3"
+                filter="url(#glow-g-p1)" />
+              <text x="514" y="102" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">MASTER AI</text>
+              <text x="514" y="116" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Final Decision</text>
+              <line x1="476" y1="124" x2="552" y2="124" stroke="rgba(255,184,0,0.3)" stroke-width="1" />
+              <text x="514" y="138" fill="#10B981" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">EXECUTE SIGNAL</text>
+              <text x="514" y="151" fill="#34D399" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Kelly Sizing f*</text>
+              <text x="514" y="163" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Semantic Inval.</text>
+              <text x="514" y="173" fill="#FBBF24" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">4-Tier Risk FSM</text>
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">1. Dual-Timeframe Data Ingestion</div>
+              <p class="text-slate-400 leading-relaxed">Streams real-time market data across multiple timeframes
+                combined with synchronized $1M dollar-bar volume aggregation.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">2. Specialized Technical Agent</div>
+              <p class="text-slate-400 leading-relaxed">Calculates multi-indicator momentum signals (RSI, MACD,
+                Bollinger Bands, KRS liquidity) into structured Pydantic schemas.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">3. Bull vs. Bear Adversarial Debate</div>
+              <p class="text-slate-400 leading-relaxed">Two specialized LLM agents debate for 3 structured rounds,
+                challenging each other's thesis to eliminate confirmation bias.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">4. Master AI &amp; Risk FSM</div>
+              <p class="text-slate-400 leading-relaxed">Synthesizes debate consensus, enforces Kelly criterion position
+                sizing, and triggers semantic stop-loss bounds.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/Agentic-Trade-Analyzer" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-agentic-trade')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL 2: BTC C-PRO (SYS.02)
+         ========================================================================= -->
+    <div id="modal-btc-cpro"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-cyan w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-cyan-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-cyan-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.02 · TIME-SERIES TRANSFORMERS &amp; QUANT
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                83.36% High-Conf Acc
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-goldGlow bg-amber-950/60 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
+                3.15M Bars Dataset
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">BTC C-PRO: Momentum Transformer</h3>
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mt-0.5">Multi-Scale RoPE Attention &middot; 4-State HMM
+              Gate &middot; Symmetric CUSUM</p>
+          </div>
+          <button onclick="closeModal('modal-btc-cpro')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-cyan-400 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-cyan p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+              <span class="text-electricCyan font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> QUANTITATIVE PIPELINE
+                FLOWCHART
+              </span>
+              <span class="text-slate-400">Institutional Pipeline Flow</span>
+            </div>
+            <svg viewBox="0 0 1000 380" class="w-full min-w-[780px] md:min-w-full h-auto" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad-gold-cpro" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFB800" />
+                  <stop offset="100%" stop-color="#FF6A00" />
+                </linearGradient>
+                <linearGradient id="grad-cyan-cpro" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#0080FF" />
+                </linearGradient>
+                <filter id="glow-gold-cpro" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFB800" flood-opacity="0.5" />
+                </filter>
+                <filter id="glow-cyan-cpro" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.5" />
+                </filter>
+              </defs>
+
+              <!-- Flow Connectors -->
+              <!-- Ingestion to CUSUM & Multi-TF -->
+              <path d="M 125 180 C 150 180, 150 100, 175 100" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 125 180 C 150 180, 150 260, 175 260" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Multi-TF & CUSUM to Feature Matrix -->
+              <path d="M 295 100 C 320 100, 320 180, 345 180" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 295 260 C 320 260, 320 180, 345 180" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Feature Matrix to MSMT Transformer -->
+              <path d="M 470 180 L 515 180" stroke="#00F0FF" stroke-width="1.8" class="arch-flow-pulse" />
+
+              <!-- HMM to Sigmoid Gate Injection -->
+              <path d="M 600 65 C 630 65, 630 140, 660 140" stroke="#FFB800" stroke-width="1.5"
+                stroke-dasharray="3,3" />
+
+              <!-- MSMT to Multi-Task Output Heads -->
+              <path d="M 720 180 C 750 180, 750 100, 780 100" stroke="#10B981" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 720 180 C 750 180, 750 180, 780 180" stroke="#FFB800" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 720 180 C 750 180, 750 260, 780 260" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Post-Hoc Calibration & Backtest -->
+              <path d="M 915 180 L 935 180" stroke="#10B981" stroke-width="1.5" class="arch-flow-pulse" />
+
+              <!-- STAGE 1: RAW INGESTION -->
+              <rect x="15" y="125" width="110" height="110" rx="10" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.3"
+                filter="url(#glow-cyan-cpro)" />
+              <text x="70" y="152" fill="#00F0FF" font-size="10.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">RAW DATA</text>
+              <text x="70" y="172" fill="#E2E8F0" font-size="9" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">5+ Yrs BTC/USD</text>
+              <text x="70" y="190" fill="#94A3B8" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">3.15M 1-Min Bars</text>
+              <text x="70" y="206" fill="#38BDF8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">2020 &rarr; 2025</text>
+              <text x="70" y="222" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">QC &amp; Resampling</text>
+
+              <!-- STAGE 2A: MULTI-TIMEFRAME RESAMPLING -->
+              <rect x="175" y="45" width="120" height="110" rx="10" fill="#06111C" stroke="#00F0FF"
+                stroke-width="1.3" />
+              <text x="235" y="70" fill="#00F0FF" font-size="9.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">1) MULTI-SCALE TF</text>
+              <text x="235" y="88" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">1m, 5m, 15m, 1h</text>
+              <text x="235" y="104" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">16 Features / TF</text>
+              <text x="235" y="120" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">EMA &amp; VWAP Dist.</text>
+              <text x="235" y="136" fill="#38BDF8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">11 Dynamic Candles</text>
+
+              <!-- STAGE 2B: CUSUM FILTER & TRIPLE BARRIER -->
+              <rect x="175" y="205" width="120" height="110" rx="10" fill="#120E04" stroke="#FFB800"
+                stroke-width="1.3" />
+              <text x="235" y="230" fill="#FFB800" font-size="9.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">2) CUSUM &amp; LABELS</text>
+              <text x="235" y="248" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Symmetric CUSUM</text>
+              <text x="235" y="264" fill="#FBBF24" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">329.6k Events (12.5%)</text>
+              <text x="235" y="280" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Triple-Barrier (1.5x ATR)</text>
+              <text x="235" y="296" fill="#FDE68A" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Dir + Strength Score</text>
+
+              <!-- STAGE 3: PURGED & EMBARGOED SPLIT -->
+              <rect x="345" y="125" width="125" height="110" rx="10" fill="#0F172A" stroke="#00F0FF"
+                stroke-width="1.3" />
+              <text x="407" y="150" fill="#00F0FF" font-size="9.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">3) LEAKAGE GUARD</text>
+              <text x="407" y="168" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Purged &amp; Embargoed</text>
+              <text x="407" y="184" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">200-Bar Boundary Gap</text>
+              <text x="407" y="200" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Train: 2021&rarr;2024</text>
+              <text x="407" y="216" fill="#10B981" font-size="7.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">Test: 2025 (Full Year)</text>
+
+              <!-- 4-STATE GAUSSIAN HMM TOP INJECTION -->
+              <rect x="500" y="20" width="160" height="65" rx="8" fill="#150E06" stroke="#FFB800" stroke-width="1.2" />
+              <text x="580" y="42" fill="#FFB800" font-size="9" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">4-STATE GAUSSIAN HMM</text>
+              <text x="580" y="58" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">Latent Regime Probabilities</text>
+              <text x="580" y="73" fill="#FBBF24" font-size="7" font-family="'Fira Code', monospace"
+                text-anchor="middle">Sideways vs Trending vs Volitile</text>
+
+              <!-- STAGE 4: MSMT TRANSFORMER CORE -->
+              <rect x="515" y="105" width="205" height="150" rx="12" fill="#070D1A" stroke="#FFB800" stroke-width="1.5"
+                filter="url(#glow-gold-cpro)" />
+              <text x="617" y="132" fill="#FFB800" font-size="11" font-family="'Space Grotesk', sans-serif"
+                font-weight="800" text-anchor="middle">MSMT TRANSFORMER</text>
+              <line x1="530" y1="140" x2="705" y2="140" stroke="rgba(255,184,0,0.3)" stroke-width="1" />
+              <text x="617" y="157" fill="#67E8F9" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">&bull; RevIN &middot; Patch Token (4 bars)</text>
+              <text x="617" y="173" fill="#E2E8F0" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">&bull; Rotary Position Embeddings (RoPE)</text>
+              <text x="617" y="189" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">&bull; Cross-TF Attn + Dyn Candle Bias</text>
+              <text x="617" y="205" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">&bull; Dynamic Sigmoid Regime Gating</text>
+              <text x="617" y="221" fill="#10B981" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">&bull; Lion Optimizer + OneCycleLR</text>
+              <text x="617" y="237" fill="#FDA4AF" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">&bull; Multi-Task: Focal + Huber + KL</text>
+
+              <!-- STAGE 5: MULTI-TASK OUTPUT HEADS -->
+              <!-- Direction Head -->
+              <rect x="780" y="65" width="135" height="70" rx="8" fill="#0A1624" stroke="#10B981" stroke-width="1.3" />
+              <text x="847" y="88" fill="#10B981" font-size="9" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">1) DIRECTION HEAD</text>
+              <text x="847" y="104" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">3-Way: Bull / Skip / Bear</text>
+              <text x="847" y="120" fill="#34D399" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="800" text-anchor="middle">83.36% High-Conf Acc</text>
+
+              <!-- Strength Head -->
+              <rect x="780" y="145" width="135" height="70" rx="8" fill="#120E04" stroke="#FFB800" stroke-width="1.3" />
+              <text x="847" y="168" fill="#FFB800" font-size="9" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">2) STRENGTH HEAD</text>
+              <text x="847" y="184" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">Continuous Score [0, 1]</text>
+              <text x="847" y="200" fill="#FBBF24" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">Volatility-Norm Return</text>
+
+              <!-- Regime Aux Head -->
+              <rect x="780" y="225" width="135" height="70" rx="8" fill="#06111C" stroke="#00F0FF" stroke-width="1.3" />
+              <text x="847" y="248" fill="#00F0FF" font-size="9" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">3) REGIME AUX HEAD</text>
+              <text x="847" y="264" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">4-State Classification</text>
+              <text x="847" y="280" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">KL-Divergence Regularizer</text>
+
+              <!-- STAGE 6: POST-HOC CALIBRATION & BACKTEST -->
+              <rect x="935" y="115" width="55" height="130" rx="8" fill="#081510" stroke="#10B981" stroke-width="1.3" />
+              <text x="962" y="142" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">EXEC.</text>
+              <line x1="943" y1="150" x2="982" y2="150" stroke="rgba(16,185,129,0.3)" stroke-width="1" />
+              <text x="962" y="168" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif"
+                text-anchor="middle">L-BFGS</text>
+              <text x="962" y="180" fill="#34D399" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">T=0.924</text>
+              <text x="962" y="200" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif"
+                text-anchor="middle">Backtest</text>
+              <text x="962" y="214" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="800"
+                text-anchor="middle">+5.15%</text>
+              <text x="962" y="228" fill="#6EE7B7" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">82.6% Win</text>
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">1. Symmetric CUSUM Event Sampling</div>
+              <p class="text-slate-400 leading-relaxed">Extracts 329.6k volatility events (~12.5% bar density),
+                eliminating random market noise and enforcing Triple-Barrier labeling.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">2. 4-State HMM Regime Gate</div>
+              <p class="text-slate-400 leading-relaxed">Dynamic latent state estimator suppresses choppy sideways
+                regimes (State 0) and enables aggressive momentum allocation (States 1 &amp; 2).</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">3. Multi-Scale RoPE Attention</div>
+              <p class="text-slate-400 leading-relaxed">Encodes short (5-bar), medium (15-bar), and macro (60-bar)
+                dependencies with Rotary Position Embeddings (RoPE).</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-rose-500/20 space-y-1">
+              <div class="text-rose-400 font-mono font-bold">4. L-BFGS Post-Hoc Calibration</div>
+              <p class="text-slate-400 leading-relaxed">Applies Temperature Scaling and Platt vector scaling to minimize
+                Expected Calibration Error (ECE &lt; 0.038).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/BTC_CPRO" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-btc-cpro')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL 3: CAUSAL NLI (SYS.03)
+         ========================================================================= -->
+    <div id="modal-causal-nli"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-amber w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-amber-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-amber-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.03 · CAUSAL NLI &amp; LLM BENCHMARKS
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                90.43% SNLI Acc
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+                Qwen3 Causal LM · bfloat16
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">Causal Natural Language Inference
+            </h3>
+            <p class="text-xs sm:text-sm font-mono text-goldGlow mt-0.5">Autoregressive Foundation Models as
+              Zero-Auxiliary Robust Classifiers</p>
+          </div>
+          <button onclick="closeModal('modal-causal-nli')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-cyan p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+              <span class="text-electricCyan font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> CAUSAL NLI ARCHITECTURE
+                FLOWCHART
+              </span>
+              <span class="text-slate-400">Structural Causal Pipeline</span>
+            </div>
+            <svg viewBox="0 0 570 260" class="w-full min-w-[540px] md:min-w-full h-auto drop-shadow-2xl" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad-cyan-p2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#0080FF" />
+                </linearGradient>
+                <linearGradient id="grad-gold-p2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFB800" />
+                  <stop offset="100%" stop-color="#FF6A00" />
+                </linearGradient>
+                <filter id="glow-c-p2" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.6" />
+                </filter>
+              </defs>
+
+              <!-- Flow Connections -->
+              <!-- Ingestion to 3 Evaluation Regimes -->
+              <path d="M 95 130 C 110 130, 110 65, 125 65" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 95 130 C 110 130, 110 130, 125 130" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 95 130 C 110 130, 110 195, 125 195" stroke="#FF6A00" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Evaluation Regimes to Causal Backbone -->
+              <path d="M 235 65 C 255 65, 255 130, 275 130" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 235 130 C 255 130, 255 130, 275 130" stroke="#00F0FF" stroke-width="1.5"
+                class="arch-flow-pulse" />
+              <path d="M 235 195 C 255 195, 255 130, 275 130" stroke="#FF6A00" stroke-width="1.5"
+                class="arch-flow-pulse" />
+
+              <!-- Causal Backbone to Output Decoder -->
+              <path d="M 405 130 L 440 130" stroke="#10B981" stroke-width="1.5" class="arch-flow-pulse" />
+
+              <!-- 1. Input Datasets Source -->
+              <rect x="8" y="95" width="87" height="70" rx="8" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="51" y="116" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">CORPUS</text>
+              <text x="51" y="131" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">Premise + Hyp</text>
+              <text x="51" y="144" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace"
+                text-anchor="middle">SNLI 570k</text>
+              <text x="51" y="156" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Multi-NLI 400k</text>
+
+              <!-- 2A. In-Domain Evaluation (SNLI Test) -->
+              <rect x="125" y="38" width="110" height="54" rx="7" fill="#06111C" stroke="#00F0FF" stroke-width="1.2" />
+              <text x="180" y="55" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">1) IN-DOMAIN SNLI</text>
+              <text x="180" y="69" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">9,824 Test Pairs</text>
+              <text x="180" y="81" fill="#10B981" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">90.43% Accuracy</text>
+
+              <!-- 2B. Cross-Genre Generalization (Multi-NLI) -->
+              <rect x="125" y="103" width="110" height="54" rx="7" fill="#0B1528" stroke="#38BDF8" stroke-width="1.2" />
+              <text x="180" y="120" fill="#38BDF8" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">2) CROSS-GENRE MNLI</text>
+              <text x="180" y="134" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">10 Unseen Genres</text>
+              <text x="180" y="146" fill="#38BDF8" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">83.83% Transfer</text>
+
+              <!-- 2C. Adversarial Robustness (Negated MNLI) -->
+              <rect x="125" y="168" width="110" height="54" rx="7" fill="#1C0E14" stroke="#FF6A00" stroke-width="1.2" />
+              <text x="180" y="185" fill="#FF6A00" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">3) ADVERSARIAL NEG</text>
+              <text x="180" y="199" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">6,607 Inverted Pairs</text>
+              <text x="180" y="211" fill="#FFB800" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">60.10% Robustness</text>
+
+              <!-- 3. Causal LM Backbone (Qwen3 0.6B / 1.7B) -->
+              <rect x="275" y="80" width="130" height="100" rx="9" fill="#0A1624" stroke="#00F0FF" stroke-width="1.3"
+                filter="url(#glow-c-p2)" />
+              <text x="340" y="103" fill="#00F0FF" font-size="9" font-family="'Space Grotesk', sans-serif"
+                font-weight="700" text-anchor="middle">Qwen3 Causal LM</text>
+              <text x="340" y="118" fill="#E2E8F0" font-size="7.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">0.6B &amp; 1.7B Parameters</text>
+              <line x1="285" y1="126" x2="395" y2="126" stroke="rgba(0,240,255,0.25)" stroke-width="1" />
+              <text x="340" y="140" fill="#67E8F9" font-size="7" font-family="'Fira Code', monospace"
+                text-anchor="middle">bfloat16 · SFT Batch 32</text>
+              <text x="340" y="153" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Left-Padding Generation</text>
+              <text x="340" y="166" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">No Classification Head</text>
+
+              <!-- 4. Autoregressive Label Decoder Output -->
+              <rect x="440" y="80" width="120" height="100" rx="8" fill="#081510" stroke="#10B981" stroke-width="1.3" />
+              <text x="500" y="102" fill="#10B981" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">LABEL LOGITS</text>
+              <text x="500" y="117" fill="#E2E8F0" font-size="7" font-family="'Inter', sans-serif"
+                text-anchor="middle">Discrete 3-Way Target</text>
+              <line x1="450" y1="124" x2="550" y2="124" stroke="rgba(16,185,129,0.3)" stroke-width="1" />
+              <text x="500" y="138" fill="#34D399" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">entailment</text>
+              <text x="500" y="151" fill="#FBBF24" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">neutral</text>
+              <text x="500" y="164" fill="#F43F5E" font-size="7" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">contradiction</text>
+              <text x="500" y="174" fill="#94A3B8" font-size="6" font-family="'Fira Code', monospace"
+                text-anchor="middle">0.00% Unknown Failures</text>
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">1. Dual-Corpus Ingestion</div>
+              <p class="text-slate-400 leading-relaxed">Ingests SNLI and Multi-NLI corpora across 10 diverse genres with
+                specialized negation challenge stress-tests.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">2. Zero-Auxiliary Causal Backbone</div>
+              <p class="text-slate-400 leading-relaxed">Employs decoder-only causal language models (Qwen3 0.6B &amp;
+                1.7B) trained via bfloat16 Supervised Fine-Tuning (SFT).</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">3. 3-Way Calibrated Output Space</div>
+              <p class="text-slate-400 leading-relaxed">Generates strict token predictions across <em>entailment</em>,
+                <em>neutral</em>, and <em>contradiction</em> with 0.00% unparseable output rate.
+              </p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-rose-500/20 space-y-1">
+              <div class="text-rose-400 font-mono font-bold">4. Negation Robustness Shift</div>
+              <p class="text-slate-400 leading-relaxed">SFT improves negation accuracy from 32.14% baseline to 60.10%,
+                effectively overcoming heuristic spurious shortcuts.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/NLI" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-causal-nli')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL 4: PARK-VISION AI (SYS.04)
+         ========================================================================= -->
+    <div id="modal-park-vision"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-cyan w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-cyan-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-cyan-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.04 · EMBEDDED COMPUTER VISION
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                89% MOTA Tracking
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">
+                28 FPS Edge Live
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">Park-Vision AI</h3>
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mt-0.5">Cascaded Multi-Object Tracking &amp;
+              High-Accuracy License Plate Recognition</p>
+          </div>
+          <button onclick="closeModal('modal-park-vision')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-cyan-400 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-amber p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[10px] font-mono">
+              <span class="text-goldGlow font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-goldGlow animate-ping"></span> TWO-STAGE CASCADED ALPR
+                FLOWCHART
+              </span>
+              <span class="text-slate-400">Real-Time Surveillance Pipeline</span>
+            </div>
+            <svg viewBox="0 0 1020 200" class="w-full min-w-[860px] h-auto" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad-cyan" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#0080FF" />
+                </linearGradient>
+                <linearGradient id="grad-gold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFB800" />
+                  <stop offset="100%" stop-color="#FF6A00" />
+                </linearGradient>
+                <linearGradient id="grad-emerald" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#10B981" />
+                  <stop offset="100%" stop-color="#059669" />
+                </linearGradient>
+                <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00F0FF" flood-opacity="0.5" />
+                </filter>
+                <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#FFB800" flood-opacity="0.5" />
+                </filter>
+                <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#00F0FF" />
+                </marker>
+                <marker id="arrow-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#FFB800" />
+                </marker>
+              </defs>
+
+              <!-- Inter-Stage Connection Pathways -->
+              <path d="M 150 100 L 173 100" stroke="#00F0FF" stroke-width="2" marker-end="url(#arrow-cyan)"
+                class="arch-flow-pulse" />
+              <path d="M 320 100 L 343 100" stroke="#00F0FF" stroke-width="2" marker-end="url(#arrow-cyan)"
+                class="arch-flow-pulse" />
+              <path d="M 490 100 L 513 100" stroke="#FFB800" stroke-width="2" marker-end="url(#arrow-gold)"
+                class="arch-flow-pulse" />
+              <path d="M 665 100 L 688 100" stroke="#FFB800" stroke-width="2" marker-end="url(#arrow-gold)"
+                class="arch-flow-pulse" />
+              <path d="M 840 100 L 863 100" stroke="#00F0FF" stroke-width="2" marker-end="url(#arrow-cyan)"
+                class="arch-flow-pulse" />
+
+              <!-- STAGE 1: RAW INGESTION -->
+              <rect x="15" y="25" width="135" height="150" rx="10" fill="#0A0E1A" stroke="#00F0FF" stroke-width="1.5"
+                filter="url(#glow-cyan)" />
+              <text x="82" y="52" fill="#00F0FF" font-size="10.5" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">1. INGESTION</text>
+              <rect x="25" y="62" width="115" height="24" rx="4" fill="#1E293B" />
+              <text x="82" y="78" fill="#E2E8F0" font-size="8.5" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">OpenCV Stream</text>
+              <text x="82" y="105" fill="#94A3B8" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">1080p RTSP / MP4</text>
+              <text x="82" y="125" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">Frame
+                Extraction</text>
+              <text x="82" y="148" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Zero Buffer Loss</text>
+
+              <!-- STAGE 2: VEHICLE DETECTOR (YOLOv8n) -->
+              <rect x="175" y="25" width="145" height="150" rx="10" fill="#070D1A" stroke="#00F0FF"
+                stroke-width="1.5" />
+              <text x="247" y="52" fill="#00F0FF" font-size="10.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">2. VEHICLE DETECT</text>
+              <rect x="185" y="62" width="125" height="24" rx="4" fill="#161F36" stroke="#00F0FF" stroke-width="0.8" />
+              <text x="247" y="78" fill="#67E8F9" font-size="8.5" font-family="'Fira Code', monospace" font-weight="600"
+                text-anchor="middle">yolov8n.pt (COCO)</text>
+              <text x="247" y="105" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">Cars, Buses, Trucks</text>
+              <text x="247" y="125" fill="#94A3B8" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">Confidence &gt; 0.85</text>
+              <text x="247" y="148" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">[xc1, yc1, xc2, yc2]</text>
+
+              <!-- STAGE 3: SORT KALMAN MULTI-OBJECT TRACKER -->
+              <rect x="345" y="25" width="145" height="150" rx="10" fill="#0B132B" stroke="#00F0FF"
+                stroke-width="1.5" />
+              <text x="417" y="52" fill="#00F0FF" font-size="10.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">3. SORT KALMAN</text>
+              <rect x="355" y="62" width="125" height="24" rx="4" fill="#1E293B" />
+              <text x="417" y="78" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif" font-weight="600"
+                text-anchor="middle">7D Kinematic State</text>
+              <text x="417" y="105" fill="#94A3B8" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">Hungarian IoU Match</text>
+              <text x="417" y="125" fill="#6EE7B7" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">Persistent car_id</text>
+              <text x="417" y="148" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">89% MOTA Score</text>
+
+              <!-- STAGE 4: PLATE DETECT (Custom YOLOv8 + Spatial BBox) -->
+              <rect x="515" y="25" width="150" height="150" rx="10" fill="#120E04" stroke="#FFB800"
+                stroke-width="1.5" />
+              <text x="590" y="52" fill="#FFB800" font-size="10.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">4. PLATE DETECT</text>
+              <rect x="525" y="62" width="130" height="24" rx="4" fill="#291807" stroke="#FFB800" stroke-width="0.8" />
+              <text x="590" y="78" fill="#FDE68A" font-size="8.5" font-family="'Fira Code', monospace" font-weight="600"
+                text-anchor="middle">models/best.pt</text>
+              <text x="590" y="105" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">Plate Search in Vehicle</text>
+              <text x="590" y="125" fill="#FDE68A" font-size="8" font-family="'Fira Code', monospace"
+                text-anchor="middle">Spatial BBox get_car</text>
+              <text x="590" y="148" fill="#94A3B8" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Sub-Region Crop</text>
+
+              <!-- STAGE 5: EasyOCR & SYNTAX HEURISTICS -->
+              <rect x="690" y="25" width="150" height="150" rx="10" fill="#161405" stroke="#FFB800" stroke-width="1.5"
+                filter="url(#glow-gold)" />
+              <text x="765" y="52" fill="#FFB800" font-size="10.5" font-family="'Fira Code', monospace"
+                font-weight="700" text-anchor="middle">5. OCR &amp; SYNTAX</text>
+              <rect x="700" y="62" width="130" height="24" rx="4" fill="#291807" stroke="#FFB800" stroke-width="0.8" />
+              <text x="765" y="78" fill="#FDE68A" font-size="8.5" font-family="'Fira Code', monospace" font-weight="600"
+                text-anchor="middle">EasyOCR + Binarize</text>
+              <text x="765" y="105" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">THRESH_BINARY_INV</text>
+              <text x="765" y="125" fill="#F43F5E" font-size="8" font-family="'Fira Code', monospace" font-weight="600"
+                text-anchor="middle">0&harr;O · 1&harr;I · 5&harr;S</text>
+              <text x="765" y="148" fill="#34D399" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">&gt;85% Error Resolved</text>
+
+              <!-- STAGE 6: SCIPY GAP-FILLING & VIDEO SYNTHESIS -->
+              <rect x="865" y="25" width="140" height="150" rx="10" fill="#070D1A" stroke="#00F0FF" stroke-width="1.5"
+                filter="url(#glow-cyan)" />
+              <text x="935" y="52" fill="#00F0FF" font-size="10" font-family="'Fira Code', monospace" font-weight="700"
+                text-anchor="middle">6. GAP-FILL &amp; RENDER</text>
+              <rect x="875" y="62" width="120" height="24" rx="4" fill="#161F36" stroke="#00F0FF" stroke-width="0.8" />
+              <text x="935" y="78" fill="#67E8F9" font-size="8" font-family="'Fira Code', monospace" font-weight="600"
+                text-anchor="middle">Scipy 1D Interpolation</text>
+              <text x="935" y="105" fill="#E2E8F0" font-size="8" font-family="'Inter', sans-serif"
+                text-anchor="middle">BBox
+                Spline Trajectory</text>
+              <text x="935" y="125" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">Max-Confidence Lock</text>
+              <text x="935" y="148" fill="#10B981" font-size="7.5" font-family="'Fira Code', monospace"
+                text-anchor="middle">output_video.mp4</text>
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">1. Two-Stage Cascaded Detection</div>
+              <p class="text-slate-400 leading-relaxed">First stage localizes vehicle bounding boxes; second stage
+                isolates license plates strictly within vehicle crops, eliminating false positives.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">2. SORT Kalman 7D Kinematics</div>
+              <p class="text-slate-400 leading-relaxed">Maintains persistent vehicle IDs across frames with Hungarian
+                algorithm IoU matching, scoring 89% MOTA.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">3. Syntax Disambiguation Engine</div>
+              <p class="text-slate-400 leading-relaxed">Applies position-specific alphanumeric rules (e.g. 0↔O, 1↔I,
+                5↔S) to resolve optical OCR confusions with &gt;85% error correction.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-rose-500/20 space-y-1">
+              <div class="text-rose-400 font-mono font-bold">4. Scipy Trajectory Smoothing</div>
+              <p class="text-slate-400 leading-relaxed">Interpolates missing bounding boxes during temporary occlusions
+                using Scipy 1D spline smoothing, producing fluid video telemetry.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/Park-Vision" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-park-vision')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL 5: ROAEYE (SYS.05)
+         ========================================================================= -->
+    <div id="modal-road-eye"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-amber w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-amber-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-amber-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-goldGlow bg-amber-950/80 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.05 · EDGE VISION &amp; FLOW TELEMETRY
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full font-semibold">
+                -68.8% Pixel Compute
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                &lt; 15ms Latency
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">RoadEye Traffic Monitor</h3>
+            <p class="text-xs sm:text-sm font-mono text-goldGlow mt-0.5">Dynamic ROI Tensor Slicing &amp;
+              High-Throughput Highway Vehicle Telemetry</p>
+          </div>
+          <button onclick="closeModal('modal-road-eye')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-amber p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-500/20 text-[10px] font-mono">
+              <span class="text-goldGlow font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-goldGlow animate-ping"></span> DYNAMIC ROI PIPELINE FLOWCHART
+              </span>
+              <span class="text-slate-400">Edge Execution Stream</span>
+            </div>
+            <svg viewBox="0 0 1060 260" class="w-full min-w-[920px] h-auto" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="roadeye-amber-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFB800" />
+                  <stop offset="100%" stop-color="#FF6A00" />
+                </linearGradient>
+                <linearGradient id="roadeye-cyan-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" />
+                  <stop offset="100%" stop-color="#0284C7" />
+                </linearGradient>
+                <filter id="roadeye-glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#FFB800" flood-opacity="0.6" />
+                </filter>
+              </defs>
+
+              <!-- =============================================================
+               FLOW CONNECTOR ARROWS
+               ============================================================= -->
+              <!-- 1 -> 2 -->
+              <path d="M 130 130 L 160 130" stroke="#00F0FF" stroke-width="2" class="arch-flow-pulse" />
+              <!-- 2 -> 3 -->
+              <path d="M 290 130 L 320 130" stroke="#FFB800" stroke-width="2" class="arch-flow-pulse" />
+              <!-- 3 -> 4 -->
+              <path d="M 450 130 L 480 130" stroke="#FF6A00" stroke-width="2" class="arch-flow-pulse" />
+              <!-- 4 -> 5 -->
+              <path d="M 610 130 L 640 130" stroke="#00F0FF" stroke-width="2" class="arch-flow-pulse" />
+              <!-- 5 -> 6 -->
+              <path d="M 770 130 L 800 130" stroke="#10B981" stroke-width="2" class="arch-flow-pulse" />
+              <!-- 6 -> 7 -->
+              <path d="M 925 130 L 955 130" stroke="#FFB800" stroke-width="2" class="arch-flow-pulse" />
+
+              <!-- =============================================================
+               STAGE 1: RAW VIDEO INGESTION
+               ============================================================= -->
+              <g>
+                <rect x="10" y="55" width="120" height="150" rx="10" fill="#0A0E1A" stroke="#00F0FF"
+                  stroke-width="1.2" />
+                <rect x="10" y="55" width="120" height="24" rx="10" fill="#00F0FF" fill-opacity="0.15" />
+                <text x="70" y="71" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                  text-anchor="middle">1. VIDEO INGEST</text>
+                <text x="70" y="98" fill="#FFFFFF" font-size="8.5" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">OpenCV Capture</text>
+                <text x="70" y="112" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">input_video.mp4</text>
+                <rect x="22" y="125" width="96" height="20" rx="4" fill="#1E293B" />
+                <text x="70" y="138" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Full 1080p (W,H)</text>
+                <rect x="22" y="152" width="96" height="20" rx="4" fill="#0B192C" />
+                <text x="70" y="165" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">30 FPS Stream</text>
+                <text x="70" y="192" fill="#64748B" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Raw Mat Frame</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 2: GEOMETRIC CALIBRATION
+               ============================================================= -->
+              <g>
+                <rect x="160" y="55" width="130" height="150" rx="10" fill="#0A0E1A" stroke="#FFB800"
+                  stroke-width="1.2" />
+                <rect x="160" y="55" width="130" height="24" rx="10" fill="#FFB800" fill-opacity="0.15" />
+                <text x="225" y="71" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                  text-anchor="middle">2. GEOMETRIC SETUP</text>
+                <text x="225" y="98" fill="#FFFFFF" font-size="8.5" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">Dynamic Calibrator</text>
+                <text x="225" y="112" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">Resolution Ratios</text>
+                <rect x="170" y="125" width="110" height="20" rx="4" fill="#1C1917" />
+                <text x="225" y="138" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Line_Y = 0.80 × H</text>
+                <rect x="170" y="152" width="110" height="20" rx="4" fill="#291807" />
+                <text x="225" y="165" fill="#F59E0B" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">X_span = [0.15, 0.80]W</text>
+                <text x="225" y="192" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Y₁ = Line_Y - 0.30H</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 3: DYNAMIC ROI SLICING (31.2% Area)
+               ============================================================= -->
+              <g filter="url(#roadeye-glow)">
+                <rect x="320" y="45" width="130" height="170" rx="10" fill="#140D04" stroke="#FF6A00"
+                  stroke-width="1.8" />
+                <rect x="320" y="45" width="130" height="24" rx="10" fill="#FF6A00" fill-opacity="0.25" />
+                <text x="385" y="61" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="800"
+                  text-anchor="middle">3. ROI SLICER</text>
+                <text x="385" y="88" fill="#FFFFFF" font-size="9" font-family="'Space Grotesk', sans-serif"
+                  font-weight="800" text-anchor="middle">Tensor Slicing</text>
+                <text x="385" y="103" fill="#FDE68A" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">frame[Y₁:Y₂, X₁:X₂]</text>
+                <rect x="330" y="115" width="110" height="26" rx="4" fill="#2E1005" stroke="#FF6A00" stroke-width="0.8"
+                  stroke-dasharray="2 2" />
+                <text x="385" y="127" fill="#FF6A00" font-size="7" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">31.2% Area Slice</text>
+                <text x="385" y="137" fill="#FDE68A" font-size="6" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Active Lane Zone</text>
+                <rect x="330" y="148" width="110" height="20" rx="4" fill="#18181B" />
+                <text x="385" y="161" fill="#10B981" font-size="6.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">-68.8% FLOPs Saved</text>
+                <text x="385" y="198" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Zero Overhead Slicing</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 4: YOLOV8 DEEP INFERENCE (best.pt)
+               ============================================================= -->
+              <g>
+                <rect x="480" y="55" width="130" height="150" rx="10" fill="#0A0E1A" stroke="#00F0FF"
+                  stroke-width="1.2" />
+                <rect x="480" y="55" width="130" height="24" rx="10" fill="#00F0FF" fill-opacity="0.15" />
+                <text x="545" y="71" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                  text-anchor="middle">4. YOLOV8 INFERENCE</text>
+                <text x="545" y="98" fill="#FFFFFF" font-size="8.5" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">Neural Detector</text>
+                <text x="545" y="112" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">Weights: best.pt</text>
+                <rect x="490" y="125" width="110" height="20" rx="4" fill="#082F49" />
+                <text x="545" y="138" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">conf &ge; 0.20 Filter</text>
+                <rect x="490" y="152" width="110" height="20" rx="4" fill="#132E35" />
+                <text x="545" y="165" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Car/Truck/Bus/Bike</text>
+                <text x="545" y="192" fill="#38BDF8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Local BBoxes (x₁,y₁)</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 5: COORDINATE TRANSLATION
+               ============================================================= -->
+              <g>
+                <rect x="640" y="55" width="130" height="150" rx="10" fill="#0A0E1A" stroke="#FFB800"
+                  stroke-width="1.2" />
+                <rect x="640" y="55" width="130" height="24" rx="10" fill="#FFB800" fill-opacity="0.15" />
+                <text x="705" y="71" fill="#FFB800" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                  text-anchor="middle">5. COORD MAPPING</text>
+                <text x="705" y="98" fill="#FFFFFF" font-size="8.5" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">Spatial Align Engine</text>
+                <text x="705" y="112" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">Local &rarr; Global Frame</text>
+                <rect x="650" y="125" width="110" height="20" rx="4" fill="#1C1917" />
+                <text x="705" y="138" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">x_glob = x_crop + X₁</text>
+                <rect x="650" y="152" width="110" height="20" rx="4" fill="#291807" />
+                <text x="705" y="165" fill="#F59E0B" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">y_glob = y_crop + Y₁</text>
+                <text x="705" y="192" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Centroid (cx, cy)</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 6: CENTROID COLLISION & COUNTING LOGIC
+               ============================================================= -->
+              <g>
+                <rect x="800" y="55" width="125" height="150" rx="10" fill="#0A0E1A" stroke="#10B981"
+                  stroke-width="1.2" />
+                <rect x="800" y="55" width="125" height="24" rx="10" fill="#10B981" fill-opacity="0.15" />
+                <text x="862" y="71" fill="#10B981" font-size="8" font-family="'Fira Code', monospace" font-weight="700"
+                  text-anchor="middle">6. CENTROID LOGIC</text>
+                <text x="862" y="98" fill="#FFFFFF" font-size="8.5" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">Line Crossing</text>
+                <text x="862" y="112" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif"
+                  text-anchor="middle">Virtual Gate (Y_line)</text>
+                <rect x="810" y="125" width="105" height="20" rx="4" fill="#064E3B" />
+                <text x="862" y="138" fill="#6EE7B7" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">|cy - Line_Y| &lt; 5px</text>
+                <rect x="810" y="152" width="105" height="20" rx="4" fill="#0F766E" />
+                <text x="862" y="165" fill="#A7F3D0" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Counter &larr; Counter + 1</text>
+                <text x="862" y="192" fill="#34D399" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Duplicate Filter Dequeue</text>
+              </g>
+
+              <!-- =============================================================
+               STAGE 7: ADAPTIVE DISPLAY & MP4 ARCHIVAL WRITER
+               ============================================================= -->
+              <g>
+                <rect x="955" y="55" width="95" height="150" rx="10" fill="#0A0E1A" stroke="#FFB800"
+                  stroke-width="1.2" />
+                <rect x="955" y="55" width="95" height="24" rx="10" fill="#FFB800" fill-opacity="0.15" />
+                <text x="1002" y="71" fill="#FFB800" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">7. SINK</text>
+                <text x="1002" y="98" fill="#FFFFFF" font-size="8" font-family="'Space Grotesk', sans-serif"
+                  font-weight="700" text-anchor="middle">Video Writer</text>
+                <text x="1002" y="112" fill="#94A3B8" font-size="6.5" font-family="'Inter', sans-serif"
+                  text-anchor="middle">output_video.mp4</text>
+                <rect x="962" y="125" width="81" height="20" rx="4" fill="#1C1917" />
+                <text x="1002" y="138" fill="#FDE68A" font-size="6" font-family="'Fira Code', monospace"
+                  text-anchor="middle">1080p MP4V</text>
+                <rect x="962" y="152" width="81" height="20" rx="4" fill="#0B192C" />
+                <text x="1002" y="165" fill="#38BDF8" font-size="6" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Adaptive GUI</text>
+                <text x="1002" y="192" fill="#64748B" font-size="6" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Screen Scaling</text>
+              </g>
+
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">1. Resolution-Agnostic Dynamic Geometry</div>
+              <p class="text-slate-400 leading-relaxed">Auto-calibrates counting tripwire at 80% height and bounding
+                corridor [0.15W, 0.80W] dynamically based on native input dimensions.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">2. Sub-Frame Tensor Slicing (-68.8% FLOPs)</div>
+              <p class="text-slate-400 leading-relaxed">Restricts YOLO forward pass to 31.2% active frame area,
+                eliminating 68.8% redundant compute for &gt;73 FPS throughput.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">3. Local-to-Global Coordinate Remapping</div>
+              <p class="text-slate-400 leading-relaxed">Maps local crop-space detections back to full 1080p canvas for
+                seamless high-definition archival recording.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-rose-500/20 space-y-1">
+              <div class="text-rose-400 font-mono font-bold">4. Centroid Line Crossing &amp; Adaptive Display</div>
+              <p class="text-slate-400 leading-relaxed">Evaluates boundary crossing within &plusmn;5px tolerance band
+                while auto-scaling GUI display to match screen boundaries.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/Road-Eye" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-goldGlow to-amberFire text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-road-eye')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL 6: ASTRO-VISTA 3D (SYS.06)
+         ========================================================================= -->
+    <div id="modal-astro-vista"
+      class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto hidden"
+      role="dialog" aria-modal="true">
+      <div
+        class="project-modal-cyan w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl relative border border-cyan-500/40 animate-fade-in">
+        <!-- Header -->
+        <div class="p-4 sm:p-6 border-b border-cyan-500/20 flex items-start justify-between gap-4 bg-slate-950/70">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+              <span
+                class="text-[10px] sm:text-xs font-mono font-bold text-electricCyan bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full">
+                SYS.06 · WEBGL 3D &amp; ASTRODYNAMICS
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
+                60 FPS WebGL
+              </span>
+              <span
+                class="text-[10px] sm:text-xs font-mono text-goldGlow bg-amber-950/60 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
+                Three.js r128
+              </span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">AstroVista 3D Engine</h3>
+            <p class="text-xs sm:text-sm font-mono text-cyan-400 mt-0.5">Interactive 3D Solar System Simulation &middot;
+              Polar Ring UVs &middot; Collision-Free Zoom</p>
+          </div>
+          <button onclick="closeModal('modal-astro-vista')"
+            class="p-2 rounded-xl bg-slate-900/80 hover:bg-cyan-400 hover:text-slate-950 text-slate-400 transition-all border border-slate-700 font-mono text-sm leading-none shrink-0"
+            aria-label="Close modal">
+            ✕
+          </button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="p-4 sm:p-6 overflow-y-auto modal-scroll-area space-y-5 flex-1 bg-slate-950/50">
+          <!-- Flowchart SVG Container -->
+          <div class="diagram-frame diagram-frame-cyan p-3 sm:p-4 arch-grid-bg rounded-2xl overflow-x-auto">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-cyan-500/20 text-[10px] font-mono">
+              <span class="text-electricCyan font-bold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-electricCyan animate-ping"></span> 3D SCENE &amp; ORBITAL
+                PIPELINE FLOWCHART
+              </span>
+              <span class="text-slate-400">Real-Time Astrodynamics Graph</span>
+            </div>
+            <svg viewBox="0 0 1020 360" class="w-full min-w-[880px] h-auto" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Solar Core & Glow Radiance Gradients -->
+                <radialGradient id="sun-radial-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#FFF5C2" />
+                  <stop offset="35%" stop-color="#FFB800" />
+                  <stop offset="70%" stop-color="#FF6A00" />
+                  <stop offset="100%" stop-color="rgba(255, 106, 0, 0)" />
+                </radialGradient>
+                <linearGradient id="orbit-grad-cyan" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#0080FF" stop-opacity="0.1" />
+                </linearGradient>
+                <linearGradient id="saturn-ring-grad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#FCD34D" stop-opacity="0.8" />
+                  <stop offset="50%" stop-color="#B45309" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#FDE68A" stop-opacity="0.9" />
+                </linearGradient>
+                <!-- Filter Glows -->
+                <filter id="sun-bloom" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#FFB800" flood-opacity="0.85" />
+                </filter>
+                <filter id="planet-glow-cyan" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.7" />
+                </filter>
+                <filter id="planet-glow-amber" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFB800" flood-opacity="0.7" />
+                </filter>
+              </defs>
+
+              <!-- Cosmic Background Star Grid Dots -->
+              <g opacity="0.25">
+                <circle cx="80" cy="40" r="1" fill="#FFFFFF" />
+                <circle cx="210" cy="70" r="1.2" fill="#00F0FF" />
+                <circle cx="340" cy="30" r="1" fill="#FFB800" />
+                <circle cx="680" cy="50" r="1" fill="#FFFFFF" />
+                <circle cx="820" cy="80" r="1.5" fill="#00F0FF" />
+                <circle cx="950" cy="40" r="1" fill="#FFB800" />
+                <circle cx="120" cy="320" r="1" fill="#00F0FF" />
+                <circle cx="450" cy="330" r="1.2" fill="#FFFFFF" />
+                <circle cx="890" cy="320" r="1" fill="#FFB800" />
+              </g>
+
+              <!-- =============================================================
+               CONCENTRIC KEPLERIAN ORBITAL ELLIPSES (Centered at x=510, y=180)
+               ============================================================= -->
+              <!-- 1. Mercury Orbit (r=65, 30) -->
+              <ellipse cx="510" cy="180" rx="68" ry="30" stroke="#00F0FF" stroke-width="0.8" stroke-opacity="0.35"
+                stroke-dasharray="2 3" />
+              <!-- 2. Venus Orbit (r=105, 46) -->
+              <ellipse cx="510" cy="180" rx="108" ry="48" stroke="#FDE68A" stroke-width="0.8" stroke-opacity="0.4"
+                stroke-dasharray="3 4" />
+              <!-- 3. Earth Orbit (r=150, 66) -->
+              <ellipse cx="510" cy="180" rx="154" ry="68" stroke="#00F0FF" stroke-width="1.2" stroke-opacity="0.55" />
+              <!-- 4. Mars Orbit (r=195, 86) -->
+              <ellipse cx="510" cy="180" rx="198" ry="88" stroke="#F87171" stroke-width="0.8" stroke-opacity="0.45"
+                stroke-dasharray="3 3" />
+
+              <!-- 5. Asteroid Belt Procedural Band (r=230..255, 102..114) -->
+              <ellipse cx="510" cy="180" rx="236" ry="104" stroke="#94A3B8" stroke-width="8" stroke-opacity="0.12"
+                stroke-dasharray="1 8" class="arch-flow-pulse" />
+              <ellipse cx="510" cy="180" rx="246" ry="109" stroke="#CBD5E1" stroke-width="6" stroke-opacity="0.10"
+                stroke-dasharray="2 12" />
+
+              <!-- 6. Jupiter Orbit (r=295, 128) -->
+              <ellipse cx="510" cy="180" rx="300" ry="132" stroke="#F59E0B" stroke-width="1.1" stroke-opacity="0.5"
+                stroke-dasharray="4 4" />
+              <!-- 7. Saturn Orbit (r=360, 156) -->
+              <ellipse cx="510" cy="180" rx="368" ry="160" stroke="#FCD34D" stroke-width="1.1" stroke-opacity="0.5" />
+              <!-- 8. Uranus Orbit (r=425, 182) -->
+              <ellipse cx="510" cy="180" rx="432" ry="186" stroke="#67E8F9" stroke-width="0.9" stroke-opacity="0.4"
+                stroke-dasharray="4 5" />
+              <!-- 9. Neptune Orbit (r=485, 208) -->
+              <ellipse cx="510" cy="180" rx="490" ry="208" stroke="#38BDF8" stroke-width="0.9" stroke-opacity="0.4"
+                stroke-dasharray="5 5" />
+
+              <!-- =============================================================
+               CENTRAL SUN & CORONA RADIANCE (x=510, y=180)
+               ============================================================= -->
+              <!-- Outer Coronal Flare -->
+              <circle cx="510" cy="180" r="42" fill="url(#sun-radial-glow)" />
+              <!-- Main Solar Mesh -->
+              <circle cx="510" cy="180" r="26" fill="#FFB800" filter="url(#sun-bloom)" />
+              <circle cx="510" cy="180" r="26" fill="url(#sun-radial-glow)" />
+              <text x="510" y="184" fill="#0A0E1A" font-size="9" font-family="'Space Grotesk', sans-serif"
+                font-weight="900" text-anchor="middle">SUN</text>
+              <!-- PointLight Radiance Rays -->
+              <line x1="510" y1="140" x2="510" y2="120" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+                stroke-dasharray="2 2" />
+              <line x1="510" y1="220" x2="510" y2="240" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+                stroke-dasharray="2 2" />
+              <line x1="465" y1="180" x2="445" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+                stroke-dasharray="2 2" />
+              <line x1="555" y1="180" x2="575" y2="180" stroke="#FFB800" stroke-width="1.5" stroke-opacity="0.7"
+                stroke-dasharray="2 2" />
+
+              <!-- =============================================================
+               PLANETARY BODIES WITH ORBITAL NODES & LABELS
+               ============================================================= -->
+              <!-- 1. Mercury (Angle ~ 310 deg: cx=554, cy=157) -->
+              <g>
+                <circle cx="554" cy="157" r="4" fill="#94A3B8" stroke="#E2E8F0" stroke-width="0.8" />
+                <text x="554" y="148" fill="#CBD5E1" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">Mercury</text>
+                <text x="554" y="172" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=40 · ω=0.40</text>
+              </g>
+
+              <!-- 2. Venus (Angle ~ 140 deg: cx=427, cy=211) -->
+              <g>
+                <circle cx="427" cy="211" r="5.5" fill="#FDE68A" stroke="#F59E0B" stroke-width="0.8" />
+                <text x="427" y="228" fill="#FDE68A" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">Venus</text>
+                <text x="427" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=48 · ω=0.30</text>
+              </g>
+
+              <!-- 3. Earth (Angle ~ 30 deg: cx=643, cy=146) + Atmosphere Halo -->
+              <g filter="url(#planet-glow-cyan)">
+                <circle cx="643" cy="146" r="7.8" fill="rgba(0, 240, 255, 0.2)" />
+                <circle cx="643" cy="146" r="6.2" fill="#0284C7" stroke="#00F0FF" stroke-width="1.2" />
+                <text x="643" y="132" fill="#00F0FF" font-size="8" font-family="'Fira Code', monospace"
+                  font-weight="800" text-anchor="middle">Earth ⊕</text>
+                <text x="643" y="164" fill="#67E8F9" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=57 · ω=0.25 (1.05x Glow)</text>
+              </g>
+
+              <!-- 4. Mars (Angle ~ 220 deg: cx=358, cy=237) -->
+              <g>
+                <circle cx="358" cy="237" r="5" fill="#EF4444" stroke="#FCA5A5" stroke-width="0.8" />
+                <text x="358" y="254" fill="#FCA5A5" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">Mars ♂</text>
+                <text x="358" y="264" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=66 · ω=0.20</text>
+              </g>
+
+              <!-- 5. Asteroid Belt Representative Particles -->
+              <g opacity="0.85">
+                <circle cx="270" cy="180" r="1.5" fill="#CBD5E1" />
+                <circle cx="274" cy="172" r="1.2" fill="#94A3B8" />
+                <circle cx="272" cy="188" r="1.8" fill="#FDE68A" />
+                <circle cx="750" cy="180" r="1.5" fill="#CBD5E1" />
+                <circle cx="746" cy="174" r="1.3" fill="#94A3B8" />
+                <circle cx="752" cy="186" r="1.6" fill="#FDE68A" />
+                <rect x="230" y="295" width="140" height="24" rx="4" fill="#0A0E1A" stroke="#64748B"
+                  stroke-width="0.8" />
+                <text x="300" y="311" fill="#94A3B8" font-size="7" font-family="'Fira Code', monospace"
+                  font-weight="600" text-anchor="middle">Asteroid Belt (100+ Debris)</text>
+                <line x1="300" y1="295" x2="274" y2="195" stroke="#64748B" stroke-width="0.8" stroke-dasharray="2 2" />
+              </g>
+
+              <!-- 6. Jupiter (Angle ~ 65 deg: cx=637, cy=60) -->
+              <g filter="url(#planet-glow-amber)">
+                <circle cx="637" cy="60" r="13" fill="#D97706" stroke="#FDE68A" stroke-width="1.2" />
+                <!-- Cloud bands -->
+                <line x1="626" y1="56" x2="648" y2="56" stroke="#B45309" stroke-width="1.8" />
+                <line x1="625" y1="63" x2="649" y2="63" stroke="#FDE68A" stroke-width="1.2" stroke-opacity="0.8" />
+                <text x="637" y="40" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace"
+                  font-weight="800" text-anchor="middle">Jupiter ♃ (R=10)</text>
+                <text x="637" y="84" fill="#FDE68A" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=90 · ω=0.15</text>
+              </g>
+
+              <!-- 7. Saturn (Angle ~ 170 deg: cx=148, cy=208) + Custom Radial UV Ring -->
+              <g>
+                <!-- Planar Ring System -->
+                <ellipse cx="148" cy="208" rx="22" ry="6" fill="url(#saturn-ring-grad)" stroke="#FDE68A"
+                  stroke-width="0.6" transform="rotate(-22 148 208)" />
+                <!-- Planet Core -->
+                <circle cx="148" cy="208" r="9" fill="#CA8A04" stroke="#FEF08A" stroke-width="1" />
+                <text x="148" y="228" fill="#FDE68A" font-size="8" font-family="'Fira Code', monospace"
+                  font-weight="800" text-anchor="middle">Saturn ♄</text>
+                <text x="148" y="238" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">Radial UV Unwrap (D=115 · ω=0.10)</text>
+              </g>
+
+              <!-- 8. Uranus (Angle ~ 335 deg: cx=901, cy=101) -->
+              <g>
+                <circle cx="901" cy="101" r="7.5" fill="#06B6D4" stroke="#67E8F9" stroke-width="1" />
+                <text x="901" y="86" fill="#67E8F9" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">Uranus ♅</text>
+                <text x="901" y="119" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=135 · ω=0.08</text>
+              </g>
+
+              <!-- 9. Neptune (Angle ~ 205 deg: cx=66, cy=268) -->
+              <g>
+                <circle cx="66" cy="268" r="7" fill="#2563EB" stroke="#60A5FA" stroke-width="1" />
+                <text x="66" y="287" fill="#60A5FA" font-size="7.5" font-family="'Fira Code', monospace"
+                  font-weight="700" text-anchor="middle">Neptune ♆</text>
+                <text x="66" y="297" fill="#94A3B8" font-size="6.5" font-family="'Fira Code', monospace"
+                  text-anchor="middle">D=155 · ω=0.06</text>
+              </g>
+
+              <!-- =============================================================
+               HUD OVERLAYS & CAMERA ORBIT CONTROLS PIPELINE BADGES
+               ============================================================= -->
+              <!-- Top Left Badge: Camera & Raycasting Pipeline -->
+              <rect x="20" y="15" width="220" height="52" rx="7" fill="#070D1A" stroke="#00F0FF" stroke-width="1" />
+              <text x="32" y="32" fill="#00F0FF" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700">THREE.PerspectiveCamera</text>
+              <text x="32" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Pos (0, 100, 140) ·
+                Target
+                (0, 0, 0)</text>
+              <text x="32" y="58" fill="#10B981" font-size="7" font-family="'Fira Code', monospace">updateMinDistance()
+                Clamping</text>
+
+              <!-- Top Right Badge: Time Dilation Multipliers -->
+              <rect x="780" y="15" width="220" height="52" rx="7" fill="#120E04" stroke="#FFB800" stroke-width="1" />
+              <text x="792" y="32" fill="#FFB800" font-size="8.5" font-family="'Fira Code', monospace"
+                font-weight="700">DUAL-LAYER TIME SCALING</text>
+              <text x="792" y="46" fill="#94A3B8" font-size="7" font-family="'Inter', sans-serif">Global Speed × Planet
+                Slider</text>
+              <text x="792" y="58" fill="#FDE68A" font-size="7" font-family="'Fira Code', monospace">θ(t) = θ₀ + (ω ·
+                μ_global · μ_i) · Δt</text>
+            </svg>
+          </div>
+
+          <!-- Quick Technical Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-cyan-500/20 space-y-1">
+              <div class="text-cyan-300 font-mono font-bold">1. PointLight Solar Origin</div>
+              <p class="text-slate-400 leading-relaxed">Omnidirectional inverse-square light source at (0,0,0) creates
+                realistic dynamic day/night terminator boundaries.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-amber-500/20 space-y-1">
+              <div class="text-goldGlow font-mono font-bold">2. Polar UV Ring Projection</div>
+              <p class="text-slate-400 leading-relaxed">Converts Cartesian vertices into concentric polar UV buffer
+                attributes, eliminating linear texture distortion on Saturn's rings.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-emerald-500/20 space-y-1">
+              <div class="text-emerald-400 font-mono font-bold">3. Collision-Free Zoom Clamping</div>
+              <p class="text-slate-400 leading-relaxed">Dynamic Euclidean distance barrier update prevents camera
+                frustum from clipping through planetary spheres.</p>
+            </div>
+            <div class="bg-slate-900/70 p-3.5 rounded-xl border border-rose-500/20 space-y-1">
+              <div class="text-rose-400 font-mono font-bold">4. Single Draw Call Starfield</div>
+              <p class="text-slate-400 leading-relaxed">Renders 10,000 deep-space particle vertices in a single GPU draw
+                call with randomized alpha shimmer.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="p-3.5 sm:p-4 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-3 bg-slate-950/80">
+          <a href="https://github.com/Kapil-Sandhu/Astro-Vista" target="_blank" rel="noopener"
+            class="px-4 py-2 text-xs font-mono font-bold bg-gradient-to-r from-electricCyan to-cyan-400 text-slate-950 rounded-xl hover:brightness-110 shadow-lg transition-all flex items-center gap-1.5">
+            <span>GitHub Repository</span> <span>↗</span>
+          </a>
+          <button onclick="closeModal('modal-astro-vista')"
+            class="px-4 py-2 text-xs font-mono text-slate-400 hover:text-white bg-slate-900 rounded-xl border border-slate-700 hover:border-slate-500 transition-all">
+            Close Window
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script>
     /* =========================================================================
@@ -3186,7 +4850,7 @@
 
         if (response.status === 200 && result.success) {
           statusBox.className = 'p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs font-mono block animate-fade-in';
-          statusBox.innerHTML = `✅ <strong>Message Transmitted Successfully!</strong><br/>Thank you <strong>${name}</strong>, your message has been delivered directly to <code>Kapilsandhu2021@gmail.com</code> via Web3Forms. I will review and reply to <em>${email}</em> promptly.`;
+          statusBox.innerHTML = `✅ <strong>Message Transmitted Successfully!</strong><br/>Thank you <strong>${name}</strong>, your message has been delivered directly to <code>me</code>. I will review and reply to <em>${email}</em> promptly.`;
           form.reset();
         } else {
           statusBox.className = 'p-4 rounded-xl bg-amber-950/80 border border-amber-500/50 text-amber-300 text-xs font-mono block animate-fade-in';
